@@ -283,6 +283,46 @@ svg.pet{overflow:visible}
 .toast.out{transition:opacity .3s,transform .3s;opacity:0;transform:translateY(-8px)}
 @keyframes tin{from{opacity:0;transform:translateY(-8px)}}
 
+/* Help */
+.hl{cursor:help;text-decoration:underline dotted;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 50%,transparent)}
+.qbtn{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--muted);font:900 12px var(--body);cursor:pointer;vertical-align:3px;margin-left:6px;padding:0}
+.intro{background:var(--surface);border:1.5px solid var(--accent);border-radius:18px;padding:12px 14px;margin:14px 0 4px;display:flex;gap:12px;align-items:flex-start}
+.intro p{margin:0;font-weight:700;font-size:14px;line-height:1.45;flex:1}
+.intro p b{font-family:var(--display);font-weight:400;font-size:17px;display:block;margin-bottom:2px}
+.sheet{position:fixed;inset:0;z-index:20;background:var(--bg);overflow-y:auto;padding-top:calc(var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px))}
+.sheet-in{max-width:480px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px calc(30px + env(safe-area-inset-bottom,0px))}
+.sheet-hd{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--bg);padding:6px 0 10px;z-index:1}
+.sheet-hd b{font-family:var(--display);font-weight:400;font-size:26px}
+.xbtn{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);font:900 18px var(--body);cursor:pointer}
+.guide details{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;margin-top:8px;overflow:hidden}
+.guide summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:900;font-size:15px;display:flex;justify-content:space-between;align-items:center}
+.guide summary::-webkit-details-marker{display:none}
+.guide summary::after{content:'+';font-size:20px;color:var(--muted)}
+.guide details[open] summary::after{content:'–'}
+.guide .gb{padding:0 14px 14px;font-size:14px;line-height:1.5}
+.guide .gb p{margin:0 0 8px}
+.guide .gb ul{margin:0 0 8px;padding-left:18px}
+.guide .gb li{margin-bottom:4px}
+.guide .gb b{color:var(--accent)}
+.tipcard{position:fixed;left:0;right:0;bottom:calc(66px + env(safe-area-inset-bottom,0px));z-index:15;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+.tipcard .coach-in{border:2px solid var(--accent)}
+.tipcard h5{margin:0 0 4px;font-family:var(--display);font-weight:400;font-size:18px;color:var(--spark)}
+.welcome{display:flex;flex-direction:column;min-height:100%;text-align:center}
+.welcome .art{flex:none;width:min(240px,62vw);margin:18px auto 0}
+.welcome .art svg{width:100%;height:auto;display:block}
+.welcome .art.wide{display:flex;gap:6px;width:min(300px,80vw)}.welcome .art.wide>div{flex:1;min-width:0}
+.welcome .art.room{width:min(300px,80vw);border-radius:20px;overflow:hidden;background:var(--stage);border:1.5px solid var(--line)}
+.welcome h2{font-family:var(--display);font-weight:400;font-size:30px;margin:8px 0 6px;line-height:1.1;text-wrap:balance}
+.welcome p{font-weight:700;font-size:15.5px;line-height:1.5;color:var(--muted);margin:0 auto 10px;max-width:36ch}
+.welcome .pts{display:grid;gap:8px;text-align:left;margin:6px 0 10px}
+.welcome .pts div{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;font-weight:700;font-size:14px}
+.welcome .pts div b{color:var(--ink)}
+.dots{display:flex;gap:6px;justify-content:center;margin:12px 0}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--accent);width:22px;border-radius:99px}
+.wbtns{display:flex;gap:8px;margin-top:auto;padding-top:10px}
+.wbtns .btn{flex:1;padding:15px}
+
 /* Sound button */
 .sndbtn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;padding:0;color:var(--ink)}
 .sndbtn svg{width:18px;height:18px}
@@ -316,7 +356,7 @@ body.has-coach #app{padding-bottom:calc(200px + env(safe-area-inset-bottom,0px))
 <div id="app">
   <header class="top">
     <div class="brand">Lumiki<small id="sub">cozy pets</small></div>
-    <div class="wallet"><button class="sndbtn" id="snd" aria-label="Sound on or off"></button><span class="speed" id="speedTag" hidden>×60</span><div class="coins dust" title="Stardust — rare currency"><i>✧</i><span id="dustN">0</span></div><div class="coins" id="coins" title="Sparks — main currency"><i>✦</i><span id="coinN">0</span></div></div>
+    <div class="wallet"><button class="sndbtn" id="helpBtn" aria-label="Guide" data-guide="start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9.2 9a3 3 0 1 1 4.3 2.7c-.9.5-1.5 1.2-1.5 2.3"/><circle cx="12" cy="17.6" r=".6" fill="currentColor"/></svg></button><button class="sndbtn" id="snd" aria-label="Sound on or off"></button><span class="speed" id="speedTag" hidden>×60</span><div class="coins dust" data-help="dust" style="cursor:help"><i>✧</i><span id="dustN">0</span></div><div class="coins" id="coins" data-help="sparks" style="cursor:help"><i>✦</i><span id="coinN">0</span></div></div>
   </header>
 
   <main>
@@ -327,7 +367,7 @@ body.has-coach #app{padding-bottom:calc(200px + env(safe-area-inset-bottom,0px))
       <div class="actions" id="actions"></div>
       <div id="panel"></div>
       <div id="info"></div>
-      <h3 class="sec">Your lumiks</h3>
+      <h3 class="sec">Your lumiks<button class="qbtn" data-guide="grow" aria-label="Help">?</button></h3>
       <div class="strip" id="strip"></div>
     </section>
     <section id="tab-tasks" hidden></section>
@@ -1003,20 +1043,20 @@ function renderSnd(){const on=S.sound!==false||S.music;$('#snd').innerHTML=on?'<
 
 /* ================= tutorial ================= */
 const TUT=[
-  {t:'Meet your lumiks! Tap Sparky or Minty to give them a pet.',ev:'pet',sel:()=>'#hab'},
-  {t:'Lumiks get hungry. Tap Feed, then Food.',ev:'feed',sel:()=>panel==='feed'?'[data-f="basic"]':'[data-a="feed"]'},
-  {t:'Play to earn Sparks ✦. Tap Play, then Catch fireflies.',ev:'play',sel:()=>panel==='play'?'[data-g="firefly"]':'[data-a="play"]'},
-  {t:'Your egg is ready! Tap it under Your lumiks, then tap Hatch.',ev:'hatch',sel:()=>{const e=S.pets.find(p=>p.egg);if(!e)return null;return sel()===e?'#hatchBtn':`.card[data-id="${e.id}"]`},
+  {t:'This is your room. Tap a lumik to pet it. Petting raises Joy, and happy lumiks earn more Sparks.',ev:'pet',sel:()=>'#hab'},
+  {t:'Fullness drops over time. Tap Feed, then Food (3 ✦). Hungry lumiks earn half and can’t explore.',ev:'feed',sel:()=>panel==='feed'?'[data-f="basic"]':'[data-a="feed"]'},
+  {t:'Games turn Energy into Sparks ✦ and train skills. Tap Play, then Catch fireflies, and tap the glowing dots fast!',ev:'play',sel:()=>panel==='play'?'[data-g="firefly"]':'[data-a="play"]'},
+  {t:'Your egg is ready! Tap it under Your lumiks, then tap Hatch. Every egg hides a new lumik with its own genes.',ev:'hatch',sel:()=>{const e=S.pets.find(p=>p.egg);if(!e)return null;return sel()===e?'#hatchBtn':`.card[data-id="${e.id}"]`},
     wait:()=>{const e=S.pets.find(p=>p.egg);return e&&!e.ready?'Your egg is almost ready to hatch. Wait a few seconds…':''}},
-  {t:'Send an adult exploring: tap Explore, then Meadow. They come back with Sparks and berries.',ev:'trip',sel:()=>panel==='trip'?'[data-l="meadow"]':'[data-a="trip"]'},
-  {t:'Cozy rooms earn more. Open Decor to furnish your home.',ev:'decor',sel:()=>'.nav [data-tab="decor"]'},
-  {t:'Come back every day: Tasks has your streak and daily rewards. Have fun!',ev:'end',sel:()=>'.nav [data-tab="tasks"]',btn:'Finish'}
+  {t:'Exploring earns while you’re away. Tap Explore, then Meadow (15 min). Your lumik brings back Sparks and berries.',ev:'trip',sel:()=>panel==='trip'?'[data-l="meadow"]':'[data-a="trip"]'},
+  {t:'Decor adds cozy points, and cozy rooms earn more. Open Decor to see what you can buy.',ev:'decor',sel:()=>'.nav [data-tab="decor"]'},
+  {t:'Tasks has 3 daily tasks, a chest and a streak reward, so drop by every day. Tap ? at the top anytime to read the full guide.',ev:'end',sel:()=>'.nav [data-tab="tasks"]',btn:'Finish'}
 ];
 function tutEvent(ev){if(S.tut==null||S.tut>=TUT.length||TUT[S.tut].ev!==ev)return;S.tut++;
   if(S.tut>=TUT.length){earn(30,'Tutorial reward');setTimeout(()=>{toast('Tutorial complete: +30 ✦');sfx('level')},400)}save();setTimeout(renderCoach,0)}
 function renderCoach(){
   document.querySelectorAll('.coach-target').forEach(e=>e.classList.remove('coach-target'));
-  let c=$('#coach');const off=S.tut==null||S.tut>=TUT.length||!!game;
+  let c=$('#coach');const off=S.tut==null||S.tut>=TUT.length||!!game||!S.welcome;
   document.body.classList.toggle('has-coach',!off);
   if(off){if(c)c.hidden=true;return}
   let st=TUT[S.tut];
@@ -1100,11 +1140,111 @@ function renderGarden(){
   else{const sd=SEEDS[b.plant],rd=bedReady(b),wet=b.wetUntil>Date.now();
     info=`<h4>Bed ${bedSel+1} · ${sd.n}</h4><div class="st">${rd?'Ready to harvest!':`Grown <b data-grow="${bedSel}">${Math.floor(b.grown/sd.sec*100)}%</b> · ${wet?`water lasts <b data-until="${b.wetUntil}">${fmt(b.wetUntil-Date.now())}</b>`:'dry — it stops growing until you water it'}`}</div>
       <div class="gbar">${rd?`<button class="btn" id="bHarv">Harvest</button>`:`<button class="btn${wet?' ghost':''}" id="bWater">Water</button>`}</div>`}
-  $('#info').innerHTML=`<div class="bedinfo">${info}</div><div class="gbar"><button class="btn ghost" id="wAll">Water all</button><button class="btn ghost" id="hAll">Harvest all</button></div>
+  $('#info').innerHTML=`${intro('garden')}<div class="bedinfo">${info}</div><div class="gbar"><button class="btn ghost" id="wAll">Water all</button><button class="btn ghost" id="hAll">Harvest all</button></div>
     <p class="lead" style="margin-top:10px">Plants grow only while the soil is wet. Watering lasts 4 hours, so come back to keep them growing.</p>`;
   document.querySelectorAll('[data-seed]').forEach(x=>x.addEventListener('click',()=>plant(bedSel,x.dataset.seed)));
   const bw=$('#bWater');bw&&bw.addEventListener('click',()=>water(bedSel));const bh=$('#bHarv');bh&&bh.addEventListener('click',()=>harvest(bedSel));
   $('#wAll').addEventListener('click',waterAll);$('#hAll').addEventListener('click',harvestAll);
+}
+
+
+/* ================= help & guide ================= */
+const HELP={
+  h:['Fullness','Goes down over about 16 hours. Feed your lumik to fill it. Below 20 the lumik is hungry: games pay half, it can’t go exploring, and Joy drops twice as fast.','needs'],
+  j:['Joy','Goes up when you pet, play or give treats, and slowly goes down. Below 30 your lumik earns 25% fewer Sparks, at 80 or more it earns 10% extra. Cozy rooms make Joy drop slower.','needs'],
+  e:['Energy','Games and trips use Energy. Awake lumiks get back 10 per hour, and sleeping ones 100 per hour. Tap Sleep, and the lumik wakes up by itself when rested.','needs'],
+  xp:['XP and growing up','Feeding, playing and exploring give XP. 30 XP turns a baby into a teen, 80 XP into an adult. After 30 days an adult becomes an elder.','grow'],
+  agi:['Agility','Grows in Catch fireflies and on trips. Crystal caves need 35 Agility.','skills'],
+  wit:['Wits','Grows in Find the pairs and on trips. The Dark forest needs 25 Wits.','skills'],
+  sta:['Stamina','Grows in Puddle jump and on trips. The Lake needs 15 Stamina.','skills'],
+  rarity:['Rarity','Rare traits make a lumik rarer. Common earns ×1, Rare ×1.3, Epic ×1.7, Legendary ×2.5 Sparks.','genes'],
+  cozy:['Cozy','Each decor item adds cozy points. Every point gives lumiks in this room +2% Sparks and makes their Joy drop slower, up to +60%. Tidying adds 5 points for 12 hours.','cozy',['Open Decor',()=>setTab('decor')]],
+  sparks:['Sparks ✦','The main currency. You earn it from games, trips, tasks and the garden, and spend it on food, decor, seeds, eggs and pairing.','money'],
+  dust:['Stardust ✧','A rare currency. It comes from the daily chest, streak days, Crystal caves, Crystal blooms and the Star garden. Spend it on the magnifier, rare eggs and legendary pairs.','money'],
+  genes:['Genes','The traits you can see: element, pattern, ears, and sometimes a glow. Rare traits raise rarity.','genes'],
+  hidden:['Hidden genes','Every lumik also carries a hidden gene for each trait. It can show up in its babies. The magnifier reveals it and shows exact odds when you pair.','genes'],
+  gen:['Generation','How many generations came before this lumik. Babies are one generation after their parents.','pairs'],
+  age:['Age','Lumiks age in real time. An adult becomes an elder at 30 days old.','elders'],
+  earnings:['Earnings bonus','The total of rarity, Joy, room cozy, elders, Star garden and pure line. It applies to games and trips.','money'],
+  line:['Pure line','A legendary lumik whose parents and grandparents were legendary too. After 4 legendary generations it earns +25% Sparks.','pairs'],
+  rooms:['Rooms','Each room fits up to 3 lumiks. Tap Move to send this lumik to another room. New rooms unlock at home levels 3, 8 and 12.','home']
+};
+const GUIDE=[
+  ['start','What is Lumiki?',`<p>Lumiki is a cozy pet game. You raise little glowing creatures called <b>lumiks</b> in your own home.</p><ul><li>Look after them: feed, play, put them to bed.</li><li>Earn <b>Sparks ✦</b> and furnish cozy rooms.</li><li>Send lumiks exploring and grow a garden.</li><li>Pair adults to hatch rarer babies and fill your <b>Atlas</b>.</li></ul><p>The game runs in <b>real time</b>: lumiks get hungry, trips finish and plants grow while you’re away. A few short visits a day is the best way to play.</p>`],
+  ['needs','Fullness, Joy and Energy',`<ul><li><b>Fullness</b> drops over ~16 hours. Below 20 a lumik is hungry: games pay half and it can’t explore.</li><li><b>Joy</b> rises when you pet, play or give treats. Below 30: −25% Sparks. 80+: +10%.</li><li><b>Energy</b> is spent on games and trips. It comes back 10 per hour while awake and 100 per hour while asleep.</li></ul><p>Tap any label under the room to read about it.</p>`],
+  ['actions','What the buttons do',`<ul><li><b>Tap a lumik</b> to select it. Tap again to pet it (+Joy).</li><li><b>Feed</b>: food (3 ✦) or treats from materials.</li><li><b>Play</b>: 4 mini-games that earn Sparks and train skills.</li><li><b>Sleep</b>: turns off the light so Energy comes back fast.</li><li><b>Explore</b>: send the lumik on a trip for Sparks and materials.</li></ul>`],
+  ['grow','Growing up',`<p>baby → teen (30 XP) → adult (80 XP) → elder (adult, 30 days old).</p><ul><li>XP comes from feeding, playing and trips.</li><li>Teens can visit the Meadow. Adults can go anywhere and can pair.</li><li>Elders stay home but give your whole home +5% Sparks.</li></ul>`],
+  ['games','Mini-games',`<ul><li><b>Catch fireflies</b>: tap glowing dots for 10 s. Trains Agility.</li><li><b>Find the pairs</b>: match 6 pairs in 40 s. Trains Wits.</li><li><b>Puddle jump</b>: tap to jump over puddles. Trains Stamina.</li><li><b>Tidy the room</b>: pick up 6 messes for +5 cozy for 12 hours.</li></ul><p>Each game costs Energy (10–20).</p>`],
+  ['trips','Exploring',`<ul><li><b>Meadow</b>, 15 min: berries. Open from the start, teens and older.</li><li><b>Lake</b>, 1 h: shells. Home Lv 2, Stamina 15.</li><li><b>Dark forest</b>, 4 h: glowshrooms. Home Lv 4, Wits 25.</li><li><b>Crystal caves</b>, 8 h: crystals and a chance of ✧. Home Lv 6, Agility 35.</li></ul><p>Higher skills bring more Sparks. Sometimes a lumik finds an egg!</p>`],
+  ['skills','Skills',`<p><b>Agility</b>, <b>Wits</b> and <b>Stamina</b> go from 0 to 100. Mini-games and trips raise them. Each place needs a certain skill, and a higher skill means more loot.</p>`],
+  ['money','Sparks, Stardust and materials',`<ul><li><b>Sparks ✦</b>: the main currency, for food, decor, seeds, eggs and pairing.</li><li><b>Stardust ✧</b>: rare, for the magnifier, rare eggs and legendary pairs.</li><li><b>Materials</b> (berries, shells, glowshrooms, crystals) come from trips and the garden. Use them for treats and special decor.</li></ul>`],
+  ['home','Home level and rooms',`<p>Your home earns XP from decor, tasks, trips, and lumiks hatching and growing up.</p><ul><li>Lv 2 Lake · Lv 3 second room · Lv 4 Dark forest · Lv 6 Crystal caves and the garden · Lv 8 third room · Lv 9 two more beds · Lv 12 fourth room.</li><li>Each room fits 3 lumiks. When every room is full, eggs wait until you unlock a new one.</li></ul>`],
+  ['cozy','Cozy and decor',`<p>Every decor item adds <b>cozy points</b> to its room. Each point gives lumiks in that room +2% Sparks and slower Joy loss, up to +60%.</p><ul><li>Decor is bought for one room at a time.</li><li>Some items also need materials.</li><li>The Floor lamp glows at night.</li></ul>`],
+  ['garden','Garden',`<p>Unlocks at home Lv 6. Plant seeds, keep the soil wet, then harvest.</p><ul><li>Sunflower 2 h → Sparks · Berry bush 4 h → berries · Glowshroom 8 h → glowshrooms · Crystal bloom 12 h → crystals, chance of ✧.</li><li>Plants grow <b>only while the soil is wet</b>. Watering lasts 4 hours.</li></ul>`],
+  ['genes','Genes and rarity',`<p>Each lumik has an element, a pattern and ears, and can have a glow. Rare traits (Crystal, Shadow, Stars, Horns, Antennae, Glow) raise rarity: Common ×1 · Rare ×1.3 · Epic ×1.7 · Legendary ×2.5 Sparks.</p><p>Every trait also has a <b>hidden gene</b>. A common gene beats a rare one, so a rare trait shows only when both of a baby’s genes are rare. The magnifier (1 ✧) shows hidden genes. Mutations (8% per gene) can bring brand new traits.</p>`],
+  ['pairs','Pairing',`<ul><li>Pick two adults in Pairs: 40 ✦ (a legendary pair also costs 2 ✧).</li><li>The egg hatches in 30 minutes. The parents rest for 2 hours.</li><li>Babies get one gene from each parent, plus a small chance of mutation.</li><li>A legendary lumik from legendary parents continues a <b>pure line</b>. At line 4 it earns +25%.</li></ul>`],
+  ['elders','Elders and the Star garden',`<p>At 30 days old an adult becomes an <b>elder</b> (look for the glasses). Up to 3 elders give your home +5% Sparks each.</p><p>You can release an elder to the <b>Star garden</b>. It becomes a star in your window, your home gets +2% Sparks forever (up to 20 stars), and you get 2 ✧.</p>`],
+  ['tasks','Tasks and streak',`<ul><li>3 new tasks every day, 25 ✦ each. Finish all 3 to open the chest (40 ✦, 2 materials, 1 ✧).</li><li>Claim the streak reward daily. Day 7 gives an egg, every 30th day a rare egg.</li><li>Missing a day resets the streak unless you have a <b>freeze</b> (60 ✦, up to 2).</li></ul>`],
+  ['atlas','Atlas',`<p>Your collection. Each element + pattern combo is an entry: 20 in total. Shadow, Crystal and the Stars pattern are the hardest to find.</p>`]
+];
+const INTRO={
+  tasks:['Tasks','Every day you get 3 tasks and a chest for finishing them. Claim your streak reward daily. Missing a day resets it, unless you have a freeze.'],
+  decor:['Decor','Buy furniture for the room you pick. Each item adds cozy points: lumiks in cozy rooms earn more Sparks and stay happy longer. Your home level unlocks new rooms and places.'],
+  breed:['Pairs','Pick two adults to get an egg. Babies inherit one gene from each parent, so choose parents carefully to get rare traits.'],
+  atlas:['Atlas','Your collection of every element and pattern combo. Hatch and pair lumiks to fill it.'],
+  eco:['Stash','Your Sparks, Stardust and materials, your permanent bonuses and the game settings.'],
+  garden:['Garden','Plant seeds, keep the soil wet and harvest Sparks and materials. Plants grow only while watered, and watering lasts 4 hours.']
+};
+const intro=k=>S.seen&&S.seen[k]?'':`<div class="intro"><p><b>${INTRO[k][0]}</b>${INTRO[k][1]}</p><button class="btn sm" data-intro-ok="${k}">Got it</button></div>`;
+const qb=k=>`<button class="qbtn" data-guide="${k}" aria-label="Help">?</button>`;
+function closeTip(){const t=$('#tip');if(t)t.remove()}
+function showHelp(k){
+  const H=HELP[k];if(!H)return;closeTip();haptic('s');
+  const t=document.createElement('div');t.id='tip';t.className='tipcard';
+  t.innerHTML=`<div class="coach-in"><h5>${H[0]}</h5><p>${H[1]}</p><div class="coach-row"><button class="link" id="tipMore">Read more in the guide</button>${H[3]?`<button class="btn sm" id="tipAct">${H[3][0]}</button>`:`<button class="btn sm" id="tipOk">Got it</button>`}</div></div>`;
+  document.body.appendChild(t);
+  $('#tipMore').onclick=()=>{closeTip();openGuide(H[2])};
+  const a=$('#tipAct');if(a)a.onclick=()=>{closeTip();H[3][1]()};const o=$('#tipOk');if(o)o.onclick=closeTip;
+}
+function openGuide(id){
+  closeTip();haptic('s');let g=$('#guide');if(g)g.remove();
+  g=document.createElement('div');g.id='guide';g.className='sheet';
+  g.innerHTML=`<div class="sheet-in"><div class="sheet-hd"><b>Guide</b><button class="xbtn" id="gClose" aria-label="Close">×</button></div>
+    <div class="guide">${GUIDE.map(([k,t,b])=>`<details id="g-${k}"${k===id?' open':''}><summary>${t}</summary><div class="gb">${b}</div></details>`).join('')}</div>
+    <div class="wbtns"><button class="btn ghost" id="gWelcome">Show the welcome again</button></div></div>`;
+  document.body.appendChild(g);
+  $('#gClose').onclick=()=>g.remove();$('#gWelcome').onclick=()=>{g.remove();showWelcome()};
+  const d=$('#g-'+id);if(d&&id!=='start')setTimeout(()=>d.scrollIntoView({block:'start'}),30);
+}
+const petArt=(g,o={})=>petSVG({name:'lumik',genes:g,xp:100,joy:95,hunger:95,sleeping:o.sleep},{anim:1});
+const WEL=[
+  ()=>({t:'Welcome to Lumiki',art:`<div class="art">${petArt({el:'leaf',hue:155,pat:'stripes',ears:'antennae',glow:true,h:{el:'leaf',pat:'none',ears:'round'}})}</div>`,
+    p:'Lumiks are little glowing creatures. Two of them already live in your home, and an egg is about to hatch.'}),
+  ()=>({t:'Look after them',art:`<div class="art wide"><div>${petArt({el:'fire',hue:22,pat:'spots',ears:'pointy',h:{el:'fire',pat:'none',ears:'round'}})}</div><div>${petArt({el:'leaf',hue:150,pat:'stripes',ears:'antennae',h:{el:'leaf',pat:'none',ears:'round'}},{sleep:1})}</div></div>`,
+    pts:['<b>Feed</b> them so they don’t get hungry.','<b>Play</b> mini-games to earn Sparks ✦.','<b>Put them to bed</b> to restore Energy.','Happy, well-fed lumiks earn more.']}),
+  ()=>({t:'Grow your home',art:`<div class="art room">${roomSVG({wall:'w_mint',floor:'f_planks',rug:'rug_round',corner:'c_ficus',big:'big_books',pic:'pic_mount',bed:'bed_basket',shelf:'shelf_clock',toy:'toy_ball'})}</div>`,
+    pts:['<b>Decorate</b> rooms: cozy rooms earn more.','<b>Explore</b> places for Sparks and materials.','<b>Level up</b> your home to unlock rooms, places and a garden.','Do your <b>daily tasks</b> to keep your streak.']}),
+  ()=>({t:'Discover rare lumiks',art:`<div class="art wide"><div>${eggSVG({genes:{el:'crystal',hue:190}},{})}</div><div>${petArt({el:'shadow',hue:280,pat:'stars',ears:'horns',glow:true,h:{el:'shadow',pat:'stars',ears:'horns'}})}</div></div>`,
+    p:'Pair two adults to hatch a baby. Hidden genes make some babies rare, even legendary. Collect every kind in your Atlas.',
+    pts:['The game runs in <b>real time</b>, so come back a few times a day.','Tap <b>?</b> at the top anytime for the full guide, or tap any underlined label to see what it means.']})
+];
+function showWelcome(i=0){
+  let w=$('#welcome');if(!w){w=document.createElement('div');w.id='welcome';w.className='sheet';document.body.appendChild(w)}
+  const W=WEL[i](),last=i===WEL.length-1;
+  w.innerHTML=`<div class="sheet-in welcome">${W.art}<h2>${W.t}</h2>${W.p?`<p>${W.p}</p>`:''}${W.pts?`<div class="pts">${W.pts.map(x=>`<div>${x}</div>`).join('')}</div>`:''}
+    <div class="dots">${WEL.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</div>
+    <div class="wbtns">${i>0?'<button class="btn ghost" id="wBack">Back</button>':'<button class="btn ghost" id="wSkip">Skip</button>'}<button class="btn" id="wNext">${last?'Let’s go!':'Next'}</button></div></div>`;
+  const fin=()=>{w.remove();S.welcome=true;save();renderAll()};
+  $('#wNext').onclick=()=>{haptic('s');last?fin():showWelcome(i+1)};
+  const b=$('#wBack');if(b)b.onclick=()=>showWelcome(i-1);const sk=$('#wSkip');if(sk)sk.onclick=fin;
+}
+function setupHelp(){
+  document.addEventListener('click',e=>{
+    const ok=e.target.closest('[data-intro-ok]');if(ok){(S.seen=S.seen||{})[ok.dataset.introOk]=1;save();renderAll();return}
+    const g=e.target.closest('[data-guide]');if(g){e.preventDefault();openGuide(g.dataset.guide);return}
+    const h=e.target.closest('[data-help]');if(h){e.preventDefault();showHelp(h.dataset.help);return}
+    const t=$('#tip');if(t&&!t.contains(e.target))closeTip();
+  });
 }
 
 /* ================= render ================= */
@@ -1141,20 +1281,19 @@ function renderHab(){
   }
   const room=curRoom(),r=rarity(p.genes),c=comfort(room),here=petsIn(room);
   if(!here.includes(p)){
-    h.innerHTML=`<div class="room-head"><div class="rtitle">${esc(room.name)}<small>empty for now</small></div><div class="chips"><button class="chip comfy" id="comfy">Cozy ${c}</button></div></div>
+    h.innerHTML=`<div class="room-head"><div class="rtitle">${esc(room.name)}<small>empty for now</small></div><div class="chips"><button class="chip comfy" id="comfy" data-help="cozy">Cozy ${c}</button></div></div>
       ${roomSVG(room.decor,{subject:roomSubjects(room,{anim:1})})}<div class="status"><span>Move a lumik here with “Move”</span></div>`;
-    h.querySelectorAll('[data-pid]').forEach(g=>g.addEventListener('click',e=>tapPet(e,+g.dataset.pid)));$('#comfy').addEventListener('click',()=>setTab('decor'));return;
+    h.querySelectorAll('[data-pid]').forEach(g=>g.addEventListener('click',e=>tapPet(e,+g.dataset.pid)));return;
   }
   const mess=!room.tidyUntil&&here.length>0;
   const status=p.awayUntil?`${esc(p.name)} returns in <b data-until="${p.awayUntil}">${fmt(p.awayUntil-Date.now())}</b>`
     :p.sleeping?'Sleeping · restoring energy':p.hunger<20?'Hungry — feed them':p.joy<30?'Bored — earns 25% less, play with them':here.length>1?'Tap a lumik to select it':'Pet your lumik';
   h.innerHTML=`<div class="room-head"><button class="rtitle" id="pname" title="Rename">${esc(p.name)}<small>${STAGES[stage(p)]} · ${esc(room.name)}</small></button>
-    <div class="chips"><span class="chip r${r}">${RAR[r].n}</span>${(p.line||0)>=4?'<span class="chip gold">Pure line</span>':''}<button class="chip comfy" id="comfy">Cozy ${c}</button></div></div>
+    <div class="chips"><span class="chip r${r}" data-help="rarity" style="cursor:help">${RAR[r].n}</span>${(p.line||0)>=4?'<span class="chip gold" data-help="line" style="cursor:help">Pure line</span>':''}<button class="chip comfy" id="comfy" data-help="cozy">Cozy ${c}</button></div></div>
     ${roomSVG(room.decor,{subject:roomSubjects(room,{anim:1,marker:1}),dim:here.length&&here.every(x=>x.sleeping||x.awayUntil)&&here.some(x=>x.sleeping),mess})}
     <div class="status"><span>${status}</span></div>`;
   h.querySelectorAll('[data-pid]').forEach(g=>g.addEventListener('click',e=>tapPet(e,+g.dataset.pid)));
   $('#pname').addEventListener('click',rename);
-  $('#comfy').addEventListener('click',()=>setTab('decor'));
 }
 function renderStats(){
   const p=sel(),el=$('#stats');
@@ -1162,9 +1301,9 @@ function renderStats(){
   if(p.egg){el.innerHTML=`<div class="genes muted" style="grid-column:1/-1;font-weight:800;font-size:13px">The shell hints at the ${EL[p.genes.el].n} element. You’ll see what’s inside when it hatches.</div>`;return}
   const s=stage(p),lo=[0,30,80,80][s],hi=[30,80,80,80][s],xp=s>=2?100:(p.xp-lo)/(hi-lo)*100;
   el.innerHTML=[['h','Fullness',p.hunger],['j','Joy',p.joy],['e','Energy',p.energy]].map(([k,l,v])=>
-    `<div class="stat${v<25?' low':''}"><div class="row"><span>${l}</span><b id="n-${k}">${Math.round(v)}</b></div><div class="track"><div class="fill f-${k}" id="f-${k}" style="width:${v}%"></div></div></div>`).join('')+
-    `<div class="stat"><div class="row"><span>${s>=2?'XP':'To grow'}</span><b>${s>=2?p.xp:Math.max(0,hi-p.xp)}</b></div><div class="track"><div class="fill f-x" style="width:${xp}%"></div></div></div>
-     <div class="skills">${Object.entries(SKILLS).map(([k,n])=>`<div class="stat"><div class="row"><span>${n}</span><b>${p.skills[k]}</b></div><div class="track thin"><div class="fill f-a" style="width:${p.skills[k]}%"></div></div></div>`).join('')}</div>`;
+    `<div class="stat${v<25?' low':''}"><div class="row"><span class="hl" data-help="${k}">${l}</span><b id="n-${k}">${Math.round(v)}</b></div><div class="track"><div class="fill f-${k}" id="f-${k}" style="width:${v}%"></div></div></div>`).join('')+
+    `<div class="stat"><div class="row"><span class="hl" data-help="xp">${s>=2?'XP':'To grow'}</span><b>${s>=2?p.xp:Math.max(0,hi-p.xp)}</b></div><div class="track"><div class="fill f-x" style="width:${xp}%"></div></div></div>
+     <div class="skills">${Object.entries(SKILLS).map(([k,n])=>`<div class="stat"><div class="row"><span class="hl" data-help="${k}">${n}</span><b>${p.skills[k]}</b></div><div class="track thin"><div class="fill f-a" style="width:${p.skills[k]}%"></div></div></div>`).join('')}</div>`;
 }
 function renderActions(){
   const p=sel(),el=$('#actions');
@@ -1185,13 +1324,13 @@ function renderPanel(){
   const el=$('#panel'),p=sel();
   if(!panel||!p||p.egg||game){el.innerHTML='';return}
   let h='';
-  if(panel==='feed'){h='<h4>What to serve</h4>'+Object.entries(FOODS).map(([k,f])=>{const ok=canPay(f.cost);
+  if(panel==='feed'){h='<h4>What to serve</h4><p class="muted" style="margin:0 10px 4px;font-size:12.5px;font-weight:700">Food fills Fullness. Treats made from materials also give Joy or Energy.</p>'+Object.entries(FOODS).map(([k,f])=>{const ok=canPay(f.cost);
     return `<button class="opt${ok?'':' off'}" data-f="${k}"><span class="ico">${k==='basic'?`<svg viewBox="0 0 24 24"><path d="M3 12h18a9 6 0 0 1-18 0z" fill="#C99A6B"/><ellipse cx="12" cy="12" rx="9" ry="2.5" fill="#E7A52B"/></svg>`:`<svg viewBox="0 0 12 12">${matIcon(Object.keys(f.cost)[0]).replace(/<\/?svg[^>]*>/g,'')}</svg>`}</span>
       <span class="t"><b>${f.n}</b><span>${f.d}</span></span><span class="go">${costHtml(f.cost)}</span></button>`}).join('')}
-  if(panel==='play'){h='<h4>What to play</h4>'+Object.entries(GAMES).map(([k,g])=>{const ok=p.energy>=g.e&&!(k==='tidy'&&curRoom().tidyUntil>Date.now());
+  if(panel==='play'){h='<h4>What to play</h4><p class="muted" style="margin:0 10px 4px;font-size:12.5px;font-weight:700">Games use Energy, pay Sparks and train a skill. Rarer, happier lumiks in cozy rooms earn more.</p>'+Object.entries(GAMES).map(([k,g])=>{const ok=p.energy>=g.e&&!(k==='tidy'&&curRoom().tidyUntil>Date.now());
     return `<button class="opt${ok?'':' off'}" data-g="${k}"><span class="ico"><svg viewBox="0 0 24 24"><path d="${k==='firefly'?MEM_SYM[3][1]:k==='memory'?'M4 4h7v9H4zM13 11h7v9h-7z':k==='runner'?'M3 18h18M6 15c3-6 9-6 12 0':'M5 20h14M8 20V9h8v11M10 5h4v4h-4z'}" fill="none" stroke="#E5654F" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
       <span class="t"><b>${g.n}</b><span>${g.d}${g.skill?` (now ${p.skills[g.skill]})`:''}</span></span><span class="go">${k==='tidy'&&curRoom().tidyUntil>Date.now()?'already clean':`−${g.e} energy`}</span></button>`}).join('')}
-  if(panel==='trip'){h='<h4>Where to go</h4>'+Object.entries(LOCS).map(([k,L])=>{const why=tripCheck(p,k);
+  if(panel==='trip'){h='<h4>Where to go</h4><p class="muted" style="margin:0 10px 4px;font-size:12.5px;font-weight:700">Trips take real time, so you can close the game. Higher skills bring more loot. New places unlock as your home grows.</p>'+Object.entries(LOCS).map(([k,L])=>{const why=tripCheck(p,k);
     const loot=Object.keys(L.mats).map(m=>matIcon(m)).join('');
     return `<button class="opt${why?' off':''}" data-l="${k}"><span class="ico"><svg viewBox="0 0 24 24"><path d="${k==='meadow'?'M2 18c4-4 8-4 10 0 2-4 6-4 10 0':k==='lake'?'M3 14c3-2 6 2 9 0s6 2 9 0M3 18c3-2 6 2 9 0s6 2 9 0':k==='forest'?'M7 20V14M17 20V12M7 4l5 10H2zM17 3l5 9H12z':'M3 20l5-10 4 6 3-4 6 8z'}" fill="none" stroke="#5E9B4E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
       <span class="t"><b>${L.n} · ${fmtSec(L.sec)}</b><span>${why||`${L.coins[0]}–${L.coins[1]} ✦ ${loot}${L.dust?' · chance of ✧':''} · −${L.e} energy`}</span></span><span class="go">${why?'locked':'Go'}</span></button>`}).join('')}
@@ -1209,12 +1348,12 @@ function renderInfo(){
   if(!p||p.egg){el.innerHTML='';return}
   const g=p.genes,ageD=Math.floor((p.age||0)/86400),bonus=Math.round((earnMult(p)-1)*100);
   el.innerHTML=`<div class="info">
-    <div class="ln"><span>Genes</span><span>${EL[g.el].n} · ${PAT[g.pat].n} · ${EARS[g.ears].n}${g.glow?' · Glow':''}</span></div>
-    <div class="ln"><span>Hidden genes</span><span>${p.revealed?`${EL[g.h.el].n} · ${PAT[g.h.pat].n} · ${EARS[g.h.ears].n}`:`<button class="link" id="lupa">Use magnifier · ${COST.lupa} ✧</button>`}</span></div>
-    <div class="ln"><span>Generation</span><span>${p.gen||1}${p.parents?` · ${esc(p.parents.join(' + '))}`:''}${(p.line||0)>0?` · line ${p.line}/4`:''}</span></div>
-    <div class="ln"><span>Age</span><span>${ageD} d${stage(p)===2?` · elder in ${Math.max(0,30-ageD)} d`:''}</span></div>
-    <div class="ln"><span>Earnings</span><span>${bonus>=0?'+':''}${bonus}% Sparks</span></div>
-    <div class="ln"><span>${esc(roomOf(p).name)}</span><span><button class="link" id="move">Move</button></span></div>
+    <div class="ln"><span class="hl" data-help="genes">Genes</span><span>${EL[g.el].n} · ${PAT[g.pat].n} · ${EARS[g.ears].n}${g.glow?' · Glow':''}</span></div>
+    <div class="ln"><span class="hl" data-help="hidden">Hidden genes</span><span>${p.revealed?`${EL[g.h.el].n} · ${PAT[g.h.pat].n} · ${EARS[g.h.ears].n}`:`<button class="link" id="lupa">Use magnifier · ${COST.lupa} ✧</button>`}</span></div>
+    <div class="ln"><span class="hl" data-help="gen">Generation</span><span>${p.gen||1}${p.parents?` · ${esc(p.parents.join(' + '))}`:''}${(p.line||0)>0?` · line ${p.line}/4`:''}</span></div>
+    <div class="ln"><span class="hl" data-help="age">Age</span><span>${ageD} d${stage(p)===2?` · elder in ${Math.max(0,30-ageD)} d`:''}</span></div>
+    <div class="ln"><span class="hl" data-help="earnings">Earnings</span><span>${bonus>=0?'+':''}${bonus}% Sparks</span></div>
+    <div class="ln"><span class="hl" data-help="rooms">${esc(roomOf(p).name)}</span><span><button class="link" id="move">Move</button></span></div>
     ${stage(p)===3?`<div class="ln"><span>Elders give your home +5% earnings</span><span><button class="link" id="rel">To Star garden</button></span></div>`:''}
   </div>`;
   const l=$('#lupa');l&&l.addEventListener('click',useLupa);$('#move').addEventListener('click',movePet);
@@ -1233,7 +1372,7 @@ function renderTasks(){
   const days=[...Array(7)].map((_,i)=>{const n=nextN-pos+i,r=streakReward(n),isDone=n<nextN||(claimed&&n===st.n);
     return `<div class="day${isDone?' done':''}${!claimed&&n===nextN?' now':''}">Day ${n}<b>${rwLabel(r).replace(/ \+ /g,'<br>')}</b></div>`}).join('');
   const all=S.daily.quests.every(q=>q.claimed);
-  el.innerHTML=`<h3 class="sec">Daily streak</h3>
+  el.innerHTML=`${intro('tasks')}<h3 class="sec">Daily streak${qb('tasks')}</h3>
     <div class="streak"><div class="big"><b>${claimed?st.n:Math.max(0,gap===1||gap-1<=st.freezes?st.n:0)}</b>${(()=>{const n=claimed?st.n:Math.max(0,gap===1||gap-1<=st.freezes?st.n:0);return `<span>${n===1?'day':'days'} in a row${claimed?'':' · claim your reward'}</span>`})()}</div>
       <div class="days">${days}</div>
       ${claimed?`<div class="muted" style="font-weight:800;font-size:13px">Tomorrow: ${rwLabel(streakReward(st.n+1))}</div>`:`<button class="btn block" id="claimDay" style="margin-top:0">Claim today’s reward</button>`}
@@ -1252,12 +1391,12 @@ function renderTasks(){
 function renderDecor(){
   const el=$('#tab-decor'),r=curRoom(),l=houseLvl(),nx=XP_T[l+1],pr=nx?(S.house.xp-XP_T[l])/(nx-XP_T[l])*100:100;
   const c=comfort(r),bonus=Math.round(cozy(r)*100),list=Object.entries(ITEMS).filter(([,it])=>it.slot===decorCat);
-  el.innerHTML=`<h3 class="sec">Home</h3>
+  el.innerHTML=`${intro('decor')}<h3 class="sec">Home${qb('home')}</h3>
     <div class="house"><div class="hd"><b>Level ${l}</b><span class="muted" style="font-weight:800;font-size:13px">${nx?`${S.house.xp} / ${nx} XP`:'max'}</span></div>
       <div class="track"><div class="fill f-x" style="width:${pr}%"></div></div>
       <div class="unl">${Object.entries(UNLOCKS).map(([lv,n])=>`<span class="${l>=lv?'on':''}">Lv ${lv} · ${n}</span>`).join('')}<span>coming soon · greenhouse</span></div>
       <div class="muted" style="font-size:12.5px;font-weight:700;margin-top:8px">Your home earns XP from decor, tasks, trips, and lumiks growing up and hatching.</div></div>
-    <h3 class="sec">Furnishing</h3>
+    <h3 class="sec">Furnishing${qb('cozy')}</h3>
     <div class="rooms" id="decRooms">${roomChips(r.id)}</div>
     <div class="roomcard">${roomSVG(r.decor,{subject:roomSubjects(r,{}),mess:!r.tidyUntil&&petsIn(r).length>0})}</div>
     <div class="comfort"><b>${c}</b><div><strong>Cozy${r.tidyUntil>Date.now()?' (tidy +5)':''}</strong> — +${bonus}% Sparks for lumiks in this room, and joy drops ${bonus}% slower. Max +60%.</div></div>
@@ -1281,7 +1420,7 @@ function renderBreed(){
       <dt>Mutation</dt><dd>${MUT*100}% per gene</dd><dt>Glow</dt><dd>${a.genes.glow||b.genes.glow?'35%':'5%'}</dd><dt>Generation</dt><dd>${Math.max(a.gen||1,b.gen||1)+1}${leg?' · a legendary pair continues the line':''}</dd></dl>
       ${both?'':`<p class="muted" style="font-size:12.5px;font-weight:700;margin:10px 0 0">Rare traits hide: a common gene beats a rare one. Use the magnifier on both parents to see exact odds.</p>`}</div>`}
   const ok=a&&b&&!canBreed(a)&&!canBreed(b),legPair=a&&b&&rarity(a.genes)===3&&rarity(b.genes)===3;
-  el.innerHTML=`<h3 class="sec">Pairs</h3><p class="lead">Every lumik carries visible and hidden genes. A baby gets one gene from each parent. A common gene beats a rare one, so a rare trait shows only when both of the baby’s genes are rare.</p>
+  el.innerHTML=`${intro('breed')}<h3 class="sec">Pairs${qb('genes')}</h3><p class="lead">Every lumik carries visible and hidden genes. A baby gets one gene from each parent. A common gene beats a rare one, so a rare trait shows only when both of the baby’s genes are rare.</p>
     <div class="pair">${slot(a)}<span class="plus">+</span>${slot(b)}</div>${fc}
     <button class="btn block" id="doBreed" ${ok?'':'disabled'}>Pair up · ${COST.breed} ✦${legPair?' + 2 ✧':''}</button>
     <h3 class="sec">Choose parents</h3>
@@ -1297,19 +1436,19 @@ function renderAtlas(){
   let g=`<div></div>`+Object.values(PAT).map(p=>`<div class="h">${p.n}</div>`).join('');
   for(const e in EL){g+=`<div class="h rh">${EL[e].n}</div>`;for(const pt in PAT){const a=S.atlas[e+'-'+pt];
     g+=a?`<div class="cell" title="${EL[e].n}, ${PAT[pt].n}">${petSVG({genes:a,xp:100,joy:80,hunger:80},{})}</div>`:`<div class="cell unk" aria-label="Not found yet">?</div>`}}
-  el.innerHTML=`<h3 class="sec">Atlas · ${found} of ${tot}</h3><p class="lead">Every element + pattern combo is its own entry. The bottom rows and the Stars column are the rarest.</p>
+  el.innerHTML=`${intro('atlas')}<h3 class="sec">Atlas · ${found} of ${tot}${qb('atlas')}</h3><p class="lead">Every element + pattern combo is its own entry. The bottom rows and the Stars column are the rarest.</p>
     <div class="atlas">${g}</div>
     <h3 class="sec">Rarity and earnings multiplier</h3>
     <div class="legend">${RAR.map((r,i)=>`<div class="r${i}">${r.n}<b>×${r.m}</b></div>`).join('')}</div>`;
 }
 function renderEco(){
   const el=$('#tab-eco'),pct=S.earned?Math.round(S.spent/S.earned*100):0,el_=elders();
-  el.innerHTML=`<h3 class="sec">Stash</h3>
+  el.innerHTML=`${intro('eco')}<h3 class="sec">Stash${qb('money')}</h3>
     <div class="nums"><div class="num"><b>${S.coins}</b><span>✦ Sparks</span></div><div class="num"><b>${S.dust}</b><span>✧ Stardust</span></div><div class="num"><b>${houseLvl()}</b><span>home level</span></div></div>
-    <h3 class="sec">Materials</h3>
+    <h3 class="sec">Materials${qb('money')}</h3>
     <div class="mats">${Object.entries(MATS).map(([k,m])=>`<div>${matIcon(k)}${m.n}<b>${S.mats[k]||0}</b></div>`).join('')}</div>
     <p class="lead" style="margin-top:8px">Lumiks bring materials back from trips. Use them for treats and special decor.</p>
-    <h3 class="sec">Permanent bonuses</h3>
+    <h3 class="sec">Permanent bonuses${qb('elders')}</h3>
     <div class="info"><div class="ln"><span>Elders at home (up to 3)</span><span>${el_} · +${Math.min(3,el_)*5}%</span></div><div class="ln"><span>Stars in the garden (up to 20)</span><span>${S.stars.length} · +${Math.min(20,S.stars.length)*2}%</span></div></div>
     ${S.stars.length?`<h3 class="sec">Star garden</h3><div class="garden">${S.stars.map(s=>`<span style="border-color:hsl(${s.hue} 60% 60%)">✦ ${esc(s.name)}</span>`).join('')}</div>`:''}
     <h3 class="sec">Settings</h3>
@@ -1326,7 +1465,7 @@ function renderEco(){
     <button class="reset" id="reset">Start over</button>`;
   $('#setSnd').addEventListener('click',()=>{S.sound=S.sound===false;sfx('tick');done()});
   $('#setMus').addEventListener('click',()=>{S.music=!S.music;S.music?startMusic():stopMusic();done()});
-  $('#setTut').addEventListener('click',()=>{S.tut=0;setTab('home');done()});
+  $('#setTut').addEventListener('click',()=>{S.tut=0;S.seen={};S.welcome=false;setTab('home');done();showWelcome()});
   $('#spd')&&$('#spd').addEventListener('click',()=>{S.speed=GS()>1?1:60;toast(GS()>1?'Time sped up ×60 (new timers)':'Normal time');done()});
   $('#nextDay')&&$('#nextDay').addEventListener('click',()=>{S.dayOffset=(S.dayOffset||0)+1;S.pets.forEach(p=>{if(!p.egg)p.age=(p.age||0)+86400});ensureDay();toast('A new day has started');done()});
   const r=$('#reset');r.addEventListener('click',()=>{if(r.classList.contains('armed')){try{localStorage.removeItem(KEY)}catch(e){}S=initial();S.pets.forEach(p=>{if(!p.egg)discover(p)});ensureDay();breedSel=[];panel=null;toast('New game');setTab('home');done();return}
@@ -1368,7 +1507,8 @@ function start(data){
   S.stars.forEach(s=>{s.name=en(s.name)});
   if(!S.lastTick)S.lastTick=Date.now();
   if(!S.dev)S.speed=1;
-  if(S.tut===undefined)S.tut=TUT.length;if(S.sound===undefined)S.sound=true;if(S.music===undefined)S.music=true;ensureGarden();
+  if(S.tut===undefined)S.tut=TUT.length;S.seen=S.seen||{};
+  setupHelp();if(!S.welcome)showWelcome();if(S.sound===undefined)S.sound=true;if(S.music===undefined)S.music=true;ensureGarden();
   $('#snd').addEventListener('click',()=>{const on=S.sound!==false||S.music;S.sound=!on;S.music=!on;on?stopMusic():(ac(),startMusic());if(!on)sfx('chime');done()});
   document.addEventListener('pointerdown',()=>{ac();startMusic()});
   document.addEventListener('visibilitychange',()=>document.hidden?stopMusic():startMusic());
