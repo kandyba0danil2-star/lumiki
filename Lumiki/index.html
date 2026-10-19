@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Лумики</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Unbounded:wght@600;800&display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
+:root{padding-top:calc(var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px))}
+/* Layout: one phone-width column like a Telegram mini app — habitat card on top, care actions, pet strip, bottom tab bar */
+:root{
+  --bg:#E4ECE6; --surface:#F6F9F5; --sunk:#D3E0D7; --ink:#173233; --muted:#55706D; --line:#C3D4C9;
+  --spark:#E09B12; --spark-ink:#4A3200; --heart:#C23F69; --rare:#2F7FB8; --epic:#7C52C4; --ok:#2F8A5B;
+  --hab-a:#C9E3D5; --hab-b:#EEF5EF; --ground:#B4CFBF; --veil:rgba(238,245,239,.35);
+  --display:'Unbounded','Nunito',system-ui,sans-serif;
+  --body:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1A1B; --surface:#152728; --sunk:#0A1516; --ink:#E2EFEB; --muted:#8FAAA6; --line:#274241;
+    --spark:#F0B437; --spark-ink:#2A1C00; --heart:#E66A93; --rare:#5BA8E0; --epic:#A584E6; --ok:#5CC08B;
+    --hab-a:#17393A; --hab-b:#0F2223; --ground:#1D3D3C; --veil:rgba(10,24,25,.35); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1A1B; --surface:#152728; --sunk:#0A1516; --ink:#E2EFEB; --muted:#8FAAA6; --line:#274241;
+  --spark:#F0B437; --spark-ink:#2A1C00; --heart:#E66A93; --rare:#5BA8E0; --epic:#A584E6; --ok:#5CC08B;
+  --hab-a:#17393A; --hab-b:#0F2223; --ground:#1D3D3C; --veil:rgba(10,24,25,.35); color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid var(--rare);outline-offset:2px}
+#app{max-width:480px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 calc(84px + env(safe-area-inset-bottom,0px))}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding-block:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.01em}
+.brand small{display:block;font-family:var(--body);font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:-2px}
+.coins{background:var(--spark);color:var(--spark-ink);border-radius:999px;padding:7px 14px;font-weight:900;font-variant-numeric:tabular-nums;font-size:16px;display:flex;gap:6px;align-items:center}
+.coins.bump{animation:bump .35s ease}
+@keyframes bump{50%{transform:scale(1.12)}}
+
+.sec{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+.lead{color:var(--muted);margin:0 0 12px;max-width:60ch}
+
+/* Habitat */
+.hab{position:relative;border-radius:26px;background:linear-gradient(180deg,var(--hab-a),var(--hab-b));overflow:hidden;padding:14px 14px 12px;min-height:310px;display:flex;flex-direction:column}
+.hab-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pname{background:none;border:0;padding:0;font-family:var(--display);font-weight:800;font-size:19px;cursor:text;text-align:left}
+.pname-input{font-family:var(--display);font-weight:800;font-size:18px;width:11ch;border:0;border-bottom:2px solid var(--ink);background:transparent;color:var(--ink);padding:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:10.5px;font-weight:900;text-transform:uppercase;letter-spacing:.07em;padding:3px 9px;border-radius:999px;border:1.5px solid currentColor;white-space:nowrap}
+.chip.plain{color:var(--muted)}
+.r0{color:var(--muted)} .r1{color:var(--rare)} .r2{color:var(--epic)} .r3{color:var(--spark)}
+.petwrap{display:block;width:min(250px,78%);margin:4px auto 0;background:none;border:0;padding:0;cursor:pointer;flex:1}
+.petwrap.away{opacity:.35;filter:grayscale(.6)}
+svg.pet{width:100%;height:auto;display:block;overflow:visible}
+.ground{fill:var(--ground)}
+.bob{animation:bob 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes bob{50%{transform:translateY(-5px) scaleY(.985)}}
+.halo{animation:halo 2.8s ease-in-out infinite}
+@keyframes halo{50%{opacity:.45}}
+.wobble{animation:wob 1.1s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes wob{0%,60%,100%{transform:rotate(0)}70%{transform:rotate(-6deg)}85%{transform:rotate(5deg)}}
+.zz{fill:var(--muted);font-family:var(--display);font-weight:800}
+.status{text-align:center;font-weight:800;color:var(--muted);font-size:13px;min-height:1.4em;font-variant-numeric:tabular-nums}
+.heart{position:absolute;color:var(--heart);font-size:22px;pointer-events:none;animation:rise .9s ease-out forwards}
+@keyframes rise{to{transform:translateY(-60px) scale(1.3);opacity:0}}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:14px}
+.stat .row{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--muted)}
+.stat .row b{color:var(--ink);font-variant-numeric:tabular-nums}
+.stat.low .row span{color:var(--heart)}
+.track{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden;margin-top:4px}
+.fill{height:100%;border-radius:99px;transition:width .6s ease}
+.f-h{background:var(--spark)} .f-j{background:var(--heart)} .f-e{background:var(--rare)} .f-x{background:var(--ok)}
+
+/* Actions */
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.act{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:10px 4px 9px;font-weight:900;font-size:13.5px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.15}
+.act small{font-weight:700;font-size:11.5px;color:var(--muted)}
+.act:hover{border-color:var(--ink)}
+.act.off{opacity:.45}
+.act.wide{grid-column:1/-1;flex-direction:row;justify-content:center;gap:8px;padding:14px}
+.act.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.act.primary small{color:var(--bg);opacity:.75}
+.act:disabled{cursor:not-allowed;opacity:.45}
+
+/* Strip */
+.strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.card{flex:none;width:88px;background:var(--surface);border:2px solid transparent;border-radius:16px;padding:6px 6px 8px;cursor:pointer;text-align:center}
+.card[aria-pressed="true"]{border-color:var(--ink)}
+.card .nm{font-weight:900;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .st{font-size:11px;font-weight:800;color:var(--muted)}
+.card svg{height:64px}
+
+/* Mini game */
+.game{position:absolute;inset:0;background:var(--veil);z-index:2}
+.game-bar{position:absolute;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;font-weight:900;background:var(--surface);border-radius:12px;padding:6px 12px;font-variant-numeric:tabular-nums}
+.orb{position:absolute;width:46px;height:46px;margin:-23px 0 0 -23px;border:0;border-radius:50%;cursor:pointer;background:radial-gradient(circle,#FFFBE0 0 22%,#FFD84D 40%,rgba(255,200,40,.35) 58%,rgba(255,200,40,0) 70%);animation:orb 1.5s ease-in forwards}
+.orb.pop{animation:pop .25s ease-out forwards}
+@keyframes orb{0%{transform:scale(.3)}15%{transform:scale(1)}100%{transform:translateY(-26px) scale(.8);opacity:0}}
+@keyframes pop{to{transform:scale(1.8);opacity:0}}
+
+/* Breed */
+.pair{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.slot{aspect-ratio:1;max-width:100%;border-radius:20px;border:2px dashed var(--line);display:grid;place-items:center;color:var(--muted);font-weight:800;font-size:13px;text-align:center;padding:8px;background:var(--surface)}
+.slot.full{border-style:solid;border-color:var(--ink)}
+.slot svg{width:80%}
+.plus{font-family:var(--display);font-weight:800;font-size:22px;color:var(--muted)}
+.picks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.picks .card{width:auto}
+.picks .card:disabled{opacity:.45;cursor:not-allowed}
+.box{background:var(--surface);border-radius:18px;padding:14px 16px;margin-top:14px}
+.box dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:14px}
+.box dt{color:var(--muted);font-weight:800}
+.box dd{margin:0;font-weight:700}
+.shop{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.shop p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:14px;padding:12px 16px;font-weight:900;cursor:pointer;white-space:nowrap}
+.btn.block{width:100%;margin-top:12px;padding:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* Atlas */
+.atlas{display:grid;grid-template-columns:64px repeat(4,minmax(0,1fr));gap:6px;align-items:center}
+.atlas .h{font-size:10.5px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:center}
+.atlas .rh{text-align:left}
+.cell{aspect-ratio:1;max-width:100%;border-radius:12px;background:var(--surface);display:grid;place-items:center;overflow:hidden}
+.cell.unk{background:transparent;border:1.5px dashed var(--line);color:var(--line);font-family:var(--display);font-weight:800;font-size:18px}
+.cell svg{width:92%}
+.legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px}
+.legend div{background:var(--surface);border-radius:12px;padding:8px 12px;font-weight:800;font-size:13px;display:flex;justify-content:space-between}
+.legend b{font-variant-numeric:tabular-nums}
+
+/* Economy */
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.num{background:var(--surface);border-radius:16px;padding:12px}
+.num b{display:block;font-family:var(--display);font-weight:800;font-size:21px;font-variant-numeric:tabular-nums}
+.num span{font-size:12px;font-weight:800;color:var(--muted)}
+.burn{height:12px;border-radius:99px;background:var(--sunk);overflow:hidden;margin-top:12px}
+.burn div{height:100%;background:var(--heart)}
+.burnlbl{font-size:12.5px;font-weight:800;color:var(--muted);margin-top:6px}
+.flows{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.flows ul{margin:6px 0 0;padding-left:18px;font-size:14px}
+.flows h4{margin:0;font-size:13px;font-weight:900}
+.log{display:flex;flex-direction:column}
+.log div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.log b{font-variant-numeric:tabular-nums}
+.plus-n{color:var(--ok)} .minus-n{color:var(--heart)}
+.reset{background:none;border:0;color:var(--muted);font-weight:800;text-decoration:underline;cursor:pointer;padding:16px 0}
+.reset.armed{color:var(--heart)}
+
+/* Nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.nav-in{max-width:448px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.nav button{background:none;border:0;padding:9px 0 10px;font-size:11.5px;font-weight:900;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
+.nav button svg{width:22px;height:22px}
+.nav button[aria-current="page"]{color:var(--ink)}
+.nav button[aria-current="page"]::before{content:"";position:absolute;top:0;width:22px;height:3px;border-radius:0 0 3px 3px;background:var(--spark)}
+
+/* Toasts */
+#toasts{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 62px);z-index:9;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.toast{background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 16px;font-weight:800;font-size:14px;max-width:440px;box-shadow:0 6px 20px rgba(0,0,0,.18);animation:tin .25s ease-out}
+.toast.out{transition:opacity .3s,transform .3s;opacity:0;transform:translateY(-8px)}
+@keyframes tin{from{opacity:0;transform:translateY(-8px)}}
+
+@media (prefers-reduced-motion: reduce){
+  .bob,.halo,.wobble,.orb,.heart,.coins.bump,.toast{animation:none!important}
+  .orb{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header class="top">
+    <div class="brand">Лумики<small id="sub">ферма питомцев</small></div>
+    <div class="coins" id="coins" title="Искры — игровая валюта, будущий токен">✦ <span id="coinN">0</span></div>
+  </header>
+
+  <main>
+    <section id="tab-home">
+      <div class="hab" id="hab"></div>
+      <div class="stats" id="stats"></div>
+      <div class="actions" id="actions"></div>
+      <h3 class="sec">Ваши лумики</h3>
+      <div class="strip" id="strip"></div>
+    </section>
+
+    <section id="tab-breed" hidden></section>
+    <section id="tab-atlas" hidden></section>
+    <section id="tab-eco" hidden></section>
+  </main>
+</div>
+
+<nav class="nav" aria-label="Разделы">
+  <div class="nav-in">
+    <button data-tab="home"><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5" ry="4"/><circle cx="6" cy="10" r="2.2"/><circle cx="18" cy="10" r="2.2"/><circle cx="9.3" cy="6.3" r="2.1"/><circle cx="14.7" cy="6.3" r="2.1"/></svg>Питомник</button>
+    <button data-tab="breed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="13" rx="6.5" ry="8"/><path d="M8 12l2.5 2 2-3 2.5 2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Скрещивание</button>
+    <button data-tab="atlas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6" stroke-dasharray="2 2"/></svg>Атлас</button>
+    <button data-tab="eco"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 6.5l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="currentColor" stroke="none"/></svg>Экономика</button>
+  </div>
+</nav>
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+const EL={fire:{n:'Огонь',hue:18,w:25,r:0},water:{n:'Вода',hue:205,w:25,r:0},leaf:{n:'Лес',hue:118,w:25,r:0},crystal:{n:'Кристалл',hue:182,w:15,r:2},shadow:{n:'Тень',hue:275,w:10,r:3}};
+const PAT={none:{n:'Гладкий',w:35,r:0},spots:{n:'Пятна',w:25,r:1},stripes:{n:'Полосы',w:25,r:1},stars:{n:'Звёзды',w:15,r:3}};
+const EARS={round:{n:'Круглые уши',w:30,r:0},pointy:{n:'Острые уши',w:30,r:0},horns:{n:'Рожки',w:25,r:1},antennae:{n:'Усики',w:15,r:2}};
+const RAR=[{n:'Обычный',m:1},{n:'Редкий',m:1.3},{n:'Эпический',m:1.7},{n:'Легендарный',m:2.5}];
+const STAGES=['малыш','подросток','взрослый'];
+const COST={feed:3,breed:40,egg:60};
+const MUT=0.1, KEY='lumiki-v1';
+
+const $=s=>document.querySelector(s);
+const clamp=v=>Math.max(0,Math.min(100,v));
+const rand=(a,b)=>a+Math.random()*(b-a);
+const fmt=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const pickW=o=>{let t=0;for(const k in o)t+=o[k].w;let r=Math.random()*t;for(const k in o){r-=o[k].w;if(r<=0)return k}return Object.keys(o)[0]};
+const rarity=g=>{const s=EL[g.el].r+PAT[g.pat].r+EARS[g.ears].r+(g.glow?2:0);return s>=6?3:s>=4?2:s>=2?1:0};
+const stage=p=>p.xp>=80?2:p.xp>=30?1:0;
+const randName=()=>{const a=['Лу','Ми','Пи','Бо','Ку','Зи','Ра','Ню','То','Фе','Шу','Ко','Да','Тя'],b=['ша','мик','ка','пи','ня','ся','ки','ро','фа','ли','шик','ту'];return a[Math.random()*a.length|0]+b[Math.random()*b.length|0]};
+
+let S, tab='home', game=null, breedSel=[], svgSeq=0, lastPet=0;
+
+function initial(){
+  const now=Date.now();
+  return {coins:75,earned:75,spent:0,nextId:5,selected:1,lastTick:now,atlas:{},
+    log:[{n:75,why:'Стартовый подарок',t:now}],
+    pets:[
+      {id:1,name:'Искорка',genes:{el:'fire',hue:22,pat:'spots',ears:'pointy',glow:false},xp:95,hunger:62,joy:74,energy:80},
+      {id:2,name:'Мята',genes:{el:'leaf',hue:150,pat:'stripes',ears:'antennae',glow:false},xp:112,hunger:41,joy:55,energy:46},
+      {id:3,name:'Буся',genes:{el:'crystal',hue:190,pat:'none',ears:'round',glow:false},xp:14,hunger:70,joy:88,energy:90},
+      {id:4,egg:true,genes:{el:'water',hue:210,pat:'stars',ears:'round',glow:false},hatchAt:now+25000,from:'стартовое яйцо'}
+    ]};
+}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));return s&&s.pets?s:null}catch(e){return null}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const pet=id=>S.pets.find(p=>p.id===id);
+const sel=()=>pet(S.selected)||S.pets[0];
+
+function earn(n,why){if(n<=0)return;S.coins+=n;S.earned+=n;S.log.unshift({n,why,t:Date.now()});S.log.length=Math.min(S.log.length,30);bump()}
+function spend(n,why){if(S.coins<n){haptic('n','error');toast(`Не хватает Искр: нужно ${n} ✦`);return false}S.coins-=n;S.spent+=n;S.log.unshift({n:-n,why,t:Date.now()});S.log.length=Math.min(S.log.length,30);bump();return true}
+function bump(){const c=$('#coins');c.classList.remove('bump');void c.offsetWidth;c.classList.add('bump')}
+function addXp(p,n){const s=stage(p);p.xp+=n;if(stage(p)>s)toast(`${p.name} подрос — теперь ${STAGES[stage(p)]}!`)}
+function discover(p){const k=p.genes.el+'-'+p.genes.pat;if(!S.atlas[k]){S.atlas[k]={...p.genes};return true}return false}
+
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;$('#toasts').appendChild(t);
+  setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),320)},2600)}
+
+/* ---------- drawing ---------- */
+function petSVG(p,o={}){
+  const g=p.genes,sc=[0.62,0.8,1][o.stage??stage(p)],u='s'+(svgSeq++),sh=g.el==='shadow';
+  const body=`hsl(${g.hue} ${sh?26:58}% ${sh?40:68}%)`,dark=`hsl(${g.hue} ${sh?30:46}% ${sh?26:49}%)`,belly=`hsl(${g.hue} ${sh?30:66}% ${sh?60:87}%)`;
+  const acc=`hsl(${(g.hue+170)%360} 80% 64%)`, ink='#1B2627';
+  const sleeping=!!p.sleeping, sad=!sleeping&&(p.joy<30||p.hunger<20);
+  const mir=s=>`<g transform="translate(200 0) scale(-1 1)">${s}</g>`;
+  let ears='';
+  if(g.ears==='round'){const e=`<circle cx="62" cy="80" r="20" fill="${body}"/><circle cx="62" cy="80" r="10" fill="${belly}"/>`;ears=e+mir(e)}
+  if(g.ears==='pointy'){const e=`<path d="M52 100 L58 46 L90 78Z" fill="${body}"/><path d="M60 88 L62 62 L78 79Z" fill="${belly}"/>`;ears=e+mir(e)}
+  if(g.ears==='horns'){const e=`<path d="M76 78 Q60 52 70 32 Q80 54 90 72Z" fill="hsl(38 50% 84%)" stroke="hsl(30 30% 60%)" stroke-width="2"/>`;ears=e+mir(e)}
+  if(g.ears==='antennae'){const e=`<path d="M88 76 Q80 52 70 38" stroke="${dark}" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="69" cy="35" r="7" fill="${acc}"/>`;ears=e+mir(e)}
+  const tufts={
+    fire:`<path d="M100 76 C84 66 90 46 100 30 C102 44 116 48 110 62 C114 60 116 55 116 50 C126 62 118 78 100 76Z" fill="#F2832A"/><path d="M100 74 C92 68 96 58 100 50 C104 60 110 64 100 74Z" fill="#FFD25A"/>`,
+    water:`<path d="M100 30 C92 46 86 56 86 64 a14 14 0 0 0 28 0 C114 56 108 46 100 30Z" fill="hsl(203 78% 60%)"/><ellipse cx="95" cy="62" rx="3" ry="5" fill="#fff" opacity=".7"/>`,
+    leaf:`<path d="M100 76 L100 54" stroke="hsl(128 45% 34%)" stroke-width="4" stroke-linecap="round"/><path d="M100 58 C86 58 80 46 82 38 C94 38 100 48 100 58Z" fill="hsl(128 55% 46%)"/><path d="M100 54 C112 54 120 44 118 34 C106 36 100 44 100 54Z" fill="hsl(110 55% 52%)"/>`,
+    crystal:`<polygon points="100,26 112,50 104,76 96,76 88,50" fill="hsl(186 75% 78%)" stroke="hsl(190 60% 48%)" stroke-width="2.5" stroke-linejoin="round"/><polygon points="100,26 104,50 100,76 96,50" fill="#fff" opacity=".45"/>`,
+    shadow:`<path d="M88 76 q-10 -20 2 -38 q-2 18 8 30Z M100 72 q-4 -24 6 -42 q2 22 2 40Z M112 76 q8 -16 0 -32 q10 12 8 30Z" fill="hsl(275 45% 30%)" opacity=".85"/>`
+  };
+  const P={
+    none:'',
+    spots:`<g fill="${dark}" opacity=".5"><circle cx="58" cy="104" r="11"/><circle cx="142" cy="100" r="9"/><circle cx="150" cy="134" r="12"/><circle cx="52" cy="140" r="8"/><circle cx="118" cy="80" r="7"/></g>`,
+    stripes:`<g fill="${dark}" opacity=".45"><path d="M40 92 q16 6 22 22 l-8 4 q-6-14-20-18Z"/><path d="M160 92 q-16 6 -22 22 l8 4 q6-14 20-18Z"/><path d="M36 126 q16 2 24 14 l-6 6 q-8-10-22-12Z"/><path d="M164 126 q-16 2 -24 14 l6 6 q8-10 22-12Z"/><path d="M88 72 l4 16 h16 l4-16Z"/></g>`,
+    stars:`<g fill="${belly}">${[[56,100,7],[146,96,6],[150,136,7],[50,138,5],[122,78,5],[78,80,4]].map(([x,y,r])=>`<polygon points="${star(x,y,r)}"/>`).join('')}</g>`
+  };
+  const eyes=sleeping
+    ?`<path d="M71 116 Q80 123 89 116 M111 116 Q120 123 129 116" stroke="${ink}" stroke-width="3.5" fill="none" stroke-linecap="round"/>`
+    :`<ellipse cx="80" cy="113" rx="8" ry="10" fill="${ink}"/><ellipse cx="120" cy="113" rx="8" ry="10" fill="${ink}"/><circle cx="83" cy="109" r="3" fill="#fff"/><circle cx="123" cy="109" r="3" fill="#fff"/>`+
+      (sad?`<path d="M70 99 L88 103 M130 99 L112 103" stroke="${ink}" stroke-width="3" stroke-linecap="round"/>`:'');
+  const mouth=sleeping?`<ellipse cx="100" cy="134" rx="4" ry="3" fill="${ink}"/>`:sad
+    ?`<path d="M92 137 Q100 130 108 137" stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`
+    :`<path d="M92 131 Q100 140 108 131" stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  const zz=sleeping&&o.anim?`<text x="150" y="70" class="zz" font-size="22">z</text><text x="166" y="50" class="zz" font-size="15">z</text>`:'';
+  return `<svg class="pet" viewBox="0 0 200 200" role="img" aria-label="${p.name||'лумик'}">
+  <defs><clipPath id="${u}c"><ellipse cx="100" cy="122" rx="60" ry="52"/></clipPath>
+  <radialGradient id="${u}g"><stop offset=".35" stop-color="hsl(${g.hue} 95% 72%)" stop-opacity=".8"/><stop offset="1" stop-color="hsl(${g.hue} 95% 72%)" stop-opacity="0"/></radialGradient></defs>
+  <ellipse class="ground" cx="100" cy="181" rx="${50*sc}" ry="${7*sc+1}"/>
+  <g transform="translate(100 180) scale(${sc}) translate(-100 -180)"><g class="${o.anim&&!sleeping?'bob':''}">
+    ${g.glow?`<circle class="halo" cx="100" cy="112" r="96" fill="url(#${u}g)"/>`:''}
+    ${ears}${tufts[g.el]}
+    <ellipse cx="100" cy="122" rx="60" ry="52" fill="${body}"/>
+    <g clip-path="url(#${u}c)">${P[g.pat]}<ellipse cx="100" cy="150" rx="38" ry="28" fill="${belly}"/></g>
+    <ellipse cx="76" cy="172" rx="15" ry="8" fill="${dark}"/><ellipse cx="124" cy="172" rx="15" ry="8" fill="${dark}"/>
+    <ellipse cx="64" cy="128" rx="8" ry="5" fill="hsl(350 85% 72%)" opacity=".55"/><ellipse cx="136" cy="128" rx="8" ry="5" fill="hsl(350 85% 72%)" opacity=".55"/>
+    ${eyes}${mouth}
+  </g></g>${zz}</svg>`;
+}
+function star(cx,cy,r){let s=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;s.push((cx+Math.cos(a)*rr).toFixed(1)+','+(cy+Math.sin(a)*rr).toFixed(1))}return s.join(' ')}
+function eggSVG(p,o={}){
+  const g=p.genes,base=`hsl(${g.hue} 45% 86%)`,sp=`hsl(${EL[g.el].hue} 60% 58%)`;
+  const ready=p.ready;
+  return `<svg class="pet" viewBox="0 0 200 200" role="img" aria-label="Яйцо">
+  <ellipse class="ground" cx="100" cy="181" rx="40" ry="7"/>
+  <g class="${o.anim&&ready?'wobble':''}">
+    <path d="M100 40 C138 40 150 110 150 132 C150 162 128 178 100 178 C72 178 50 162 50 132 C50 110 62 40 100 40Z" fill="${base}" stroke="${sp}" stroke-width="2"/>
+    <circle cx="82" cy="92" r="9" fill="${sp}" opacity=".7"/><circle cx="118" cy="120" r="12" fill="${sp}" opacity=".6"/><circle cx="86" cy="148" r="7" fill="${sp}" opacity=".7"/><circle cx="124" cy="78" r="5" fill="${sp}" opacity=".6"/>
+    ${ready?`<path d="M62 110 L76 100 L86 114 L100 102 L112 116 L124 104 L138 112" stroke="#1B2627" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`:''}
+    <ellipse cx="82" cy="70" rx="7" ry="12" fill="#fff" opacity=".5" transform="rotate(20 82 70)"/>
+  </g></svg>`;
+}
+const drawAny=(p,o)=>p.egg?eggSVG(p,o):petSVG(p,o);
+
+/* ---------- loop ---------- */
+function tick(){
+  const now=Date.now();let dt=(now-S.lastTick)/1000;S.lastTick=now;dt=Math.min(Math.max(dt,0),7200);
+  let changed=false;
+  for(const p of S.pets){
+    if(p.egg){if(!p.ready&&now>=p.hatchAt){p.ready=true;changed=true;toast('Яйцо треснуло — можно вылуплять!')}continue}
+    if(p.restUntil&&now>=p.restUntil){p.restUntil=0;changed=true}
+    if(p.awayUntil){if(now>=p.awayUntil){finishTrip(p);changed=true}continue}
+    const m0=mood(p);
+    p.hunger=clamp(p.hunger-0.11*dt);
+    p.joy=clamp(p.joy-(p.hunger<20?0.2:0.07)*dt);
+    if(p.sleeping){p.energy=clamp(p.energy+0.8*dt);if(p.energy>=100){p.sleeping=false;changed=true;toast(`${p.name} выспался`)}}
+    else p.energy=clamp(p.energy-0.04*dt);
+    if(mood(p)!==m0)changed=true;
+  }
+  if(changed){save();renderAll()}else renderLive();
+}
+const mood=p=>p.sleeping?'z':(p.joy<30||p.hunger<20)?'sad':'ok';
+setInterval(save,5000);
+
+/* ---------- actions ---------- */
+function act(kind){
+  const p=sel();if(!p||game)return;
+  if(kind==='hatch'){if(!p.ready)return;p.egg=false;p.ready=false;p.name=randName();p.xp=0;p.hunger=70;p.joy=85;p.energy=90;
+    const isNew=discover(p);haptic('n','success');toast(`Вылупился ${p.name}! ${RAR[rarity(p.genes)].n}${isNew?' · новая запись в атласе':''}`);return done()}
+  if(p.awayUntil)return toast(`${p.name} ещё в экспедиции`);
+  if(kind==='feed'){if(p.hunger>=95)return toast(`${p.name} не голоден`);if(p.sleeping)return toast('Сначала разбудите');
+    if(!spend(COST.feed,`Корм для ${p.name}`))return;p.hunger=clamp(p.hunger+28);p.joy=clamp(p.joy+4);addXp(p,4);return done()}
+  if(kind==='sleep'){p.sleeping=!p.sleeping;toast(p.sleeping?`${p.name} уснул`:`${p.name} проснулся`);return done()}
+  if(kind==='play'){if(p.sleeping)return toast('Тсс, он спит');if(p.energy<20)return toast(`${p.name} устал — уложите спать`);return startGame(p)}
+  if(kind==='trip'){
+    if(stage(p)<2)return toast('В экспедицию ходят только взрослые');
+    if(p.sleeping)return toast('Сначала разбудите');
+    if(p.energy<30)return toast('Нужно хотя бы 30 энергии');
+    if(p.hunger<20)return toast('Покормите перед дорогой');
+    p.energy=clamp(p.energy-30);p.hunger=clamp(p.hunger-20);p.awayUntil=Date.now()+45000;toast(`${p.name} ушёл в экспедицию на 45 секунд`);return done()}
+}
+function done(){save();renderAll()}
+function finishTrip(p){
+  p.awayUntil=0;const n=Math.round(rand(12,24)*RAR[rarity(p.genes)].m);earn(n,`Экспедиция: ${p.name}`);addXp(p,10);
+  let msg=`${p.name} вернулся: +${n} ✦`;
+  if(Math.random()<0.2){addEgg(randomGenes(p.genes.el),30,'найдено в экспедиции');msg+=' и нашёл яйцо!'}
+  toast(msg);
+}
+function randomGenes(el){el=el||pickW(EL);return{el,hue:Math.round((EL[el].hue+rand(-30,30)+360)%360),pat:pickW(PAT),ears:pickW(EARS),glow:Math.random()<0.03}}
+function mixGenes(a,b){
+  const m=()=>Math.random()<MUT,pk=(x,y)=>Math.random()<.5?x:y;
+  const d=((b.hue-a.hue+540)%360)-180;
+  return{el:m()?pickW(EL):pk(a.el,b.el),pat:m()?pickW(PAT):pk(a.pat,b.pat),ears:m()?pickW(EARS):pk(a.ears,b.ears),
+    hue:Math.round((a.hue+d/2+rand(-25,25)+360)%360),glow:(a.glow||b.glow)?Math.random()<.35:Math.random()<.05};
+}
+function addEgg(genes,secs,from){const e={id:S.nextId++,egg:true,genes,hatchAt:Date.now()+secs*1000,from};S.pets.push(e);return e}
+
+function tapPet(e){
+  const p=sel();if(!p||p.egg||game)return;
+  if(p.egg)return;
+  if(p.awayUntil)return;
+  if(p.sleeping)return toast('Тсс, он спит');
+  const now=Date.now();if(now-lastPet<350)return;lastPet=now;
+  p.joy=clamp(p.joy+2);
+  const hab=$('#hab'),r=hab.getBoundingClientRect(),h=document.createElement('span');
+  h.className='heart';h.textContent='♥';h.style.left=(e.clientX-r.left-8||r.width/2)+'px';h.style.top=(e.clientY-r.top-20||r.height/2)+'px';
+  hab.appendChild(h);setTimeout(()=>h.remove(),900);renderLive();
+}
+
+/* ---------- mini game ---------- */
+function startGame(p){
+  p.energy=clamp(p.energy-20);p.hunger=clamp(p.hunger-5);
+  const ov=document.createElement('div');ov.className='game';
+  ov.innerHTML=`<div class="game-bar"><span>Лови светлячков!</span><span><b id="gT">10</b> с · поймано <b id="gC">0</b></span></div>`;
+  $('#hab').appendChild(ov);
+  game={p,caught:0,end:Date.now()+10000,ov};
+  game.spawn=setInterval(spawnOrb,480);spawnOrb();
+  game.timer=setInterval(()=>{const l=Math.ceil((game.end-Date.now())/1000);$('#gT').textContent=Math.max(0,l);if(l<=0)endGame()},150);
+  renderActions();
+}
+function spawnOrb(){
+  if(!game)return;const b=document.createElement('button');b.className='orb';b.setAttribute('aria-label','Светлячок');
+  b.style.left=rand(12,88)+'%';b.style.top=rand(26,86)+'%';
+  b.addEventListener('click',()=>{if(!game||b.disabled)return;b.disabled=true;game.caught++;haptic('i','light');$('#gC').textContent=game.caught;b.classList.add('pop');setTimeout(()=>b.remove(),250)});
+  game.ov.appendChild(b);setTimeout(()=>b.isConnected&&!b.disabled&&b.remove(),1500);
+}
+function endGame(){
+  clearInterval(game.spawn);clearInterval(game.timer);
+  const {p,caught,ov}=game;game=null;ov.remove();
+  const n=Math.round(caught*RAR[rarity(p.genes)].m*(p.hunger<20?.5:1));
+  p.joy=clamp(p.joy+20);addXp(p,6);earn(n,`Игра: ${p.name}`);
+  toast(`Поймано ${caught} — +${n} ✦${p.hunger<20?' (голодный — половина)':''}`);done();
+}
+
+/* ---------- breed / shop ---------- */
+function canBreed(p){if(p.egg)return'яйцо';if(stage(p)<2)return'ещё '+STAGES[stage(p)];if(p.awayUntil)return'в пути';if(p.restUntil>Date.now())return'отдыхает';return''}
+function toggleBreed(id){const i=breedSel.indexOf(id);if(i>=0)breedSel.splice(i,1);else{if(breedSel.length>=2)breedSel.shift();breedSel.push(id)}renderBreed()}
+function breed(){
+  const [a,b]=breedSel.map(pet);if(!a||!b||canBreed(a)||canBreed(b))return;
+  if(!spend(COST.breed,`Скрещивание ${a.name} + ${b.name}`))return;
+  const e=addEgg(mixGenes(a.genes,b.genes),30,`${a.name} + ${b.name}`);
+  a.restUntil=b.restUntil=Date.now()+60000;breedSel=[];S.selected=e.id;
+  haptic('n','success');toast('Появилось яйцо! Вылупится через 30 секунд');setTab('home');done();
+}
+function buyEgg(){if(!spend(COST.egg,'Яйцо из лавки'))return;const e=addEgg(randomGenes(),20,'лавка');S.selected=e.id;toast('Яйцо куплено');setTab('home');done()}
+
+/* ---------- render ---------- */
+function renderAll(){renderLive();if(!game){renderHab();renderActions()}renderStats();renderStrip();
+  if(tab==='breed')renderBreed();if(tab==='atlas')renderAtlas();if(tab==='eco')renderEco()}
+function renderLive(){
+  $('#coinN').textContent=S.coins;
+  const p=sel();
+  if(p&&!p.egg){setBar('h',p.hunger);setBar('j',p.joy);setBar('e',p.energy)}
+  document.querySelectorAll('[data-until]').forEach(el=>el.textContent=fmt(+el.dataset.until-Date.now()));
+}
+function setBar(k,v){const f=document.getElementById('f-'+k);if(!f)return;f.style.width=v+'%';document.getElementById('n-'+k).textContent=Math.round(v);f.closest('.stat').classList.toggle('low',v<25)}
+function renderHab(){
+  const p=sel(),h=$('#hab');
+  if(p.egg){
+    const r=rarity(p.genes);
+    h.innerHTML=`<div class="hab-meta"><span class="pname">Яйцо</span><div class="chips"><span class="chip plain">${p.from||''}</span></div></div>
+      <div class="petwrap">${eggSVG(p,{anim:1})}</div>
+      <div class="status">${p.ready?'Готово! Нажмите «Вылупить»':`Вылупится через <span data-until="${p.hatchAt}">${fmt(p.hatchAt-Date.now())}</span>`}</div>`;
+    return;
+  }
+  const r=rarity(p.genes);
+  const status=p.awayUntil?`В экспедиции · вернётся через <span data-until="${p.awayUntil}">${fmt(p.awayUntil-Date.now())}</span>`
+    :p.sleeping?'Спит · энергия восстанавливается':p.hunger<20?'Голоден — покормите':p.joy<30?'Скучает — поиграйте с ним':'Погладьте лумика';
+  h.innerHTML=`<div class="hab-meta"><button class="pname" id="pname" title="Переименовать">${esc(p.name)}</button>
+    <div class="chips"><span class="chip r${r}">${RAR[r].n}</span><span class="chip plain">${STAGES[stage(p)]}</span></div></div>
+    <button class="petwrap${p.awayUntil?' away':''}" id="petTap" aria-label="Погладить ${esc(p.name)}">${petSVG(p,{anim:1})}</button>
+    <div class="status">${status}</div>`;
+  $('#petTap').addEventListener('click',tapPet);
+  $('#pname').addEventListener('click',rename);
+}
+function renderStats(){
+  const p=sel(),el=$('#stats');
+  if(p.egg){const g=p.genes;el.innerHTML=`<div class="stat" style="grid-column:1/-1"><div class="row"><span>Что внутри — узнаете, когда вылупится. Стихия по скорлупе: ${EL[g.el].n.toLowerCase()}?</span></div></div>`;return}
+  const s=stage(p),lo=[0,30,80][s],hi=[30,80,80][s],xp=s===2?100:(p.xp-lo)/(hi-lo)*100;
+  const g=p.genes;
+  el.innerHTML=[['h','Сытость',p.hunger],['j','Радость',p.joy],['e','Энергия',p.energy]].map(([k,l,v])=>
+    `<div class="stat${v<25?' low':''}"><div class="row"><span>${l}</span><b id="n-${k}">${Math.round(v)}</b></div><div class="track"><div class="fill f-${k}" id="f-${k}" style="width:${v}%"></div></div></div>`).join('')+
+    `<div class="stat"><div class="row"><span>${s===2?'Опыт':'До роста'}</span><b>${s===2?p.xp:Math.max(0,hi-p.xp)}</b></div><div class="track"><div class="fill f-x" style="width:${xp}%"></div></div></div>
+     <div class="stat" style="grid-column:1/-1"><div class="row"><span>Гены: ${EL[g.el].n} · ${PAT[g.pat].n} · ${EARS[g.ears].n}${g.glow?' · Свечение':''}</span><span>×${RAR[rarity(g)].m} к добыче</span></div></div>`;
+}
+function renderActions(){
+  const p=sel(),el=$('#actions');
+  if(game){el.innerHTML=`<button class="act wide" disabled>Идёт игра…</button>`;return}
+  if(p.egg){el.innerHTML=`<button class="act wide primary" data-a="hatch" ${p.ready?'':'disabled'}>${p.ready?'Вылупить':'Яйцо ещё греется'}</button>`}
+  else{
+    const away=!!p.awayUntil,adult=stage(p)===2;
+    const B=(a,l,s,off)=>`<button class="act${off?' off':''}" data-a="${a}">${l}<small>${s}</small></button>`;
+    el.innerHTML=B('feed','Покормить',`${COST.feed} ✦`,away||p.sleeping||S.coins<COST.feed)+
+      B('play','Играть','−20 энергии',away||p.sleeping||p.energy<20)+
+      B('sleep',p.sleeping?'Разбудить':'Спать',p.sleeping?'хватит':'восст. энергию',away)+
+      B('trip','Поход',adult?'45 сек':'со взрослым',away||!adult||p.sleeping||p.energy<30||p.hunger<20);
+  }
+  el.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>act(b.dataset.a)));
+}
+function stripStatus(p){if(p.egg)return p.ready?'готово!':'яйцо';if(p.awayUntil)return'в походе';if(p.sleeping)return'спит';if(p.hunger<20)return'голоден';if(p.joy<30)return'скучает';return STAGES[stage(p)]}
+function renderStrip(){
+  const el=$('#strip');
+  el.innerHTML=S.pets.map(p=>`<button class="card" aria-pressed="${p.id===S.selected}" data-id="${p.id}">${drawAny(p,{})}<div class="nm">${p.egg?'Яйцо':esc(p.name)}</div><div class="st">${stripStatus(p)}</div></button>`).join('');
+  el.querySelectorAll('.card').forEach(b=>b.addEventListener('click',()=>{if(game)return;S.selected=+b.dataset.id;done()}));
+}
+function renderBreed(){
+  const el=$('#tab-breed'),[a,b]=breedSel.map(pet);
+  const slot=p=>p?`<div class="slot full">${petSVG(p,{})}</div>`:`<div class="slot">Выберите взрослого</div>`;
+  const cand=S.pets.filter(p=>!p.egg);
+  let fc='';
+  if(a&&b){const ga=a.genes,gb=b.genes,u=(x,y,T)=>[...new Set([T[x].n,T[y].n])].join(' или ');
+    fc=`<div class="box"><dl><dt>Стихия</dt><dd>${u(ga.el,gb.el,EL)}</dd><dt>Узор</dt><dd>${u(ga.pat,gb.pat,PAT)}</dd><dt>Уши</dt><dd>${u(ga.ears,gb.ears,EARS)}</dd>
+      <dt>Мутация</dt><dd>${MUT*100}% на каждый признак — так появляются Кристалл, Тень, Звёзды</dd><dt>Свечение</dt><dd>${ga.glow||gb.glow?'35%':'5%'}</dd></dl></div>`}
+  const ok=a&&b&&!canBreed(a)&&!canBreed(b);
+  el.innerHTML=`<h3 class="sec">Скрещивание</h3><p class="lead">Два взрослых лумика дают яйцо. Признаки берутся от родителей, но иногда случается мутация — так рождаются редкие и легендарные лумики. Редкость умножает добычу Искр.</p>
+    <div class="pair">${slot(a)}<span class="plus">+</span>${slot(b)}</div>${fc}
+    <button class="btn block" id="doBreed" ${ok?'':'disabled'}>Скрестить · ${COST.breed} ✦</button>
+    <h3 class="sec">Кого выбрать</h3>
+    <div class="picks">${cand.map(p=>{const why=canBreed(p);return`<button class="card" data-id="${p.id}" aria-pressed="${breedSel.includes(p.id)}" ${why?'disabled':''}>${petSVG(p,{})}<div class="nm">${esc(p.name)}</div><div class="st">${why==='отдыхает'?`отдых <span data-until="${p.restUntil}">${fmt(p.restUntil-Date.now())}</span>`:why||RAR[rarity(p.genes)].n}</div></button>`}).join('')}</div>
+    <h3 class="sec">Лавка</h3>
+    <div class="box shop"><div><b>Случайное яйцо</b><p>Обычно обычный лумик, но может повезти. Вылупится через 20 секунд.</p></div><button class="btn" id="buyEgg">${COST.egg} ✦</button></div>`;
+  el.querySelectorAll('.picks .card').forEach(c=>c.addEventListener('click',()=>toggleBreed(+c.dataset.id)));
+  $('#doBreed').addEventListener('click',breed);$('#buyEgg').addEventListener('click',buyEgg);
+}
+function renderAtlas(){
+  const el=$('#tab-atlas'),found=Object.keys(S.atlas).length,tot=Object.keys(EL).length*Object.keys(PAT).length;
+  let g=`<div></div>`+Object.values(PAT).map(p=>`<div class="h">${p.n}</div>`).join('');
+  for(const e in EL){g+=`<div class="h rh">${EL[e].n}</div>`;for(const pt in PAT){const a=S.atlas[e+'-'+pt];
+    g+=a?`<div class="cell" title="${EL[e].n}, ${PAT[pt].n}">${petSVG({genes:a,xp:100,joy:80,hunger:80},{})}</div>`:`<div class="cell unk" aria-label="Не открыт">?</div>`}}
+  el.innerHTML=`<h3 class="sec">Атлас · ${found} из ${tot}</h3><p class="lead">Каждая пара «стихия + узор» — отдельная запись. Нижние строки и колонка «Звёзды» встречаются реже всего.</p>
+    <div class="atlas">${g}</div>
+    <h3 class="sec">Редкость и множитель добычи</h3>
+    <div class="legend">${RAR.map((r,i)=>`<div class="r${i}">${r.n}<b>×${r.m}</b></div>`).join('')}</div>`;
+}
+function renderEco(){
+  const el=$('#tab-eco'),pct=S.earned?Math.round(S.spent/S.earned*100):0;
+  el.innerHTML=`<h3 class="sec">Экономика Искр</h3>
+    <div class="nums"><div class="num"><b>${S.earned}</b><span>добыто</span></div><div class="num"><b>${S.spent}</b><span>сожжено</span></div><div class="num"><b>${S.coins}</b><span>на руках</span></div></div>
+    <div class="burn"><div style="width:${Math.min(100,pct)}%"></div></div><div class="burnlbl">Сожжено ${pct}% от всего добытого</div>
+    <h3 class="sec">Как это станет монетой</h3>
+    <p class="lead">Сейчас Искры — обычные игровые очки. Когда у игры будут постоянные игроки, их можно перевести в токен на TON. Всё, что игроки тратят, сгорает: чем больше трат внутри игры, тем меньше монет продают и тем стабильнее цена.</p>
+    <div class="flows"><div class="box" style="margin:0"><h4 class="plus-n">Откуда приходят</h4><ul><li>Мини-игра со светлячками</li><li>Экспедиции взрослых</li><li>Редкость умножает добычу</li></ul></div>
+    <div class="box" style="margin:0"><h4 class="minus-n">Куда сгорают</h4><ul><li>Корм — ${COST.feed} ✦</li><li>Скрещивание — ${COST.breed} ✦</li><li>Яйца в лавке — ${COST.egg} ✦</li></ul></div></div>
+    <h3 class="sec">Последние операции</h3>
+    <div class="log">${S.log.slice(0,10).map(l=>`<div><span>${esc(l.why)}</span><b class="${l.n>0?'plus-n':'minus-n'}">${l.n>0?'+':''}${l.n} ✦</b></div>`).join('')}</div>
+    <button class="reset" id="reset">Начать заново</button>`;
+  const r=$('#reset');r.addEventListener('click',()=>{if(r.classList.contains('armed')){try{localStorage.removeItem(KEY)}catch(e){}S=initial();breedSel=[];toast('Новая игра');setTab('home');done();return}
+    r.classList.add('armed');r.textContent='Весь прогресс пропадёт. Нажмите ещё раз';setTimeout(()=>{if(r.isConnected){r.classList.remove('armed');r.textContent='Начать заново'}},4000)});
+}
+function rename(){
+  const p=sel(),b=$('#pname'),i=document.createElement('input');i.className='pname-input';i.id='pname-input';i.value=p.name;i.maxLength=14;
+  b.replaceWith(i);i.focus();i.select();
+  const fin=()=>{const v=i.value.trim();if(v)p.name=v;done()};
+  i.addEventListener('blur',fin);i.addEventListener('keydown',e=>{if(e.key==='Enter')i.blur()});
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function setTab(t){tab=t;['home','breed','atlas','eco'].forEach(k=>$('#tab-'+k).hidden=k!==t);
+  document.querySelectorAll('.nav button').forEach(b=>b.dataset.tab===t?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
+  renderAll();window.scrollTo(0,0)}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+
+
+/* ---------- Telegram ---------- */
+const TG=window.Telegram&&Telegram.WebApp&&Telegram.WebApp.initData?Telegram.WebApp:null;
+const haptic=(k,v)=>{try{TG&&(k==='n'?TG.HapticFeedback.notificationOccurred(v):TG.HapticFeedback.impactOccurred(v))}catch(e){}};
+function tgInit(){
+  if(!TG)return;
+  try{TG.ready();TG.expand();TG.disableVerticalSwipes&&TG.disableVerticalSwipes()}catch(e){}
+  const apply=()=>{document.documentElement.setAttribute('data-theme',TG.colorScheme==='dark'?'dark':'light');
+    const bg=getComputedStyle(document.body).backgroundColor;try{TG.setHeaderColor(bg);TG.setBackgroundColor(bg);TG.setBottomBarColor&&TG.setBottomBarColor(bg)}catch(e){}};
+  apply();TG.onEvent('themeChanged',apply);
+  const u=TG.initDataUnsafe&&TG.initDataUnsafe.user;if(u&&u.first_name)$('#sub').textContent='питомник · '+u.first_name;
+}
+function start(data){
+  tgInit();
+  S=(data&&data.S)||load()||initial();
+  S.pets.forEach(p=>{if(!p.egg)discover(p)});
+  if(!S.lastTick)S.lastTick=Date.now();
+  tick();setTab('home');setInterval(tick,1000);
+  window.claude?.hot?.snapshot?.(()=>({S}));
+}
+window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+</script>
+</body>
+</html>
