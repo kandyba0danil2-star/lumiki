@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<title>Лумики</title>
+<title>Lumiki</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Pangolin&display=swap">
@@ -291,8 +291,8 @@ svg.pet{overflow:visible}
 <body>
 <div id="app">
   <header class="top">
-    <div class="brand">Лумики<small id="sub">уютные питомцы</small></div>
-    <div class="wallet"><span class="speed" id="speedTag" hidden>×60</span><div class="coins dust" title="Звёздная пыль — редкая валюта"><i>✧</i><span id="dustN">0</span></div><div class="coins" id="coins" title="Искры — основная валюта"><i>✦</i><span id="coinN">0</span></div></div>
+    <div class="brand">Lumiki<small id="sub">cozy pets</small></div>
+    <div class="wallet"><span class="speed" id="speedTag" hidden>×60</span><div class="coins dust" title="Stardust — rare currency"><i>✧</i><span id="dustN">0</span></div><div class="coins" id="coins" title="Sparks — main currency"><i>✦</i><span id="coinN">0</span></div></div>
   </header>
 
   <main>
@@ -303,7 +303,7 @@ svg.pet{overflow:visible}
       <div class="actions" id="actions"></div>
       <div id="panel"></div>
       <div id="info"></div>
-      <h3 class="sec">Ваши лумики</h3>
+      <h3 class="sec">Your lumiks</h3>
       <div class="strip" id="strip"></div>
     </section>
     <section id="tab-tasks" hidden></section>
@@ -314,85 +314,85 @@ svg.pet{overflow:visible}
   </main>
 </div>
 
-<nav class="nav" aria-label="Разделы">
+<nav class="nav" aria-label="Sections">
   <div class="nav-in">
-    <button data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg>Дом</button>
-    <button data-tab="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4" width="15" height="17" rx="2.5"/><path d="M8.5 9.5l1.5 1.5 3-3M8.5 15.5h7"/></svg>Дела<span class="dot" id="taskDot" hidden></span></button>
-    <button data-tab="decor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 3h8l3 7H5z"/><path d="M12 10v8"/><path d="M8 21h8"/></svg>Декор</button>
-    <button data-tab="breed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="13" rx="6.5" ry="8"/><path d="M8 12l2.5 2 2-3 2.5 2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Пары</button>
-    <button data-tab="atlas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5c-.8 0-1.5-.7-1.5-1.5z"/><path d="M13 4h5.5c.8 0 1.5.7 1.5 1.5v13c0 .8-.7 1.5-1.5 1.5H13z"/></svg>Атлас</button>
-    <button data-tab="eco"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 6.5l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="currentColor" stroke="none"/></svg>Запасы</button>
+    <button data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg>Home</button>
+    <button data-tab="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4" width="15" height="17" rx="2.5"/><path d="M8.5 9.5l1.5 1.5 3-3M8.5 15.5h7"/></svg>Tasks<span class="dot" id="taskDot" hidden></span></button>
+    <button data-tab="decor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 3h8l3 7H5z"/><path d="M12 10v8"/><path d="M8 21h8"/></svg>Decor</button>
+    <button data-tab="breed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="13" rx="6.5" ry="8"/><path d="M8 12l2.5 2 2-3 2.5 2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Pairs</button>
+    <button data-tab="atlas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5c-.8 0-1.5-.7-1.5-1.5z"/><path d="M13 4h5.5c.8 0 1.5.7 1.5 1.5v13c0 .8-.7 1.5-1.5 1.5H13z"/></svg>Atlas</button>
+    <button data-tab="eco"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 6.5l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="currentColor" stroke="none"/></svg>Stash</button>
   </div>
 </nav>
 <div id="toasts" aria-live="polite"></div>
 
 <script>
 /* ================= catalogs ================= */
-const EL={fire:{n:'Огонь',hue:18,w:25,r:0},water:{n:'Вода',hue:205,w:25,r:0},leaf:{n:'Лес',hue:118,w:25,r:0},crystal:{n:'Кристалл',hue:182,w:15,r:2},shadow:{n:'Тень',hue:275,w:10,r:3}};
-const PAT={none:{n:'Гладкий',w:35,r:0},spots:{n:'Пятна',w:25,r:1},stripes:{n:'Полосы',w:25,r:1},stars:{n:'Звёзды',w:15,r:3}};
-const EARS={round:{n:'Круглые уши',w:30,r:0},pointy:{n:'Острые уши',w:30,r:0},horns:{n:'Рожки',w:25,r:1},antennae:{n:'Усики',w:15,r:2}};
+const EL={fire:{n:'Fire',hue:18,w:25,r:0},water:{n:'Water',hue:205,w:25,r:0},leaf:{n:'Leaf',hue:118,w:25,r:0},crystal:{n:'Crystal',hue:182,w:15,r:2},shadow:{n:'Shadow',hue:275,w:10,r:3}};
+const PAT={none:{n:'Plain',w:35,r:0},spots:{n:'Spots',w:25,r:1},stripes:{n:'Stripes',w:25,r:1},stars:{n:'Stars',w:15,r:3}};
+const EARS={round:{n:'Round ears',w:30,r:0},pointy:{n:'Pointy ears',w:30,r:0},horns:{n:'Horns',w:25,r:1},antennae:{n:'Antennae',w:15,r:2}};
 const TR={el:EL,pat:PAT,ears:EARS};
-const RAR=[{n:'Обычный',m:1},{n:'Редкий',m:1.3},{n:'Эпический',m:1.7},{n:'Легендарный',m:2.5}];
-const STAGES=['малыш','подросток','взрослый','старейшина'];
+const RAR=[{n:'Common',m:1},{n:'Rare',m:1.3},{n:'Epic',m:1.7},{n:'Legendary',m:2.5}];
+const STAGES=['baby','teen','adult','elder'];
 const ELDER_AGE=30*86400, ROOM_CAP=3, MUT=0.08, KEY='lumiki-v1';
 const COST={breed:40,egg:60,rareEgg:3,lupa:1,freeze:60};
-const SKILLS={agi:'Ловкость',wit:'Смекалка',sta:'Выносливость'};
+const SKILLS={agi:'Agility',wit:'Wits',sta:'Stamina'};
 
-const MATS={berry:{n:'Ягоды',c:'#C2416B'},shell:{n:'Ракушки',c:'#F0B48E'},mush:{n:'Светогрибы',c:'#8A7FD6'},crystal:{n:'Кристаллы',c:'#4FC3D6'}};
+const MATS={berry:{n:'Berries',c:'#C2416B'},shell:{n:'Shells',c:'#F0B48E'},mush:{n:'Glowshrooms',c:'#8A7FD6'},crystal:{n:'Crystals',c:'#4FC3D6'}};
 const FOODS={
-  basic:{n:'Корм',d:'+28 сытости',cost:{coins:3},h:28,j:4,e:0,xp:4},
-  pie:{n:'Ягодный пирог',d:'+45 сытости, +20 радости',cost:{berry:3},h:45,j:20,e:0,xp:8},
-  soup:{n:'Грибной суп',d:'+30 сытости, +35 энергии',cost:{mush:2},h:30,j:5,e:35,xp:8},
-  candy:{n:'Кристальный леденец',d:'+30 радости, +50 энергии',cost:{crystal:1},h:10,j:30,e:50,xp:12}
+  basic:{n:'Food',d:'+28 fullness',cost:{coins:3},h:28,j:4,e:0,xp:4},
+  pie:{n:'Berry pie',d:'+45 fullness, +20 joy',cost:{berry:3},h:45,j:20,e:0,xp:8},
+  soup:{n:'Mushroom soup',d:'+30 fullness, +35 energy',cost:{mush:2},h:30,j:5,e:35,xp:8},
+  candy:{n:'Crystal candy',d:'+30 joy, +50 energy',cost:{crystal:1},h:10,j:30,e:50,xp:12}
 };
 const GAMES={
-  firefly:{n:'Лови светлячков',d:'10 секунд · ловкость',skill:'agi',e:20},
-  memory:{n:'Найди пару',d:'40 секунд · смекалка',skill:'wit',e:20},
-  runner:{n:'Перепрыгни лужи',d:'до 25 секунд · выносливость',skill:'sta',e:20},
-  tidy:{n:'Прибери комнату',d:'+5 уюта на сутки',skill:null,e:10}
+  firefly:{n:'Catch fireflies',d:'10 seconds · agility',skill:'agi',e:20},
+  memory:{n:'Find the pairs',d:'40 seconds · wits',skill:'wit',e:20},
+  runner:{n:'Puddle jump',d:'up to 25 seconds · stamina',skill:'sta',e:20},
+  tidy:{n:'Tidy the room',d:'+5 cozy for a day',skill:null,e:10}
 };
 const LOCS={
-  meadow:{n:'Луг',sec:900,lvl:1,minStage:1,skill:null,req:0,e:15,h:10,coins:[10,20],mats:{berry:[2,4]},egg:.05,eggEl:null,dust:0,xp:5},
-  lake:{n:'Озеро',sec:3600,lvl:2,minStage:2,skill:'sta',req:15,e:25,h:15,coins:[25,45],mats:{shell:[2,3],berry:[0,1]},egg:.1,eggEl:'water',dust:0,xp:10},
-  forest:{n:'Тёмный лес',sec:14400,lvl:4,minStage:2,skill:'wit',req:25,e:35,h:25,coins:[60,100],mats:{mush:[2,3]},egg:.15,eggEl:'shadow',dust:.05,xp:20},
-  caves:{n:'Кристальные пещеры',sec:28800,lvl:6,minStage:2,skill:'agi',req:35,e:45,h:30,coins:[120,180],mats:{crystal:[1,2]},egg:.2,eggEl:'crystal',dust:.15,xp:40}
+  meadow:{n:'Meadow',sec:900,lvl:1,minStage:1,skill:null,req:0,e:15,h:10,coins:[10,20],mats:{berry:[2,4]},egg:.05,eggEl:null,dust:0,xp:5},
+  lake:{n:'Lake',sec:3600,lvl:2,minStage:2,skill:'sta',req:15,e:25,h:15,coins:[25,45],mats:{shell:[2,3],berry:[0,1]},egg:.1,eggEl:'water',dust:0,xp:10},
+  forest:{n:'Dark forest',sec:14400,lvl:4,minStage:2,skill:'wit',req:25,e:35,h:25,coins:[60,100],mats:{mush:[2,3]},egg:.15,eggEl:'shadow',dust:.05,xp:20},
+  caves:{n:'Crystal caves',sec:28800,lvl:6,minStage:2,skill:'agi',req:35,e:45,h:30,coins:[120,180],mats:{crystal:[1,2]},egg:.2,eggEl:'crystal',dust:.15,xp:40}
 };
 const QUESTS=[
-  {t:'play',n:'Сыграй в мини-игры',need:2},{t:'feed',n:'Покорми лумиков',need:3},{t:'trip',n:'Отправь в поход',need:1},
-  {t:'pet',n:'Погладь лумиков',need:10},{t:'decor',n:'Купи предмет декора',need:1},{t:'treat',n:'Угости лакомством',need:1},
-  {t:'tidy',n:'Прибери комнату',need:1},{t:'sleep',n:'Уложи кого-нибудь спать',need:1},{t:'skill',n:'Подними навыки',need:3}
+  {t:'play',n:'Play mini-games',need:2},{t:'feed',n:'Feed your lumiks',need:3},{t:'trip',n:'Send a lumik exploring',need:1},
+  {t:'pet',n:'Pet your lumiks',need:10},{t:'decor',n:'Buy a decor item',need:1},{t:'treat',n:'Give a treat',need:1},
+  {t:'tidy',n:'Tidy a room',need:1},{t:'sleep',n:'Put a lumik to bed',need:1},{t:'skill',n:'Raise skills',need:3}
 ];
 const XP_T=[0,0,60,150,280,450,660,920,1230,1600,2030,2520,3080,3710,4410,5180,6030,6960,7980,9090,10300];
-const UNLOCKS={2:'Озеро',3:'Вторая комната',4:'Тёмный лес',6:'Кристальные пещеры',8:'Третья комната',12:'Четвёртая комната'};
+const UNLOCKS={2:'Lake',3:'Second room',4:'Dark forest',6:'Crystal caves',8:'Third room',12:'Fourth room'};
 const roomsFor=l=>l>=12?4:l>=8?3:l>=3?2:1;
-const ROOM_NAMES=['Гостиная','Спальня','Детская','Мансарда'];
+const ROOM_NAMES=['Living room','Bedroom','Nursery','Attic'];
 
-const SLOTS={wall:'Обои',floor:'Пол',rug:'Ковёр',bed:'Лежанка',corner:'Угол',big:'Мебель',pic:'Картина',shelf:'Полка',toy:'Игрушка'};
+const SLOTS={wall:'Wallpaper',floor:'Floor',rug:'Rug',bed:'Bed',corner:'Corner',big:'Furniture',pic:'Picture',shelf:'Shelf',toy:'Toy'};
 const ITEMS={
-  w_cream:{slot:'wall',n:'Сливочные обои',price:0,c:0},
-  w_mint:{slot:'wall',n:'Мятная полоска',price:25,c:2},
-  w_berry:{slot:'wall',n:'Клубничный горошек',price:30,c:2},
-  w_wood:{slot:'wall',n:'Деревянные панели',price:35,c:3},
-  w_star:{slot:'wall',n:'Звёздная ночь',price:45,c:5,mat:{crystal:2}},
-  f_planks:{slot:'floor',n:'Дощатый пол',price:0,c:0},
-  f_carpet:{slot:'floor',n:'Мягкий ковролин',price:25,c:2},
-  f_check:{slot:'floor',n:'Шахматная плитка',price:30,c:2},
-  rug_round:{slot:'rug',n:'Круглый коврик',price:15,c:2},
-  rug_stripe:{slot:'rug',n:'Полосатый половик',price:20,c:2},
-  rug_cloud:{slot:'rug',n:'Ковёр-облако',price:35,c:5,mat:{berry:4}},
-  bed_pillow:{slot:'bed',n:'Подушка',price:20,c:3},
-  bed_basket:{slot:'bed',n:'Корзинка-лежанка',price:45,c:6},
-  c_cactus:{slot:'corner',n:'Кактус',price:12,c:1},
-  c_ficus:{slot:'corner',n:'Фикус',price:22,c:3},
-  c_lamp:{slot:'corner',n:'Торшер',price:30,c:5,mat:{mush:2},note:'светит ночью'},
-  big_books:{slot:'big',n:'Книжный шкаф',price:50,c:6},
-  big_aqua:{slot:'big',n:'Аквариум',price:70,c:9,mat:{shell:4}},
-  pic_poster:{slot:'pic',n:'Постер с лумиком',price:15,c:2},
-  pic_mount:{slot:'pic',n:'Картина «Горы»',price:22,c:2},
-  shelf_books:{slot:'shelf',n:'Полка с книгами',price:20,c:2},
-  shelf_clock:{slot:'shelf',n:'Часы с кукушкой',price:28,c:3},
-  toy_ball:{slot:'toy',n:'Мячик',price:10,c:1},
-  toy_yarn:{slot:'toy',n:'Клубок',price:12,c:2}
+  w_cream:{slot:'wall',n:'Cream wallpaper',price:0,c:0},
+  w_mint:{slot:'wall',n:'Mint stripes',price:25,c:2},
+  w_berry:{slot:'wall',n:'Strawberry dots',price:30,c:2},
+  w_wood:{slot:'wall',n:'Wood panels',price:35,c:3},
+  w_star:{slot:'wall',n:'Starry night',price:45,c:5,mat:{crystal:2}},
+  f_planks:{slot:'floor',n:'Plank floor',price:0,c:0},
+  f_carpet:{slot:'floor',n:'Soft carpet',price:25,c:2},
+  f_check:{slot:'floor',n:'Checker tiles',price:30,c:2},
+  rug_round:{slot:'rug',n:'Round rug',price:15,c:2},
+  rug_stripe:{slot:'rug',n:'Striped runner',price:20,c:2},
+  rug_cloud:{slot:'rug',n:'Cloud rug',price:35,c:5,mat:{berry:4}},
+  bed_pillow:{slot:'bed',n:'Cushion',price:20,c:3},
+  bed_basket:{slot:'bed',n:'Basket bed',price:45,c:6},
+  c_cactus:{slot:'corner',n:'Cactus',price:12,c:1},
+  c_ficus:{slot:'corner',n:'Ficus',price:22,c:3},
+  c_lamp:{slot:'corner',n:'Floor lamp',price:30,c:5,mat:{mush:2},note:'glows at night'},
+  big_books:{slot:'big',n:'Bookcase',price:50,c:6},
+  big_aqua:{slot:'big',n:'Aquarium',price:70,c:9,mat:{shell:4}},
+  pic_poster:{slot:'pic',n:'Lumik poster',price:15,c:2},
+  pic_mount:{slot:'pic',n:'Mountain painting',price:22,c:2},
+  shelf_books:{slot:'shelf',n:'Book shelf',price:20,c:2},
+  shelf_clock:{slot:'shelf',n:'Cuckoo clock',price:28,c:3},
+  toy_ball:{slot:'toy',n:'Ball',price:10,c:1},
+  toy_yarn:{slot:'toy',n:'Yarn ball',price:12,c:2}
 };
 const CROP={wall:'0 22 320 240',floor:'0 22 320 240',rug:'92 180 156 117',bed:'22 160 120 90',corner:'88 102 92 69',big:'168 92 100 75',pic:'88 66 72 54',shelf:'176 72 112 84',toy:'212 196 64 48'};
 
@@ -402,16 +402,17 @@ const clamp=v=>Math.max(0,Math.min(100,v));
 const rand=(a,b)=>a+Math.random()*(b-a);
 const irand=(a,b)=>Math.floor(rand(a,b+1));
 const fmt=ms=>{let s=Math.max(0,Math.ceil(ms/1000));const h=Math.floor(s/3600);s%=3600;const m=Math.floor(s/60);s%=60;return h?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${m}:${String(s).padStart(2,'0')}`};
-const fmtSec=sec=>sec>=3600?`${sec/3600} ч`:`${sec/60} мин`;
+const fmtSec=sec=>sec>=3600?`${sec/3600} h`:`${sec/60} min`;
 const pickW=o=>{let t=0;for(const k in o)t+=o[k].w;let r=Math.random()*t;for(const k in o){r-=o[k].w;if(r<=0)return k}return Object.keys(o)[0]};
 const rarity=g=>{const s=EL[g.el].r+PAT[g.pat].r+EARS[g.ears].r+(g.glow?2:0);return s>=6?3:s>=4?2:s>=2?1:0};
 const stage=p=>p.xp>=80?((p.age||0)>=ELDER_AGE?3:2):p.xp>=30?1:0;
 const adult=p=>stage(p)>=2;
 const plural=(n,a,b,c)=>{const m=n%10,h=n%100;return m===1&&h!==11?a:m>=2&&m<=4&&(h<10||h>=20)?b:c};
+const art=w=>(/^[aeiou]/i.test(w)?'an ':'a ')+w;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const GS=()=>S.speed||1;
 const durMs=sec=>sec*1000/GS();
-const randName=()=>{const a=['Лу','Ми','Пи','Бо','Ку','Зи','Ра','Ню','То','Фе','Шу','Ко','Да','Тя'],b=['ша','мик','ка','пи','ня','ся','ки','ро','фа','ли','шик','ту'];return a[Math.random()*a.length|0]+b[Math.random()*b.length|0]};
+const randName=()=>{const a=['Lu','Mi','Pi','Bo','Ku','Zi','Ra','Nu','To','Fe','Shu','Ko','Da','Ti'],b=['sha','mik','ka','pi','nya','sy','ki','ro','fa','li','bo','tu'];return a[Math.random()*a.length|0]+b[Math.random()*b.length|0]};
 const matIcon=k=>`<svg class="mi" viewBox="0 0 12 12"><path d="${k==='berry'?'M6 2.5a3.5 3.5 0 1 1 0 7a3.5 3.5 0 1 1 0-7z':k==='shell'?'M6 1.5l4.5 6.5h-9z':k==='mush'?'M1.5 6a4.5 4 0 0 1 9 0zM4.5 6h3v4h-3z':'M6 1l3 4-3 6-3-6z'}" fill="${MATS[k].c}"/></svg>`;
 const costHtml=c=>Object.entries(c).filter(([,v])=>v).map(([k,v])=>k==='coins'?`${v} ✦`:k==='dust'?`${v} ✧`:`${v}${matIcon(k)}`).join(' + ');
 const roomOf=p=>S.rooms.find(r=>r.id===p.roomId)||S.rooms[0];
@@ -423,7 +424,7 @@ const sel=()=>pet(S.selected)||S.pets.find(p=>!p.egg)||S.pets[0];
 let S, tab='home', panel=null, game=null, breedSel=[], svgSeq=0, lastPet=0, decorCat='wall';
 
 /* ================= state ================= */
-function newRoom(){const n=S?S.rooms.length:0;return{id:(S?Math.max(0,...S.rooms.map(r=>r.id)):0)+1,name:ROOM_NAMES[n]||('Комната '+(n+1)),decor:{wall:'w_cream',floor:'f_planks'},inv:['w_cream','f_planks'],tidyUntil:0}}
+function newRoom(){const n=S?S.rooms.length:0;return{id:(S?Math.max(0,...S.rooms.map(r=>r.id)):0)+1,name:ROOM_NAMES[n]||('Room '+(n+1)),decor:{wall:'w_cream',floor:'f_planks'},inv:['w_cream','f_planks'],tidyUntil:0}}
 const skillsRnd=()=>({agi:irand(5,12),wit:irand(5,12),sta:irand(5,12)});
 function genesRnd(el){
   const g={h:{}};for(const t in TR){const a=t==='el'&&el?el:pickW(TR[t]),b=pickW(TR[t]);const [v,h]=dominance(t,a,b);g[t]=v;g.h[t]=h}
@@ -433,12 +434,12 @@ function initial(){
   const now=Date.now();
   const st={v:2,coins:120,dust:1,earned:120,spent:0,nextId:4,selected:1,roomSel:1,lastTick:now,atlas:{},speed:1,dayOffset:0,
     mats:{berry:3,shell:0,mush:0,crystal:0},house:{xp:0},stars:[],streak:{n:0,last:null,freezes:0},daily:null,
-    log:[{n:120,why:'Стартовый подарок',t:now}],
-    rooms:[{id:1,name:'Гостиная',decor:{wall:'w_cream',floor:'f_planks',rug:'rug_round',corner:'c_ficus',pic:'pic_mount',bed:'bed_pillow'},inv:['w_cream','f_planks','rug_round','c_ficus','pic_mount','bed_pillow'],tidyUntil:0}],
+    log:[{n:120,why:'Welcome gift',t:now}],
+    rooms:[{id:1,name:'Living room',decor:{wall:'w_cream',floor:'f_planks',rug:'rug_round',corner:'c_ficus',pic:'pic_mount',bed:'bed_pillow'},inv:['w_cream','f_planks','rug_round','c_ficus','pic_mount','bed_pillow'],tidyUntil:0}],
     pets:[
-      {id:1,name:'Искорка',genes:{el:'fire',hue:22,pat:'spots',ears:'pointy',glow:false,h:{el:'shadow',pat:'none',ears:'pointy'}},xp:95,hunger:62,joy:74,energy:80,roomId:1,skills:{agi:14,wit:8,sta:11},age:4*86400,gen:1,line:0},
-      {id:2,name:'Мята',genes:{el:'leaf',hue:150,pat:'stripes',ears:'antennae',glow:false,h:{el:'water',pat:'stars',ears:'round'}},xp:112,hunger:41,joy:55,energy:46,roomId:1,skills:{agi:9,wit:16,sta:10},age:6*86400,gen:1,line:0},
-      {id:3,egg:true,genes:{el:'water',hue:210,pat:'spots',ears:'round',glow:false,h:{el:'crystal',pat:'stars',ears:'horns'}},hatchAt:now+60000,from:'стартовое яйцо',gen:1,line:0}
+      {id:1,name:'Sparky',genes:{el:'fire',hue:22,pat:'spots',ears:'pointy',glow:false,h:{el:'shadow',pat:'none',ears:'pointy'}},xp:95,hunger:62,joy:74,energy:80,roomId:1,skills:{agi:14,wit:8,sta:11},age:4*86400,gen:1,line:0},
+      {id:2,name:'Minty',genes:{el:'leaf',hue:150,pat:'stripes',ears:'antennae',glow:false,h:{el:'water',pat:'stars',ears:'round'}},xp:112,hunger:41,joy:55,energy:46,roomId:1,skills:{agi:9,wit:16,sta:10},age:6*86400,gen:1,line:0},
+      {id:3,egg:true,genes:{el:'water',hue:210,pat:'spots',ears:'round',glow:false,h:{el:'crystal',pat:'stars',ears:'horns'}},hatchAt:now+60000,from:'starter egg',gen:1,line:0}
     ]};
   return st;
 }
@@ -452,12 +453,12 @@ function migrate(){
     p.gen=p.gen||1;p.line=p.line||0;
     if(p.egg)continue;
     const dec=p.room||{wall:'w_cream',floor:'f_planks'};
-    const r={id:S.rooms.length+1,name:ROOM_NAMES[S.rooms.length]||('Комната '+(S.rooms.length+1)),decor:{...dec},inv:p.inv||Object.values(dec),tidyUntil:0};
+    const r={id:S.rooms.length+1,name:ROOM_NAMES[S.rooms.length]||('Room '+(S.rooms.length+1)),decor:{...dec},inv:p.inv||Object.values(dec),tidyUntil:0};
     S.rooms.push(r);p.roomId=r.id;delete p.room;delete p.inv;
     p.skills=p.skills||skillsRnd();p.age=p.age||3*86400;
     if(p.awayUntil){p.trip='meadow'}
   }
-  if(!S.rooms.length)S.rooms.push({id:1,name:'Гостиная',decor:{wall:'w_cream',floor:'f_planks'},inv:['w_cream','f_planks'],tidyUntil:0});
+  if(!S.rooms.length)S.rooms.push({id:1,name:'Living room',decor:{wall:'w_cream',floor:'f_planks'},inv:['w_cream','f_planks'],tidyUntil:0});
   const sp=S.pets.find(p=>p.id===S.selected&&!p.egg);S.roomSel=sp?sp.roomId:S.rooms[0].id;S.v=2;
 }
 function load(){try{const s=JSON.parse(localStorage.getItem(KEY));return s&&s.pets?s:null}catch(e){return null}}
@@ -468,8 +469,8 @@ function logOp(n,why,unit){S.log.unshift({n,why,u:unit||'✦',t:Date.now()});S.l
 function earn(n,why){n=Math.round(n);if(n<=0)return;S.coins+=n;S.earned+=n;logOp(n,why);bump('#coins')}
 function canPay(c){return Object.entries(c).every(([k,v])=>k==='coins'?S.coins>=v:k==='dust'?S.dust>=v:(S.mats[k]||0)>=v)}
 function pay(c,why){
-  if(!canPay(c)){const miss=Object.entries(c).filter(([k,v])=>k==='coins'?S.coins<v:k==='dust'?S.dust<v:(S.mats[k]||0)<v).map(([k])=>k==='coins'?'Искр':k==='dust'?'Звёздной пыли':MATS[k].n.toLowerCase());
-    haptic('n','error');toast(`Не хватает: ${miss.join(', ')}`);return false}
+  if(!canPay(c)){const miss=Object.entries(c).filter(([k,v])=>k==='coins'?S.coins<v:k==='dust'?S.dust<v:(S.mats[k]||0)<v).map(([k])=>k==='coins'?'Sparks':k==='dust'?'Stardust':MATS[k].n.toLowerCase());
+    haptic('n','error');toast(`Not enough: ${miss.join(', ')}`);return false}
   for(const [k,v] of Object.entries(c)){if(!v)continue;if(k==='coins'){S.coins-=v;S.spent+=v;logOp(-v,why)}else if(k==='dust'){S.dust-=v;logOp(-v,why,'✧');bump('.coins.dust')}else S.mats[k]-=v}
   if(c.coins)bump('#coins');return true;
 }
@@ -482,7 +483,7 @@ const elders=()=>S.pets.filter(p=>!p.egg&&stage(p)===3).length;
 function earnMult(p){
   return RAR[rarity(p.genes)].m*(1+cozy(roomOf(p)))*(1+Math.min(3,elders())*.05)*(1+Math.min(20,S.stars.length)*.02)*((p.line||0)>=4?1.25:1);
 }
-function addXp(p,n){const s=stage(p);p.xp+=n;if(stage(p)>s&&stage(p)<3){toast(`${p.name} подрос — теперь ${STAGES[stage(p)]}!`);addHouseXp(20)}}
+function addXp(p,n){const s=stage(p);p.xp+=n;if(stage(p)>s&&stage(p)<3){toast(`${p.name} grew up — now ${art(STAGES[stage(p)])}!`);addHouseXp(20)}}
 function addSkill(p,k,n){if(!k||n<=0)return 0;const b=p.skills[k];p.skills[k]=Math.min(100,b+n);const d=p.skills[k]-b;if(d>0)progress('skill',d);return d}
 function discover(p){const k=p.genes.el+'-'+p.genes.pat;if(!S.atlas[k]){S.atlas[k]={...p.genes};return true}return false}
 function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;$('#toasts').appendChild(t);
@@ -494,7 +495,7 @@ function addHouseXp(n){
   const l0=houseLvl();S.house.xp+=n;const l=houseLvl();
   if(l>l0){while(S.rooms.length<roomsFor(l))S.rooms.push(newRoom());
     const un=[];for(let i=l0+1;i<=l;i++)if(UNLOCKS[i])un.push(UNLOCKS[i]);
-    haptic('n','success');toast(`Дом вырос до ур. ${l}!${un.length?' Открыто: '+un.join(', '):''}`)}
+    haptic('n','success');toast(`Your home reached Lv ${l}!${un.length?' Unlocked: '+un.join(', '):''}`)}
 }
 const capacity=()=>S.rooms.length*ROOM_CAP;
 const petCount=()=>S.pets.filter(p=>!p.egg).length;
@@ -510,31 +511,31 @@ function ensureDay(){
 }
 function progress(t,n=1){
   if(!S.daily)return;for(const q of S.daily.quests){if(q.t!==t||q.claimed||q.have>=q.need)continue;q.have=Math.min(q.need,q.have+n);
-    if(q.have>=q.need){toast(`Задание выполнено: ${QUESTS.find(x=>x.t===t).n}`);haptic('n','success')}}
+    if(q.have>=q.need){toast(`Task done: ${QUESTS.find(x=>x.t===t).n}`);haptic('n','success')}}
   renderDot();
 }
 function streakReward(n){
-  if(n%30===0)return{egg:'rare',dust:3,label:'Редкое яйцо + 3 ✧'};
+  if(n%30===0)return{egg:'rare',dust:3,label:'Rare egg + 3 ✧'};
   const c=((n-1)%7)+1;
   const T={1:{coins:20},2:{coins:25,mats:{berry:2}},3:{coins:30},4:{coins:35,mats:{shell:2}},5:{coins:40},6:{coins:50,mats:{mush:1}},7:{egg:'basic',dust:1}};
   const r={...T[c]};if(n%14===0)r.dust=(r.dust||0)+2;return r;
 }
-const rwLabel=r=>r.label||[r.coins?`${r.coins} ✦`:'',r.mats?Object.entries(r.mats).map(([k,v])=>`${v}${matIcon(k)}`).join(' '):'',r.egg?(r.egg==='rare'?'редкое яйцо':'яйцо'):'',r.dust?`${r.dust} ✧`:''].filter(Boolean).join(' + ');
+const rwLabel=r=>r.label||[r.coins?`${r.coins} ✦`:'',r.mats?Object.entries(r.mats).map(([k,v])=>`${v}${matIcon(k)}`).join(' '):'',r.egg?(r.egg==='rare'?'rare egg':'egg'):'',r.dust?`${r.dust} ✧`:''].filter(Boolean).join(' + ');
 function grant(r,why){if(r.coins)earn(r.coins,why);if(r.mats)addMats(r.mats);if(r.dust)addDust(r.dust,why);
   if(r.egg){let g=genesRnd();if(r.egg==='rare'){let k=0;while(rarity(g)<1&&k++<200)g=genesRnd()}addEgg(g,r.egg==='rare'?1800:1200,why,{gen:1,line:0})}}
 function streakGap(){const st=S.streak;return st.last==null?1:dayNum()-st.last}
 function claimLogin(){
   const st=S.streak,d=dayNum();if(st.last===d)return;const gap=streakGap();let extra='';
-  if(gap===1)st.n++;else if(gap-1<=st.freezes){st.freezes-=gap-1;st.n++;extra=' · заморозка сохранила серию'}else st.n=1;
-  st.last=d;const r=streakReward(st.n);grant(r,`Серия: ${st.n} дн.`);addHouseXp(10);
-  haptic('n','success');toast(`День ${st.n}: ${rwLabel(r).replace(/<[^>]+>/g,'')}${extra}`);done();
+  if(gap===1)st.n++;else if(gap-1<=st.freezes){st.freezes-=gap-1;st.n++;extra=' · a freeze saved your streak'}else st.n=1;
+  st.last=d;const r=streakReward(st.n);grant(r,`Streak: day ${st.n}`);addHouseXp(10);
+  haptic('n','success');toast(`Day ${st.n}: ${rwLabel(r).replace(/<[^>]+>/g,'')}${extra}`);done();
 }
-function claimQuest(i){const q=S.daily.quests[i];if(!q||q.claimed||q.have<q.need)return;q.claimed=true;earn(25,'Задание дня');addHouseXp(10);haptic('i','light');done()}
+function claimQuest(i){const q=S.daily.quests[i];if(!q||q.claimed||q.have<q.need)return;q.claimed=true;earn(25,'Daily task');addHouseXp(10);haptic('i','light');done()}
 function claimChest(){if(S.daily.chest||!S.daily.quests.every(q=>q.claimed))return;S.daily.chest=true;
   const ks=Object.keys(MATS),m={};for(let i=0;i<2;i++){const k=ks[Math.random()*ks.length|0];m[k]=(m[k]||0)+1}
-  earn(40,'Сундучок дня');addMats(m);addDust(1,'Сундучок дня');addHouseXp(25);haptic('n','success');
-  toast(`Сундучок: 40 ✦, ${Object.entries(m).map(([k,v])=>v+' '+MATS[k].n.toLowerCase()).join(', ')}, 1 ✧`);done()}
-function buyFreeze(){if(S.streak.freezes>=2)return toast('Можно хранить не больше 2 заморозок');if(!pay({coins:COST.freeze},'Заморозка серии'))return;S.streak.freezes++;toast('Заморозка куплена');done()}
+  earn(40,'Daily chest');addMats(m);addDust(1,'Daily chest');addHouseXp(25);haptic('n','success');
+  toast(`Chest: 40 ✦, ${Object.entries(m).map(([k,v])=>v+' '+MATS[k].n.toLowerCase()).join(', ')}, 1 ✧`);done()}
+function buyFreeze(){if(S.streak.freezes>=2)return toast('You can hold up to 2 freezes');if(!pay({coins:COST.freeze},'Streak freeze'))return;S.streak.freezes++;toast('Freeze bought');done()}
 const hasTaskNews=()=>S.daily&&(S.streak.last!==dayNum()||S.daily.quests.some(q=>q.have>=q.need&&!q.claimed)||(!S.daily.chest&&S.daily.quests.every(q=>q.claimed)));
 function renderDot(){const d=$('#taskDot');if(d)d.hidden=!hasTaskNews()}
 
@@ -585,7 +586,7 @@ function petSVG(p,o={}){
   const beard=old?`<path d="M82 138 q18 34 36 0 q-6 6 -18 6 q-12 0 -18 -6Z" fill="#FFFFFF" stroke="#B8AFA2" stroke-width="2" stroke-linejoin="round"/><path d="M68 98 q12 -8 22 0 M110 98 q10 -8 22 0" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round"/>${sleeping?'':`<circle cx="80" cy="113" r="15" fill="none" stroke="#5A3A24" stroke-width="3"/><circle cx="120" cy="113" r="15" fill="none" stroke="#5A3A24" stroke-width="3"/><path d="M95 112 h10" stroke="#5A3A24" stroke-width="3"/>`}`:'';
   const zz=sleeping&&o.anim?`<text x="150" y="70" class="zz" font-size="26">z</text><text x="168" y="46" class="zz" font-size="18">z</text>`:'';
   const ground=o.noGround?'':`<ellipse cx="100" cy="181" rx="${50*sc}" ry="${7*sc+1}" fill="rgba(60,30,10,.18)"/>`;
-  return `<svg class="pet" ${o.box||''} viewBox="0 0 200 200" role="img" aria-label="${esc(p.name||'лумик')}">
+  return `<svg class="pet" ${o.box||''} viewBox="0 0 200 200" role="img" aria-label="${esc(p.name||'lumik')}">
   <defs><clipPath id="${u}c"><ellipse cx="100" cy="122" rx="60" ry="52"/></clipPath>
   <radialGradient id="${u}g"><stop offset=".35" stop-color="hsl(${g.hue} 95% 72%)" stop-opacity=".8"/><stop offset="1" stop-color="hsl(${g.hue} 95% 72%)" stop-opacity="0"/></radialGradient></defs>
   ${ground}
@@ -602,7 +603,7 @@ function petSVG(p,o={}){
 function star(cx,cy,r){let s=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;s.push((cx+Math.cos(a)*rr).toFixed(1)+','+(cy+Math.sin(a)*rr).toFixed(1))}return s.join(' ')}
 function eggSVG(p,o={}){
   const g=p.genes,base=`hsl(${g.hue} 45% 86%)`,sp=`hsl(${EL[g.el].hue} 60% 58%)`,ready=p.ready;
-  return `<svg class="pet" ${o.box||''} viewBox="0 0 200 200" role="img" aria-label="Яйцо">
+  return `<svg class="pet" ${o.box||''} viewBox="0 0 200 200" role="img" aria-label="Egg">
   ${o.nest?`<ellipse cx="100" cy="176" rx="62" ry="16" fill="#C68E4E"/><path d="M42 172 q58 22 116 0" stroke="#9C6A36" stroke-width="5" fill="none"/>`:`<ellipse cx="100" cy="181" rx="40" ry="7" fill="rgba(60,30,10,.18)"/>`}
   <g class="${o.anim&&ready?'wobble':''}">
     <path d="M100 40 C138 40 150 110 150 132 C150 162 128 178 100 178 C72 178 50 162 50 132 C50 110 62 40 100 40Z" fill="${base}" stroke="${sp}" stroke-width="2"/>
@@ -710,7 +711,7 @@ const spotOf=(i,n)=>PET_SPOTS[Math.min(3,Math.max(1,n))][i%3];
 function roomSVG(r,o={}){
   const u='rm'+(svgSeq++), night=period()==='night', dim=night||o.dim, dec=r.decor||r;
   const W=WALLS[dec.wall]||WALLS.w_cream, F=FLOORS[dec.floor]||FLOORS.f_planks;
-  let s=`<svg class="room" viewBox="${o.crop||'0 -16 320 296'}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Комната">
+  let s=`<svg class="room" viewBox="${o.crop||'0 -16 320 296'}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Room">
   <defs><radialGradient id="${u}l"><stop offset="0" stop-color="#FFD98A" stop-opacity=".75"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient></defs>`;
   s+=`<g transform="${LW}"><rect width="140" height="110" fill="${W.b}"/>${W.d}</g>`;
   s+=`<g transform="${RW}"><rect width="140" height="110" fill="${W.b}"/>${W.d}<rect width="140" height="110" fill="rgba(70,35,10,.09)"/></g>`;
@@ -732,7 +733,7 @@ function roomSVG(r,o={}){
 function roomSubjects(r,o={}){
   const list=petsIn(r);let bedUsed=false,out=[];
   list.forEach((p,i)=>{
-    if(p.awayUntil){if(p.id===S.selected){const [x,y]=fp(...spotOf(i,list.length));out.push([y,`<g><rect x="${x-36}" y="${y-40}" width="72" height="30" rx="6" fill="#FFF8EE" stroke="#C99A6B" stroke-width="2" transform="rotate(-4 ${x} ${y-25})"/><text x="${x}" y="${y-21}" text-anchor="middle" font-family="Pangolin,sans-serif" font-size="12" fill="#4A2F1D" transform="rotate(-4 ${x} ${y-25})">${esc(p.name)} в походе</text></g>`])}return}
+    if(p.awayUntil){if(p.id===S.selected){const [x,y]=fp(...spotOf(i,list.length));out.push([y,`<g><rect x="${x-36}" y="${y-40}" width="72" height="30" rx="6" fill="#FFF8EE" stroke="#C99A6B" stroke-width="2" transform="rotate(-4 ${x} ${y-25})"/><text x="${x}" y="${y-21}" text-anchor="middle" font-family="Pangolin,sans-serif" font-size="12" fill="#4A2F1D" transform="rotate(-4 ${x} ${y-25})">${esc(p.name)} is away</text></g>`])}return}
     const onBed=p.sleeping&&r.decor.bed&&!bedUsed;if(onBed)bedUsed=true;
     const [x,y]=onBed?fp(26,110):fp(...spotOf(i,list.length)),lift=onBed?(r.decor.bed==='bed_basket'?14:6):0,size=onBed?84:(list.length>1?88:100);
     const mk=p.id===S.selected&&list.length>1&&o.marker?`<polygon class="marker" points="${x-6},${y-size*.9-lift-6} ${x+6},${y-size*.9-lift-6} ${x},${y-size*.9-lift+2}" fill="#E5654F"/>`:'';
@@ -747,14 +748,14 @@ function tick(){
   const now=Date.now();let dt=(now-S.lastTick)/1000;S.lastTick=now;dt=Math.min(Math.max(dt,0),43200);const g=dt*GS();
   let changed=ensureDay();
   for(const p of S.pets){
-    if(p.egg){if(!p.ready&&now>=p.hatchAt){p.ready=true;changed=true;toast('Яйцо треснуло — можно вылуплять!')}continue}
+    if(p.egg){if(!p.ready&&now>=p.hatchAt){p.ready=true;changed=true;toast('An egg cracked — ready to hatch!')}continue}
     if(p.restUntil&&now>=p.restUntil){p.restUntil=0;changed=true}
-    const st0=stage(p);p.age=(p.age||0)+g;if(stage(p)!==st0){changed=true;if(stage(p)===3)toast(`${p.name} стал старейшиной`)}
+    const st0=stage(p);p.age=(p.age||0)+g;if(stage(p)!==st0){changed=true;if(stage(p)===3)toast(`${p.name} became an elder`)}
     if(p.awayUntil){if(now>=p.awayUntil){finishTrip(p);changed=true}continue}
     const m0=mood(p);
     p.hunger=clamp(p.hunger-g*100/36000);
     p.joy=clamp(p.joy-g*(p.hunger<20?2:1)*100/50400*(1-cozy(roomOf(p))));
-    if(p.sleeping){p.energy=clamp(p.energy+g*100/3600);if(p.energy>=100){p.sleeping=false;changed=true;toast(`${p.name} выспался`)}}
+    if(p.sleeping){p.energy=clamp(p.energy+g*100/3600);if(p.energy>=100){p.sleeping=false;changed=true;toast(`${p.name} is fully rested`)}}
     else p.energy=clamp(p.energy+g*10/3600);
     if(mood(p)!==m0)changed=true;
   }
@@ -768,68 +769,68 @@ setInterval(()=>S&&save(),5000);
 function done(){save();renderAll()}
 function hatch(p){
   if(!p.ready)return;const room=freeRoom(curRoom());
-  if(!room){toast(`Нет места: в комнате живут до ${ROOM_CAP} лумиков. Поднимите уровень дома, чтобы открыть новую комнату`);return}
+  if(!room){toast(`No room: up to ${ROOM_CAP} lumiks per room. Level up your home to unlock a new room`);return}
   Object.assign(p,{egg:false,ready:false,name:randName(),xp:0,hunger:70,joy:85,energy:90,roomId:room.id,skills:skillsRnd(),age:0});
   S.roomSel=room.id;const isNew=discover(p);addHouseXp(15);haptic('n','success');
-  toast(`Вылупился ${p.name}! ${RAR[rarity(p.genes)].n}${isNew?' · новая запись в атласе':''}`);done();
+  toast(`${p.name} hatched! ${RAR[rarity(p.genes)].n}${isNew?' · new atlas entry':''}`);done();
 }
 function feed(key){
   const p=sel(),f=FOODS[key];if(!p||p.egg||p.awayUntil)return;
-  if(p.sleeping)return toast('Сначала разбудите');
-  if(key==='basic'&&p.hunger>=95)return toast(`${p.name} не голоден`);
-  if(!pay(f.cost,`${f.n} для ${p.name}`))return;
+  if(p.sleeping)return toast('Wake them up first');
+  if(key==='basic'&&p.hunger>=95)return toast(`${p.name} isn't hungry`);
+  if(!pay(f.cost,`${f.n} for ${p.name}`))return;
   p.hunger=clamp(p.hunger+f.h);p.joy=clamp(p.joy+f.j);p.energy=clamp(p.energy+f.e);addXp(p,f.xp);
-  progress('feed');if(key!=='basic')progress('treat');haptic('i','light');toast(`${p.name}: ${f.n.toLowerCase()} — ням!`);done();
+  progress('feed');if(key!=='basic')progress('treat');haptic('i','light');toast(`${p.name}: ${f.n.toLowerCase()} — yum!`);done();
 }
 function toggleSleep(){const p=sel();if(!p||p.egg||p.awayUntil)return;p.sleeping=!p.sleeping;if(p.sleeping)progress('sleep');
-  toast(p.sleeping?`${p.name} уснул${roomOf(p).decor.bed?' на лежанке':''}`:`${p.name} проснулся`);done()}
+  toast(p.sleeping?`${p.name} fell asleep${roomOf(p).decor.bed?' in bed':''}`:`${p.name} woke up`);done()}
 function tripCheck(p,k){
   const L=LOCS[k];
-  if(houseLvl()<L.lvl)return`откроется на ур. дома ${L.lvl}`;
-  if(stage(p)===3)return'старейшины не ходят в походы';
-  if(stage(p)<L.minStage)return L.minStage===1?'нужен подросток или старше':'нужен взрослый';
+  if(houseLvl()<L.lvl)return`unlocks at home Lv ${L.lvl}`;
+  if(stage(p)===3)return'elders stay home';
+  if(stage(p)<L.minStage)return L.minStage===1?'needs a teen or older':'needs an adult';
   if(L.skill&&p.skills[L.skill]<L.req)return`${SKILLS[L.skill].toLowerCase()} ${p.skills[L.skill]}/${L.req}`;
-  if(p.sleeping)return'сначала разбудите';
-  if(p.energy<L.e)return`нужно ${L.e} энергии`;
-  if(p.hunger<L.h+5)return'покормите перед дорогой';
+  if(p.sleeping)return'wake them up first';
+  if(p.energy<L.e)return`needs ${L.e} energy`;
+  if(p.hunger<L.h+5)return'feed them before the trip';
   return'';
 }
 function startTrip(k){
   const p=sel(),L=LOCS[k];if(!p||p.egg||p.awayUntil)return;const why=tripCheck(p,k);if(why)return toast(why[0].toUpperCase()+why.slice(1));
   p.energy=clamp(p.energy-L.e);p.hunger=clamp(p.hunger-L.h);p.awayUntil=Date.now()+durMs(L.sec);p.trip=k;panel=null;
-  progress('trip');toast(`${p.name} отправился: ${L.n}, ${fmtSec(L.sec)}`);done();
+  progress('trip');toast(`${p.name} set off: ${L.n}, ${fmtSec(L.sec)}`);done();
 }
 function finishTrip(p){
   const L=LOCS[p.trip]||LOCS.meadow;p.awayUntil=0;p.trip=null;
   const sk=L.skill?p.skills[L.skill]:(p.skills.agi+p.skills.wit+p.skills.sta)/3;
-  const n=Math.round(rand(...L.coins)*earnMult(p)*(1+sk/150));earn(n,`Поход: ${L.n}`);
+  const n=Math.round(rand(...L.coins)*earnMult(p)*(1+sk/150));earn(n,`Trip: ${L.n}`);
   const m={};for(const k in L.mats){const v=irand(...L.mats[k]);if(v)m[k]=v}addMats(m);
   addXp(p,Math.round(L.xp/2)+4);addHouseXp(L.xp);const sg=addSkill(p,L.skill||['agi','wit','sta'][Math.random()*3|0],irand(1,2));
-  let msg=`${p.name} вернулся (${L.n}): +${n} ✦`;
+  let msg=`${p.name} is back (${L.n}): +${n} ✦`;
   const ms=Object.entries(m).map(([k,v])=>`${v} ${MATS[k].n.toLowerCase()}`);if(ms.length)msg+=', '+ms.join(', ');
-  if(L.dust&&Math.random()<L.dust){addDust(1,`Поход: ${L.n}`);msg+=', 1 ✧'}
-  if(Math.random()<L.egg){const el=L.eggEl&&Math.random()<.5?L.eggEl:null;addEgg(genesRnd(el),1200,`найдено: ${L.n}`,{gen:1,line:0});msg+=' и яйцо!'}
+  if(L.dust&&Math.random()<L.dust){addDust(1,`Trip: ${L.n}`);msg+=', 1 ✧'}
+  if(Math.random()<L.egg){const el=L.eggEl&&Math.random()<.5?L.eggEl:null;addEgg(genesRnd(el),1200,`found at ${L.n}`,{gen:1,line:0});msg+=' and an egg!'}
   toast(msg);
 }
 function addEgg(genes,secs,from,extra={}){const e={id:S.nextId++,egg:true,genes,hatchAt:Date.now()+durMs(secs),from,...extra};S.pets.push(e);return e}
 function movePet(){
   const p=sel();if(!p||p.egg)return;const others=S.rooms.filter(r=>r.id!==p.roomId&&petsIn(r).length<ROOM_CAP);
-  if(!others.length)return toast(S.rooms.length<2?'Вторая комната откроется на ур. дома 3':'Во всех других комнатах нет места');
-  p.roomId=others[0].id;S.roomSel=p.roomId;toast(`${p.name} переехал: ${others[0].name}`);done();
+  if(!others.length)return toast(S.rooms.length<2?'The second room unlocks at home Lv 3':'All other rooms are full');
+  p.roomId=others[0].id;S.roomSel=p.roomId;toast(`${p.name} moved to the ${others[0].name.toLowerCase()}`);done();
 }
-function useLupa(){const p=sel();if(!p||p.egg||p.revealed)return;if(!pay({dust:COST.lupa},`Лупа: ${p.name}`))return;p.revealed=true;
-  toast(`Скрытые гены ${p.name}: ${EL[p.genes.h.el].n}, ${PAT[p.genes.h.pat].n}, ${EARS[p.genes.h.ears].n}`);done()}
+function useLupa(){const p=sel();if(!p||p.egg||p.revealed)return;if(!pay({dust:COST.lupa},`Magnifier: ${p.name}`))return;p.revealed=true;
+  toast(`${p.name}'s hidden genes: ${EL[p.genes.h.el].n}, ${PAT[p.genes.h.pat].n}, ${EARS[p.genes.h.ears].n}`);done()}
 function release(){
   const p=sel();if(!p||stage(p)!==3)return;
   S.stars.push({name:p.name,hue:p.genes.hue});S.pets=S.pets.filter(x=>x.id!==p.id);breedSel=breedSel.filter(id=>id!==p.id);
-  addDust(2,`Звёздный сад: ${p.name}`);addHouseXp(50);panel=null;S.selected=(S.pets.find(x=>!x.egg)||S.pets[0]||{}).id;
-  haptic('n','success');toast(`${p.name} стал звездой над домом. Дом навсегда получил +2% к добыче`);done();
+  addDust(2,`Star garden: ${p.name}`);addHouseXp(50);panel=null;S.selected=(S.pets.find(x=>!x.egg)||S.pets[0]||{}).id;
+  haptic('n','success');toast(`${p.name} became a star above your home. Your home gets +2% earnings forever`);done();
 }
 
 function tapPet(e,pid){
   const p=pet(pid);if(!p||game)return;
   if(S.selected!==pid){S.selected=pid;panel=null;haptic('s');return done()}
-  if(p.sleeping)return toast('Тсс, он спит');
+  if(p.sleeping)return toast('Shh, they’re sleeping');
   const now=Date.now();if(now-lastPet<350)return;lastPet=now;
   p.joy=clamp(p.joy+2);haptic('i','soft');progress('pet');
   const hab=$('#hab'),r=hab.getBoundingClientRect(),h=document.createElement('span');
@@ -840,9 +841,9 @@ function tapPet(e,pid){
 /* ================= mini games ================= */
 function startGame(k){
   const p=sel(),G=GAMES[k];if(!p||p.egg||p.awayUntil||game)return;
-  if(p.sleeping)return toast('Тсс, он спит');
-  if(p.energy<G.e)return toast(`${p.name} устал — нужно ${G.e} энергии`);
-  if(k==='tidy'&&curRoom().tidyUntil>Date.now())return toast('В комнате уже чисто');
+  if(p.sleeping)return toast('Shh, they’re sleeping');
+  if(p.energy<G.e)return toast(`${p.name} is tired — needs ${G.e} energy`);
+  if(k==='tidy'&&curRoom().tidyUntil>Date.now())return toast('The room is already clean');
   p.energy=clamp(p.energy-G.e);p.hunger=clamp(p.hunger-(k==='tidy'?2:5));panel=null;
   const ov=document.createElement('div');ov.className='game';$('#hab').appendChild(ov);
   game={k,p,ov};renderActions();renderPanel();
@@ -855,25 +856,25 @@ function endGame(res){
   if(k!=='tidy')p.joy=clamp(p.joy+20);else p.joy=clamp(p.joy+10);
   addXp(p,6);addHouseXp(3);earn(n,`${G.n}: ${p.name}`);
   const sg=addSkill(p,G.skill,res.skill||0);progress('play');if(k==='tidy'&&res.done)progress('tidy');
-  toast(`${res.msg} — +${n} ✦${sg?` · ${SKILLS[G.skill].toLowerCase()} +${sg}`:''}${hungry<1?' (голодный — половина)':''}`);done();
+  toast(`${res.msg} — +${n} ✦${sg?` · ${SKILLS[G.skill].toLowerCase()} +${sg}`:''}${hungry<1?' (hungry — half reward)':''}`);done();
 }
-function bar(ov,label){const b=document.createElement('div');b.className='game-bar';b.innerHTML=`<span>${label}</span><span><b class="gT"></b> с · <b class="gC">0</b></span>`;ov.appendChild(b);return b}
+function bar(ov,label){const b=document.createElement('div');b.className='game-bar';b.innerHTML=`<span>${label}</span><span><b class="gT"></b> s · <b class="gC">0</b></span>`;ov.appendChild(b);return b}
 function gFirefly(p,ov){
-  const b=bar(ov,'Лови светлячков!'),end=Date.now()+10000;let c=0;
-  const spawn=()=>{const o=document.createElement('button');o.className='orb';o.setAttribute('aria-label','Светлячок');o.style.left=rand(12,88)+'%';o.style.top=rand(26,86)+'%';
+  const b=bar(ov,'Catch the fireflies!'),end=Date.now()+10000;let c=0;
+  const spawn=()=>{const o=document.createElement('button');o.className='orb';o.setAttribute('aria-label','Firefly');o.style.left=rand(12,88)+'%';o.style.top=rand(26,86)+'%';
     o.addEventListener('click',()=>{if(o.disabled)return;o.disabled=true;c++;haptic('i','light');b.querySelector('.gC').textContent=c;o.classList.add('pop');setTimeout(()=>o.remove(),250)});
     ov.appendChild(o);setTimeout(()=>o.isConnected&&!o.disabled&&o.remove(),1500)};
   game.t1=setInterval(spawn,480);spawn();
-  game.t2=setInterval(()=>{const l=Math.ceil((end-Date.now())/1000);b.querySelector('.gT').textContent=Math.max(0,l);if(l<=0)endGame({score:c,per:1,skill:Math.min(4,Math.floor(c/4)),msg:`Поймано ${c}`})},150);
+  game.t2=setInterval(()=>{const l=Math.ceil((end-Date.now())/1000);b.querySelector('.gT').textContent=Math.max(0,l);if(l<=0)endGame({score:c,per:1,skill:Math.min(4,Math.floor(c/4)),msg:`Caught ${c}`})},150);
 }
 const MEM_SYM=[['#E5654F','M12 3l2.6 5.6 6 .7-4.4 4.1 1.2 6-5.4-3-5.4 3 1.2-6L3.4 9.3l6-.7z'],['#3F86B8','M12 3c-4 5-6 8-6 11a6 6 0 0 0 12 0c0-3-2-6-6-11z'],['#5E9B4E','M12 21V9M12 12C6 12 4 7 5 3c5 0 7 4 7 9zM12 10c5 0 8-3 7-7-5 0-7 3-7 7z'],['#E7A52B','M12 2l3 7h7l-5.5 4.5 2 7.5-6.5-4.5-6.5 4.5 2-7.5L2 9h7z'],['#8A5CC6','M12 2l7 10-7 10-7-10z'],['#D9506E','M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z']];
 function gMemory(p,ov){
-  const b=bar(ov,'Найди пару'),end=Date.now()+40000;let open=[],pairs=0,lock=false;
+  const b=bar(ov,'Find the pairs'),end=Date.now()+40000;let open=[],pairs=0,lock=false;
   const deck=[0,1,2,3,4,5,0,1,2,3,4,5].sort(()=>Math.random()-.5);
   const g=document.createElement('div');g.className='mem';
-  g.innerHTML=deck.map((s,i)=>`<button class="mc" data-i="${i}" data-s="${s}" aria-label="Карточка"><svg viewBox="0 0 24 24"><path d="${MEM_SYM[s][1]}" fill="${MEM_SYM[s][0]}" stroke="${MEM_SYM[s][0]}" stroke-width="1.5" stroke-linejoin="round"/></svg></button>`).join('');
+  g.innerHTML=deck.map((s,i)=>`<button class="mc" data-i="${i}" data-s="${s}" aria-label="Card"><svg viewBox="0 0 24 24"><path d="${MEM_SYM[s][1]}" fill="${MEM_SYM[s][0]}" stroke="${MEM_SYM[s][0]}" stroke-width="1.5" stroke-linejoin="round"/></svg></button>`).join('');
   ov.appendChild(g);
-  const finish=()=>{const left=Math.max(0,Math.ceil((end-Date.now())/1000));endGame({score:pairs*3+(pairs===6?Math.floor(left/3):0),per:1,skill:pairs===6?4:Math.floor(pairs/2),msg:pairs===6?`Все пары за ${40-left} с`:`Найдено пар: ${pairs}`})};
+  const finish=()=>{const left=Math.max(0,Math.ceil((end-Date.now())/1000));endGame({score:pairs*3+(pairs===6?Math.floor(left/3):0),per:1,skill:pairs===6?4:Math.floor(pairs/2),msg:pairs===6?`All pairs in ${40-left} s`:`Pairs found: ${pairs}`})};
   g.querySelectorAll('.mc').forEach(c=>c.addEventListener('click',()=>{
     if(lock||c.classList.contains('up')||c.classList.contains('ok'))return;c.classList.add('up');open.push(c);haptic('s');
     if(open.length===2){const [a,d]=open;open=[];
@@ -883,8 +884,8 @@ function gMemory(p,ov){
   game.t2=setInterval(()=>{const l=Math.ceil((end-Date.now())/1000);b.querySelector('.gT').textContent=Math.max(0,l);if(l<=0)finish()},200);
 }
 function gRunner(p,ov){
-  const b=bar(ov,'Перепрыгни лужи'),end=Date.now()+25000;
-  const w=document.createElement('div');w.className='run';w.innerHTML=`<div class="cl" style="top:26%;left:12%;width:54px"></div><div class="cl" style="top:34%;left:62%;width:72px"></div><div class="gnd"></div><div class="rp">${petSVG(p,{noGround:1})}</div><div class="hint">Нажимайте, чтобы прыгать</div>`;ov.appendChild(w);
+  const b=bar(ov,'Puddle jump'),end=Date.now()+25000;
+  const w=document.createElement('div');w.className='run';w.innerHTML=`<div class="cl" style="top:26%;left:12%;width:54px"></div><div class="cl" style="top:34%;left:62%;width:72px"></div><div class="gnd"></div><div class="rp">${petSVG(p,{noGround:1})}</div><div class="hint">Tap to jump</div>`;ov.appendChild(w);
   const pe=w.querySelector('.rp'),hint=w.querySelector('.hint');
   let y=0,vy=0,last=performance.now(),spawnT=1.2,speed=170,score=0,obs=[],alive=true;
   const W=()=>w.clientWidth,px=()=>W()*.14;
@@ -900,49 +901,49 @@ function gRunner(p,ov){
     obs=obs.filter(o=>{if(o.x<-80){o.el.remove();return false}return true});
     pe.style.transform=`translateY(${-y}px)`;
     const l=Math.ceil((end-Date.now())/1000);b.querySelector('.gT').textContent=Math.max(0,l);
-    if(!alive||l<=0){haptic(alive?'n':'n',alive?'success':'warning');return endGame({score,per:2,skill:Math.min(5,Math.floor(score/3)),msg:alive?`Добежал! Луж: ${score}`:`Плюх! Луж: ${score}`})}
+    if(!alive||l<=0){haptic(alive?'n':'n',alive?'success':'warning');return endGame({score,per:2,skill:Math.min(5,Math.floor(score/3)),msg:alive?`Made it! Puddles: ${score}`:`Splash! Puddles: ${score}`})}
     game.raf=requestAnimationFrame(frame)};
   game.raf=requestAnimationFrame(frame);
 }
 function gTidy(p,ov){
-  const b=bar(ov,'Прибери комнату'),end=Date.now()+12000,room=curRoom();let c=0;
+  const b=bar(ov,'Tidy the room'),end=Date.now()+12000,room=curRoom();let c=0;
   const svg=$('#hab svg.room'),vb=svg.viewBox.baseVal,rect=svg.getBoundingClientRect(),hr=$('#hab').getBoundingClientRect();
-  MESS_SPOTS.forEach(([pp,qq],i)=>{const [x,y]=fp(pp,qq);const m=document.createElement('button');m.className='mess';m.setAttribute('aria-label','Мусор');
+  MESS_SPOTS.forEach(([pp,qq],i)=>{const [x,y]=fp(pp,qq);const m=document.createElement('button');m.className='mess';m.setAttribute('aria-label','Mess');
     m.style.left=((x-vb.x)/vb.width*rect.width+rect.left-hr.left)+'px';m.style.top=((y-vb.y)/vb.height*rect.height+rect.top-hr.top)+'px';
     m.innerHTML=`<svg viewBox="-14 -18 28 28">${messSVG(i)}</svg>`;
     m.addEventListener('click',()=>{if(m.disabled)return;m.disabled=true;c++;haptic('i','light');b.querySelector('.gC').textContent=c+'/6';m.classList.add('gone');setTimeout(()=>m.remove(),250);
-      if(c===6){room.tidyUntil=Date.now()+durMs(86400);endGame({score:c,per:2,done:true,msg:'Чистота! +5 уюта на сутки'})}});
+      if(c===6){room.tidyUntil=Date.now()+durMs(86400);endGame({score:c,per:2,done:true,msg:'Spotless! +5 cozy for a day'})}});
     ov.appendChild(m)});
   b.querySelector('.gC').textContent='0/6';
-  game.t2=setInterval(()=>{const l=Math.ceil((end-Date.now())/1000);b.querySelector('.gT').textContent=Math.max(0,l);if(l<=0)endGame({score:c,per:2,msg:`Убрано ${c} из 6`})},200);
+  game.t2=setInterval(()=>{const l=Math.ceil((end-Date.now())/1000);b.querySelector('.gT').textContent=Math.max(0,l);if(l<=0)endGame({score:c,per:2,msg:`Cleaned ${c} of 6`})},200);
 }
 
 /* ================= decor ================= */
 function useItem(id){
   const r=curRoom(),it=ITEMS[id];
-  if(r.decor[it.slot]===id){if(it.slot==='wall'||it.slot==='floor')return;delete r.decor[it.slot];toast(`${it.n}: убрано`);return done()}
+  if(r.decor[it.slot]===id){if(it.slot==='wall'||it.slot==='floor')return;delete r.decor[it.slot];toast(`${it.n}: removed`);return done()}
   if(!r.inv.includes(id)){const c={coins:it.price,...(it.mat||{})};if(!pay(c,`${it.n} (${r.name})`))return;r.inv.push(id);addHouseXp(Math.round(it.price/2)+(it.mat?15:0));progress('decor');haptic('n','success')}
   const before=comfort(r);r.decor[it.slot]=id;const d=comfort(r)-before;
-  toast(`${it.n} — в комнате${d>0?` · уют +${d}`:''}`);done();
+  toast(`${it.n} — placed${d>0?` · cozy +${d}`:''}`);done();
 }
 
 /* ================= breed / shop ================= */
-function canBreed(p){if(p.egg)return'яйцо';if(!adult(p))return'ещё '+STAGES[stage(p)];if(p.awayUntil)return'в походе';if(p.restUntil>Date.now())return'отдыхает';return''}
+function canBreed(p){if(p.egg)return'egg';if(!adult(p))return'still '+art(STAGES[stage(p)]);if(p.awayUntil)return'away';if(p.restUntil>Date.now())return'resting';return''}
 function toggleBreed(id){const i=breedSel.indexOf(id);if(i>=0)breedSel.splice(i,1);else{if(breedSel.length>=2)breedSel.shift();breedSel.push(id)}renderBreed()}
 function breed(){
   const [a,b]=breedSel.map(pet);if(!a||!b||canBreed(a)||canBreed(b))return;
   const leg=rarity(a.genes)===3&&rarity(b.genes)===3;
-  if(!pay(leg?{coins:COST.breed,dust:2}:{coins:COST.breed},`Пара ${a.name} + ${b.name}`))return;
+  if(!pay(leg?{coins:COST.breed,dust:2}:{coins:COST.breed},`Pair ${a.name} + ${b.name}`))return;
   const g=mixGenes(a,b),child=rarity(g)===3;
   const line=child?(leg?Math.min(a.line||1,b.line||1)+1:1):0;
   const e=addEgg(g,1800,`${a.name} + ${b.name}`,{gen:Math.max(a.gen||1,b.gen||1)+1,line,parents:[a.name,b.name]});
   a.restUntil=b.restUntil=Date.now()+durMs(7200);breedSel=[];S.selected=e.id;
-  haptic('n','success');toast(`Появилось яйцо! Вылупится через ${fmtSec(1800)}`);setTab('home');done();
+  haptic('n','success');toast(`You got an egg! It hatches in ${fmtSec(1800)}`);setTab('home');done();
 }
 function buyEgg(rare){
-  if(rare){if(!pay({dust:COST.rareEgg},'Редкое яйцо'))return;let g=genesRnd(),k=0;while(rarity(g)<2&&k++<500)g=genesRnd();const e=addEgg(g,1200,'редкое яйцо из лавки',{gen:1,line:0});S.selected=e.id}
-  else{if(!pay({coins:COST.egg},'Яйцо из лавки'))return;const e=addEgg(genesRnd(),600,'лавка',{gen:1,line:0});S.selected=e.id}
-  toast('Яйцо куплено');setTab('home');done();
+  if(rare){if(!pay({dust:COST.rareEgg},'Rare egg'))return;let g=genesRnd(),k=0;while(rarity(g)<2&&k++<500)g=genesRnd();const e=addEgg(g,1200,'rare egg from the shop',{gen:1,line:0});S.selected=e.id}
+  else{if(!pay({coins:COST.egg},'Egg from the shop'))return;const e=addEgg(genesRnd(),600,'shop',{gen:1,line:0});S.selected=e.id}
+  toast('Egg bought');setTab('home');done();
 }
 
 /* ================= render ================= */
@@ -956,7 +957,7 @@ function renderLive(){
 function setBar(k,v){const f=document.getElementById('f-'+k);if(!f)return;f.style.width=v+'%';document.getElementById('n-'+k).textContent=Math.round(v);f.closest('.stat').classList.toggle('low',v<25)}
 function roomChips(cur,onclick){
   const l=houseLvl();let h=S.rooms.map(r=>`<button class="rchip" data-r="${r.id}" aria-pressed="${r.id===cur}">${esc(r.name)}<small>${petsIn(r).length}/${ROOM_CAP}</small></button>`).join('');
-  const next=[3,8,12].find(x=>roomsFor(x)>S.rooms.length);if(next)h+=`<span class="rchip locked">Новая комната · ур. ${next}</span>`;return h;
+  const next=[3,8,12].find(x=>roomsFor(x)>S.rooms.length);if(next)h+=`<span class="rchip locked">New room · Lv ${next}</span>`;return h;
 }
 function renderRooms(){
   const el=$('#roomsBar'),p=sel();el.hidden=!!(p&&p.egg);el.innerHTML=roomChips(S.roomSel);
@@ -968,22 +969,22 @@ function renderHab(){
   if(!p){h.innerHTML=roomSVG(curRoom());return}
   if(p.egg){
     const [x,y]=fp(88,78);
-    h.innerHTML=`<div class="room-head"><div class="rtitle">Яйцо<small>${esc(p.from||'')}${p.gen>1?` · поколение ${p.gen}`:''}</small></div></div>
+    h.innerHTML=`<div class="room-head"><div class="rtitle">Egg<small>${esc(p.from||'')}${p.gen>1?` · generation ${p.gen}`:''}</small></div></div>
       ${roomSVG({wall:'w_cream',floor:'f_planks',rug:'rug_round'},{subject:`<g>${eggSVG(p,{anim:1,nest:1,box:`x="${x-42}" y="${y-80}" width="84" height="84"`})}</g>`})}
-      <div class="status"><span>${p.ready?'Готово! Нажмите «Вылупить»':`Вылупится через <b data-until="${p.hatchAt}">${fmt(p.hatchAt-Date.now())}</b>`}</span></div>`;
+      <div class="status"><span>${p.ready?'Ready! Tap “Hatch”':`Hatches in <b data-until="${p.hatchAt}">${fmt(p.hatchAt-Date.now())}</b>`}</span></div>`;
     return;
   }
   const room=curRoom(),r=rarity(p.genes),c=comfort(room),here=petsIn(room);
   if(!here.includes(p)){
-    h.innerHTML=`<div class="room-head"><div class="rtitle">${esc(room.name)}<small>пока пусто</small></div><div class="chips"><button class="chip comfy" id="comfy">Уют ${c}</button></div></div>
-      ${roomSVG(room.decor,{subject:roomSubjects(room,{anim:1})})}<div class="status"><span>Переселите сюда лумика кнопкой «Переселить»</span></div>`;
+    h.innerHTML=`<div class="room-head"><div class="rtitle">${esc(room.name)}<small>empty for now</small></div><div class="chips"><button class="chip comfy" id="comfy">Cozy ${c}</button></div></div>
+      ${roomSVG(room.decor,{subject:roomSubjects(room,{anim:1})})}<div class="status"><span>Move a lumik here with “Move”</span></div>`;
     h.querySelectorAll('[data-pid]').forEach(g=>g.addEventListener('click',e=>tapPet(e,+g.dataset.pid)));$('#comfy').addEventListener('click',()=>setTab('decor'));return;
   }
   const mess=!room.tidyUntil&&here.length>0;
-  const status=p.awayUntil?`${esc(p.name)} вернётся через <b data-until="${p.awayUntil}">${fmt(p.awayUntil-Date.now())}</b>`
-    :p.sleeping?'Спит · энергия восстанавливается':p.hunger<20?'Голоден — покормите':p.joy<30?'Скучает — поиграйте':here.length>1?'Нажмите на лумика, чтобы выбрать':'Погладьте лумика';
-  h.innerHTML=`<div class="room-head"><button class="rtitle" id="pname" title="Переименовать">${esc(p.name)}<small>${STAGES[stage(p)]} · ${esc(room.name)}</small></button>
-    <div class="chips"><span class="chip r${r}">${RAR[r].n}</span>${(p.line||0)>=4?'<span class="chip gold">Чистая линия</span>':''}<button class="chip comfy" id="comfy">Уют ${c}</button></div></div>
+  const status=p.awayUntil?`${esc(p.name)} returns in <b data-until="${p.awayUntil}">${fmt(p.awayUntil-Date.now())}</b>`
+    :p.sleeping?'Sleeping · restoring energy':p.hunger<20?'Hungry — feed them':p.joy<30?'Bored — play with them':here.length>1?'Tap a lumik to select it':'Pet your lumik';
+  h.innerHTML=`<div class="room-head"><button class="rtitle" id="pname" title="Rename">${esc(p.name)}<small>${STAGES[stage(p)]} · ${esc(room.name)}</small></button>
+    <div class="chips"><span class="chip r${r}">${RAR[r].n}</span>${(p.line||0)>=4?'<span class="chip gold">Pure line</span>':''}<button class="chip comfy" id="comfy">Cozy ${c}</button></div></div>
     ${roomSVG(room.decor,{subject:roomSubjects(room,{anim:1,marker:1}),dim:here.length&&here.every(x=>x.sleeping||x.awayUntil)&&here.some(x=>x.sleeping),mess})}
     <div class="status"><span>${status}</span></div>`;
   h.querySelectorAll('[data-pid]').forEach(g=>g.addEventListener('click',e=>tapPet(e,+g.dataset.pid)));
@@ -993,44 +994,44 @@ function renderHab(){
 function renderStats(){
   const p=sel(),el=$('#stats');
   if(!p){el.innerHTML='';return}
-  if(p.egg){el.innerHTML=`<div class="genes muted" style="grid-column:1/-1;font-weight:800;font-size:13px">По скорлупе похоже на стихию «${EL[p.genes.el].n}». Что внутри — узнаете, когда вылупится.</div>`;return}
+  if(p.egg){el.innerHTML=`<div class="genes muted" style="grid-column:1/-1;font-weight:800;font-size:13px">The shell hints at the ${EL[p.genes.el].n} element. You’ll see what’s inside when it hatches.</div>`;return}
   const s=stage(p),lo=[0,30,80,80][s],hi=[30,80,80,80][s],xp=s>=2?100:(p.xp-lo)/(hi-lo)*100;
-  el.innerHTML=[['h','Сытость',p.hunger],['j','Радость',p.joy],['e','Энергия',p.energy]].map(([k,l,v])=>
+  el.innerHTML=[['h','Fullness',p.hunger],['j','Joy',p.joy],['e','Energy',p.energy]].map(([k,l,v])=>
     `<div class="stat${v<25?' low':''}"><div class="row"><span>${l}</span><b id="n-${k}">${Math.round(v)}</b></div><div class="track"><div class="fill f-${k}" id="f-${k}" style="width:${v}%"></div></div></div>`).join('')+
-    `<div class="stat"><div class="row"><span>${s>=2?'Опыт':'До роста'}</span><b>${s>=2?p.xp:Math.max(0,hi-p.xp)}</b></div><div class="track"><div class="fill f-x" style="width:${xp}%"></div></div></div>
+    `<div class="stat"><div class="row"><span>${s>=2?'XP':'To grow'}</span><b>${s>=2?p.xp:Math.max(0,hi-p.xp)}</b></div><div class="track"><div class="fill f-x" style="width:${xp}%"></div></div></div>
      <div class="skills">${Object.entries(SKILLS).map(([k,n])=>`<div class="stat"><div class="row"><span>${n}</span><b>${p.skills[k]}</b></div><div class="track thin"><div class="fill f-a" style="width:${p.skills[k]}%"></div></div></div>`).join('')}</div>`;
 }
 function renderActions(){
   const p=sel(),el=$('#actions');
   if(!p){el.innerHTML='';return}
-  if(game){el.innerHTML=`<button class="act wide" disabled>Идёт игра…</button>`;return}
-  if(p.egg){el.innerHTML=`<button class="act wide primary" id="hatchBtn" ${p.ready?'':'disabled'}>${p.ready?'Вылупить':'Яйцо ещё греется'}</button>`;const b=$('#hatchBtn');b&&b.addEventListener('click',()=>hatch(p));return}
+  if(game){el.innerHTML=`<button class="act wide" disabled>Game in progress…</button>`;return}
+  if(p.egg){el.innerHTML=`<button class="act wide primary" id="hatchBtn" ${p.ready?'':'disabled'}>${p.ready?'Hatch':'Egg is still warming'}</button>`;const b=$('#hatchBtn');b&&b.addEventListener('click',()=>hatch(p));return}
   const away=!!p.awayUntil;
   const B=(a,l,s,off)=>`<button class="act${off?' off':''}${panel===a?' open':''}" data-a="${a}">${l}<small>${s}</small></button>`;
-  el.innerHTML=B('feed','Покормить','меню',away||p.sleeping)+B('play','Играть','4 игры',away||p.sleeping||p.energy<10)+
-    B('sleep',p.sleeping?'Разбудить':'Спать',p.sleeping?'включить свет':'выключить свет',away)+B('trip','Поход',stage(p)===3?'на покое':'4 места',away||p.sleeping||stage(p)===3);
+  el.innerHTML=B('feed','Feed','menu',away||p.sleeping)+B('play','Play','4 games',away||p.sleeping||p.energy<10)+
+    B('sleep',p.sleeping?'Wake':'Sleep',p.sleeping?'lights on':'lights off',away)+B('trip','Explore',stage(p)===3?'retired':'4 places',away||p.sleeping||stage(p)===3);
   el.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.a;
     if(a==='sleep')return toggleSleep();
-    if(p.awayUntil)return toast(`${p.name} ещё в походе`);
-    if(p.sleeping&&a!=='sleep')return toast('Сначала разбудите');
+    if(p.awayUntil)return toast(`${p.name} is still away`);
+    if(p.sleeping&&a!=='sleep')return toast('Wake them up first');
     panel=panel===a?null:a;haptic('s');renderActions();renderPanel()}));
 }
 function renderPanel(){
   const el=$('#panel'),p=sel();
   if(!panel||!p||p.egg||game){el.innerHTML='';return}
   let h='';
-  if(panel==='feed'){h='<h4>Чем угостить</h4>'+Object.entries(FOODS).map(([k,f])=>{const ok=canPay(f.cost);
+  if(panel==='feed'){h='<h4>What to serve</h4>'+Object.entries(FOODS).map(([k,f])=>{const ok=canPay(f.cost);
     return `<button class="opt${ok?'':' off'}" data-f="${k}"><span class="ico">${k==='basic'?`<svg viewBox="0 0 24 24"><path d="M3 12h18a9 6 0 0 1-18 0z" fill="#C99A6B"/><ellipse cx="12" cy="12" rx="9" ry="2.5" fill="#E7A52B"/></svg>`:`<svg viewBox="0 0 12 12">${matIcon(Object.keys(f.cost)[0]).replace(/<\/?svg[^>]*>/g,'')}</svg>`}</span>
       <span class="t"><b>${f.n}</b><span>${f.d}</span></span><span class="go">${costHtml(f.cost)}</span></button>`}).join('')}
-  if(panel==='play'){h='<h4>Во что играем</h4>'+Object.entries(GAMES).map(([k,g])=>{const ok=p.energy>=g.e&&!(k==='tidy'&&curRoom().tidyUntil>Date.now());
+  if(panel==='play'){h='<h4>What to play</h4>'+Object.entries(GAMES).map(([k,g])=>{const ok=p.energy>=g.e&&!(k==='tidy'&&curRoom().tidyUntil>Date.now());
     return `<button class="opt${ok?'':' off'}" data-g="${k}"><span class="ico"><svg viewBox="0 0 24 24"><path d="${k==='firefly'?MEM_SYM[3][1]:k==='memory'?'M4 4h7v9H4zM13 11h7v9h-7z':k==='runner'?'M3 18h18M6 15c3-6 9-6 12 0':'M5 20h14M8 20V9h8v11M10 5h4v4h-4z'}" fill="none" stroke="#E5654F" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
-      <span class="t"><b>${g.n}</b><span>${g.d}${g.skill?` (сейчас ${p.skills[g.skill]})`:''}</span></span><span class="go">${k==='tidy'&&curRoom().tidyUntil>Date.now()?'уже чисто':`−${g.e} энергии`}</span></button>`}).join('')}
-  if(panel==='trip'){h='<h4>Куда отправимся</h4>'+Object.entries(LOCS).map(([k,L])=>{const why=tripCheck(p,k);
+      <span class="t"><b>${g.n}</b><span>${g.d}${g.skill?` (now ${p.skills[g.skill]})`:''}</span></span><span class="go">${k==='tidy'&&curRoom().tidyUntil>Date.now()?'already clean':`−${g.e} energy`}</span></button>`}).join('')}
+  if(panel==='trip'){h='<h4>Where to go</h4>'+Object.entries(LOCS).map(([k,L])=>{const why=tripCheck(p,k);
     const loot=Object.keys(L.mats).map(m=>matIcon(m)).join('');
     return `<button class="opt${why?' off':''}" data-l="${k}"><span class="ico"><svg viewBox="0 0 24 24"><path d="${k==='meadow'?'M2 18c4-4 8-4 10 0 2-4 6-4 10 0':k==='lake'?'M3 14c3-2 6 2 9 0s6 2 9 0M3 18c3-2 6 2 9 0s6 2 9 0':k==='forest'?'M7 20V14M17 20V12M7 4l5 10H2zM17 3l5 9H12z':'M3 20l5-10 4 6 3-4 6 8z'}" fill="none" stroke="#5E9B4E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
-      <span class="t"><b>${L.n} · ${fmtSec(L.sec)}</b><span>${why||`${L.coins[0]}–${L.coins[1]} ✦ ${loot}${L.dust?' · шанс ✧':''} · −${L.e} энергии`}</span></span><span class="go">${why?'закрыто':'Идти'}</span></button>`}).join('')}
-  if(panel==='release'){h=`<h4>Отпустить ${esc(p.name)} в Звёздный сад?</h4><p class="lead" style="margin:4px 10px 10px">${esc(p.name)} станет звездой над домом. Дом навсегда получит +2% к добыче, а вы — 2 ✧. Вернуть лумика будет нельзя.</p>
-    <div style="display:flex;gap:8px;padding:0 6px 6px"><button class="btn" id="relYes">Отпустить</button><button class="btn ghost" id="relNo">Не сейчас</button></div>`}
+      <span class="t"><b>${L.n} · ${fmtSec(L.sec)}</b><span>${why||`${L.coins[0]}–${L.coins[1]} ✦ ${loot}${L.dust?' · chance of ✧':''} · −${L.e} energy`}</span></span><span class="go">${why?'locked':'Go'}</span></button>`}).join('')}
+  if(panel==='release'){h=`<h4>Release ${esc(p.name)} to the Star garden?</h4><p class="lead" style="margin:4px 10px 10px">${esc(p.name)} will become a star above your home. Your home gets +2% earnings forever, and you get 2 ✧. This can’t be undone.</p>
+    <div style="display:flex;gap:8px;padding:0 6px 6px"><button class="btn" id="relYes">Release</button><button class="btn ghost" id="relNo">Not now</button></div>`}
   el.innerHTML=`<div class="panel">${h}</div>`;
   el.querySelectorAll('[data-f]').forEach(b=>b.addEventListener('click',()=>feed(b.dataset.f)));
   el.querySelectorAll('[data-g]').forEach(b=>b.addEventListener('click',()=>startGame(b.dataset.g)));
@@ -1042,42 +1043,42 @@ function renderInfo(){
   if(!p||p.egg){el.innerHTML='';return}
   const g=p.genes,ageD=Math.floor((p.age||0)/86400),bonus=Math.round((earnMult(p)-1)*100);
   el.innerHTML=`<div class="info">
-    <div class="ln"><span>Гены</span><span>${EL[g.el].n} · ${PAT[g.pat].n} · ${EARS[g.ears].n}${g.glow?' · Свечение':''}</span></div>
-    <div class="ln"><span>Скрытые гены</span><span>${p.revealed?`${EL[g.h.el].n} · ${PAT[g.h.pat].n} · ${EARS[g.h.ears].n}`:`<button class="link" id="lupa">Посмотреть лупой · ${COST.lupa} ✧</button>`}</span></div>
-    <div class="ln"><span>Поколение</span><span>${p.gen||1}${p.parents?` · ${esc(p.parents.join(' + '))}`:''}${(p.line||0)>0?` · линия ${p.line}/4`:''}</span></div>
-    <div class="ln"><span>Возраст</span><span>${ageD} дн.${stage(p)===2?` · старейшина через ${Math.max(0,30-ageD)} дн.`:''}</span></div>
-    <div class="ln"><span>Добыча</span><span>${bonus>=0?'+':''}${bonus}% к Искрам</span></div>
-    <div class="ln"><span>${esc(roomOf(p).name)}</span><span><button class="link" id="move">Переселить</button></span></div>
-    ${stage(p)===3?`<div class="ln"><span>Старейшина даёт дому +5% к добыче</span><span><button class="link" id="rel">В Звёздный сад</button></span></div>`:''}
+    <div class="ln"><span>Genes</span><span>${EL[g.el].n} · ${PAT[g.pat].n} · ${EARS[g.ears].n}${g.glow?' · Glow':''}</span></div>
+    <div class="ln"><span>Hidden genes</span><span>${p.revealed?`${EL[g.h.el].n} · ${PAT[g.h.pat].n} · ${EARS[g.h.ears].n}`:`<button class="link" id="lupa">Use magnifier · ${COST.lupa} ✧</button>`}</span></div>
+    <div class="ln"><span>Generation</span><span>${p.gen||1}${p.parents?` · ${esc(p.parents.join(' + '))}`:''}${(p.line||0)>0?` · line ${p.line}/4`:''}</span></div>
+    <div class="ln"><span>Age</span><span>${ageD} d${stage(p)===2?` · elder in ${Math.max(0,30-ageD)} d`:''}</span></div>
+    <div class="ln"><span>Earnings</span><span>${bonus>=0?'+':''}${bonus}% Sparks</span></div>
+    <div class="ln"><span>${esc(roomOf(p).name)}</span><span><button class="link" id="move">Move</button></span></div>
+    ${stage(p)===3?`<div class="ln"><span>Elders give your home +5% earnings</span><span><button class="link" id="rel">To Star garden</button></span></div>`:''}
   </div>`;
   const l=$('#lupa');l&&l.addEventListener('click',useLupa);$('#move').addEventListener('click',movePet);
   const r=$('#rel');r&&r.addEventListener('click',()=>{panel='release';renderPanel();$('#panel').scrollIntoView({behavior:'smooth',block:'center'})});
 }
-function stripStatus(p){if(p.egg)return p.ready?'готово!':'яйцо';if(p.awayUntil)return'в походе';if(p.sleeping)return'спит';if(p.hunger<20)return'голоден';if(p.joy<30)return'скучает';return STAGES[stage(p)]}
+function stripStatus(p){if(p.egg)return p.ready?'ready!':'egg';if(p.awayUntil)return'away';if(p.sleeping)return'asleep';if(p.hunger<20)return'hungry';if(p.joy<30)return'bored';return STAGES[stage(p)]}
 function renderStrip(){
   const el=$('#strip');
-  el.innerHTML=S.pets.map(p=>`<button class="card" aria-pressed="${p.id===S.selected}" data-id="${p.id}">${drawAny(p,{})}<div class="nm">${p.egg?'Яйцо':esc(p.name)}</div><div class="st">${stripStatus(p)}</div></button>`).join('')+
-    `<div class="card" style="cursor:default;display:grid;place-items:center;color:var(--muted);font-weight:800;font-size:12px;border-style:dashed">${petCount()}/${capacity()}<br>мест</div>`;
+  el.innerHTML=S.pets.map(p=>`<button class="card" aria-pressed="${p.id===S.selected}" data-id="${p.id}">${drawAny(p,{})}<div class="nm">${p.egg?'Egg':esc(p.name)}</div><div class="st">${stripStatus(p)}</div></button>`).join('')+
+    `<div class="card" style="cursor:default;display:grid;place-items:center;color:var(--muted);font-weight:800;font-size:12px;border-style:dashed">${petCount()}/${capacity()}<br>spots</div>`;
   el.querySelectorAll('button.card').forEach(b=>b.addEventListener('click',()=>{if(game)return;S.selected=+b.dataset.id;const p=pet(S.selected);if(p&&!p.egg)S.roomSel=p.roomId;panel=null;done()}));
 }
 function renderTasks(){
   const el=$('#tab-tasks'),st=S.streak,d=dayNum(),claimed=st.last===d,gap=streakGap();
   const nextN=claimed?st.n+1:(gap===1||gap-1<=st.freezes?st.n+1:1),pos=((nextN-1)%7);
   const days=[...Array(7)].map((_,i)=>{const n=nextN-pos+i,r=streakReward(n),isDone=n<nextN||(claimed&&n===st.n);
-    return `<div class="day${isDone?' done':''}${!claimed&&n===nextN?' now':''}">День ${n}<b>${rwLabel(r).replace(/ \+ /g,'<br>')}</b></div>`}).join('');
+    return `<div class="day${isDone?' done':''}${!claimed&&n===nextN?' now':''}">Day ${n}<b>${rwLabel(r).replace(/ \+ /g,'<br>')}</b></div>`}).join('');
   const all=S.daily.quests.every(q=>q.claimed);
-  el.innerHTML=`<h3 class="sec">Серия дней</h3>
-    <div class="streak"><div class="big"><b>${claimed?st.n:Math.max(0,gap===1||gap-1<=st.freezes?st.n:0)}</b>${(()=>{const n=claimed?st.n:Math.max(0,gap===1||gap-1<=st.freezes?st.n:0);return `<span>${plural(n,'день','дня','дней')} подряд${claimed?'':' · заберите награду'}</span>`})()}</div>
+  el.innerHTML=`<h3 class="sec">Daily streak</h3>
+    <div class="streak"><div class="big"><b>${claimed?st.n:Math.max(0,gap===1||gap-1<=st.freezes?st.n:0)}</b>${(()=>{const n=claimed?st.n:Math.max(0,gap===1||gap-1<=st.freezes?st.n:0);return `<span>${n===1?'day':'days'} in a row${claimed?'':' · claim your reward'}</span>`})()}</div>
       <div class="days">${days}</div>
-      ${claimed?`<div class="muted" style="font-weight:800;font-size:13px">Завтра: ${rwLabel(streakReward(st.n+1))}</div>`:`<button class="btn block" id="claimDay" style="margin-top:0">Забрать награду дня</button>`}
-      <div class="toggle" style="border:0;padding-bottom:0"><span>Заморозки: ${st.freezes}/2<small>Сохранят серию, если пропустите день</small></span><button class="btn sm ghost" id="freeze">${COST.freeze} ✦</button></div></div>
-    <h3 class="sec">Задания на сегодня</h3>
+      ${claimed?`<div class="muted" style="font-weight:800;font-size:13px">Tomorrow: ${rwLabel(streakReward(st.n+1))}</div>`:`<button class="btn block" id="claimDay" style="margin-top:0">Claim today’s reward</button>`}
+      <div class="toggle" style="border:0;padding-bottom:0"><span>Freezes: ${st.freezes}/2<small>Keep your streak if you miss a day</small></span><button class="btn sm ghost" id="freeze">${COST.freeze} ✦</button></div></div>
+    <h3 class="sec">Today’s tasks</h3>
     ${S.daily.quests.map((q,i)=>{const Q=QUESTS.find(x=>x.t===q.t),ok=q.have>=q.need;
       return `<div class="quest${q.claimed?' claimed':''}"><div class="t"><b>${Q.n}</b> <span>${q.have}/${q.need}</span><div class="track thin"><div class="fill f-x" style="width:${q.have/q.need*100}%"></div></div></div>
-      ${q.claimed?'<span class="muted" style="font-weight:800;font-size:13px">готово</span>':`<button class="btn sm" data-q="${i}" ${ok?'':'disabled'}>25 ✦</button>`}</div>`}).join('')}
+      ${q.claimed?'<span class="muted" style="font-weight:800;font-size:13px">done</span>':`<button class="btn sm" data-q="${i}" ${ok?'':'disabled'}>25 ✦</button>`}</div>`}).join('')}
     <div class="chest${all&&!S.daily.chest?' ready':''}"><svg viewBox="0 0 48 48"><rect x="6" y="18" width="36" height="24" rx="4" fill="#C08A5D"/><path d="M6 22a18 12 0 0 1 36 0z" fill="#A6703F"/><rect x="6" y="22" width="36" height="4" fill="#E7A52B"/><rect x="21" y="22" width="6" height="9" rx="1.5" fill="#F2C14E"/></svg>
-      <div style="flex:1"><b>Сундучок дня</b><div class="muted" style="font-size:12.5px;font-weight:700">${S.daily.chest?'Открыт. Новый — завтра':'Выполните все 3 задания: 40 ✦, 2 материала и 1 ✧'}</div></div>
-      ${S.daily.chest?'':`<button class="btn sm" id="chest" ${all?'':'disabled'}>Открыть</button>`}</div>`;
+      <div style="flex:1"><b>Daily chest</b><div class="muted" style="font-size:12.5px;font-weight:700">${S.daily.chest?'Opened. A new one comes tomorrow':'Finish all 3 tasks: 40 ✦, 2 materials and 1 ✧'}</div></div>
+      ${S.daily.chest?'':`<button class="btn sm" id="chest" ${all?'':'disabled'}>Open</button>`}</div>`;
   const c=$('#claimDay');c&&c.addEventListener('click',claimLogin);$('#freeze').addEventListener('click',buyFreeze);
   el.querySelectorAll('[data-q]').forEach(b=>b.addEventListener('click',()=>claimQuest(+b.dataset.q)));
   const ch=$('#chest');ch&&ch.addEventListener('click',claimChest);
@@ -1085,43 +1086,43 @@ function renderTasks(){
 function renderDecor(){
   const el=$('#tab-decor'),r=curRoom(),l=houseLvl(),nx=XP_T[l+1],pr=nx?(S.house.xp-XP_T[l])/(nx-XP_T[l])*100:100;
   const c=comfort(r),bonus=Math.round(cozy(r)*100),list=Object.entries(ITEMS).filter(([,it])=>it.slot===decorCat);
-  el.innerHTML=`<h3 class="sec">Дом</h3>
-    <div class="house"><div class="hd"><b>Уровень ${l}</b><span class="muted" style="font-weight:800;font-size:13px">${nx?`${S.house.xp} / ${nx} опыта`:'максимум'}</span></div>
+  el.innerHTML=`<h3 class="sec">Home</h3>
+    <div class="house"><div class="hd"><b>Level ${l}</b><span class="muted" style="font-weight:800;font-size:13px">${nx?`${S.house.xp} / ${nx} XP`:'max'}</span></div>
       <div class="track"><div class="fill f-x" style="width:${pr}%"></div></div>
-      <div class="unl">${Object.entries(UNLOCKS).map(([lv,n])=>`<span class="${l>=lv?'on':''}">ур. ${lv} · ${n}</span>`).join('')}<span>скоро · сад и оранжерея</span></div>
-      <div class="muted" style="font-size:12.5px;font-weight:700;margin-top:8px">Опыт дома дают декор, задания, походы, рост и рождение лумиков.</div></div>
-    <h3 class="sec">Обустройство</h3>
+      <div class="unl">${Object.entries(UNLOCKS).map(([lv,n])=>`<span class="${l>=lv?'on':''}">Lv ${lv} · ${n}</span>`).join('')}<span>coming soon · garden and greenhouse</span></div>
+      <div class="muted" style="font-size:12.5px;font-weight:700;margin-top:8px">Your home earns XP from decor, tasks, trips, and lumiks growing up and hatching.</div></div>
+    <h3 class="sec">Furnishing</h3>
     <div class="rooms" id="decRooms">${roomChips(r.id)}</div>
     <div class="roomcard">${roomSVG(r.decor,{subject:roomSubjects(r,{}),mess:!r.tidyUntil&&petsIn(r).length>0})}</div>
-    <div class="comfort"><b>${c}</b><div><strong>Уют${r.tidyUntil>Date.now()?' (с уборкой +5)':''}</strong> — +${bonus}% Искр для жильцов комнаты, радость падает на ${bonus}% медленнее. Максимум +60%.</div></div>
+    <div class="comfort"><b>${c}</b><div><strong>Cozy${r.tidyUntil>Date.now()?' (tidy +5)':''}</strong> — +${bonus}% Sparks for lumiks in this room, and joy drops ${bonus}% slower. Max +60%.</div></div>
     <div class="cats">${Object.entries(SLOTS).map(([k,n])=>`<button class="cat" data-c="${k}" aria-pressed="${k===decorCat}">${n}</button>`).join('')}</div>
     <div class="items">${list.map(([id,it])=>{const on=r.decor[it.slot]===id,own=r.inv.includes(id);
       const r2={wall:r.decor.wall,floor:r.decor.floor,[it.slot]:id};
       return `<button class="item${on?' on':''}" data-i="${id}"><div class="th">${roomSVG(r2,{crop:CROP[it.slot]})}</div><div class="nm">${it.n}</div>
-        <div class="meta"><span>уют +${it.c}${it.note?' · '+it.note:''}</span><span class="price">${on?(it.slot==='wall'||it.slot==='floor'?'стоит':'убрать'):own?'поставить':it.price||it.mat?costHtml({coins:it.price,...(it.mat||{})}):'даром'}</span></div></button>`}).join('')}</div>`;
+        <div class="meta"><span>cozy +${it.c}${it.note?' · '+it.note:''}</span><span class="price">${on?(it.slot==='wall'||it.slot==='floor'?'in use':'remove'):own?'place':it.price||it.mat?costHtml({coins:it.price,...(it.mat||{})}):'free'}</span></div></button>`}).join('')}</div>`;
   el.querySelectorAll('#decRooms [data-r]').forEach(b=>b.addEventListener('click',()=>{S.roomSel=+b.dataset.r;renderDecor()}));
   el.querySelectorAll('.cat').forEach(b=>b.addEventListener('click',()=>{decorCat=b.dataset.c;renderDecor()}));
   el.querySelectorAll('.item').forEach(b=>b.addEventListener('click',()=>useItem(b.dataset.i)));
 }
 function renderBreed(){
   const el=$('#tab-breed'),[a,b]=breedSel.map(pet);
-  const slot=p=>p?`<div class="slot full">${petSVG(p,{})}</div>`:`<div class="slot">Выберите взрослого</div>`;
+  const slot=p=>p?`<div class="slot full">${petSVG(p,{})}</div>`:`<div class="slot">Pick an adult</div>`;
   const cand=S.pets.filter(p=>!p.egg);
   let fc='';
   if(a&&b){const both=a.revealed&&b.revealed,leg=rarity(a.genes)===3&&rarity(b.genes)===3;
-    const row=(t,n)=>`<dt>${n}</dt><dd>${both?forecast(a,b,t):[...new Set([TR[t][a.genes[t]].n,TR[t][b.genes[t]].n])].join(' или ')+' · и скрытые гены'}</dd>`;
-    fc=`<div class="box"><dl>${row('el','Стихия')}${row('pat','Узор')}${row('ears','Уши')}
-      <dt>Мутация</dt><dd>${MUT*100}% на каждый ген</dd><dt>Свечение</dt><dd>${a.genes.glow||b.genes.glow?'35%':'5%'}</dd><dt>Поколение</dt><dd>${Math.max(a.gen||1,b.gen||1)+1}${leg?' · легендарная пара продолжает линию':''}</dd></dl>
-      ${both?'':`<p class="muted" style="font-size:12.5px;font-weight:700;margin:10px 0 0">Редкие признаки «прячутся»: обычный ген сильнее редкого. Посмотрите скрытые гены родителей лупой, чтобы увидеть точные шансы.</p>`}</div>`}
+    const row=(t,n)=>`<dt>${n}</dt><dd>${both?forecast(a,b,t):[...new Set([TR[t][a.genes[t]].n,TR[t][b.genes[t]].n])].join(' or ')+' · plus hidden genes'}</dd>`;
+    fc=`<div class="box"><dl>${row('el','Element')}${row('pat','Pattern')}${row('ears','Ears')}
+      <dt>Mutation</dt><dd>${MUT*100}% per gene</dd><dt>Glow</dt><dd>${a.genes.glow||b.genes.glow?'35%':'5%'}</dd><dt>Generation</dt><dd>${Math.max(a.gen||1,b.gen||1)+1}${leg?' · a legendary pair continues the line':''}</dd></dl>
+      ${both?'':`<p class="muted" style="font-size:12.5px;font-weight:700;margin:10px 0 0">Rare traits hide: a common gene beats a rare one. Use the magnifier on both parents to see exact odds.</p>`}</div>`}
   const ok=a&&b&&!canBreed(a)&&!canBreed(b),legPair=a&&b&&rarity(a.genes)===3&&rarity(b.genes)===3;
-  el.innerHTML=`<h3 class="sec">Пары</h3><p class="lead">Каждый лумик несёт видимые и скрытые гены. Ребёнок получает по одному гену от каждого родителя. Обычный ген сильнее редкого, поэтому редкий признак проявится, только если оба гена ребёнка редкие.</p>
+  el.innerHTML=`<h3 class="sec">Pairs</h3><p class="lead">Every lumik carries visible and hidden genes. A baby gets one gene from each parent. A common gene beats a rare one, so a rare trait shows only when both of the baby’s genes are rare.</p>
     <div class="pair">${slot(a)}<span class="plus">+</span>${slot(b)}</div>${fc}
-    <button class="btn block" id="doBreed" ${ok?'':'disabled'}>Свести пару · ${COST.breed} ✦${legPair?' + 2 ✧':''}</button>
-    <h3 class="sec">Кого выбрать</h3>
-    <div class="picks">${cand.map(p=>{const why=canBreed(p);return`<button class="card" data-id="${p.id}" aria-pressed="${breedSel.includes(p.id)}" ${why?'disabled':''}>${petSVG(p,{})}<div class="nm">${esc(p.name)}</div><div class="st">${why==='отдыхает'?`отдых <span data-until="${p.restUntil}">${fmt(p.restUntil-Date.now())}</span>`:why||RAR[rarity(p.genes)].n}</div></button>`}).join('')}</div>
-    <h3 class="sec">Лавка</h3>
-    <div class="box shop"><div><b>Случайное яйцо</b><p>Чаще всего обычный лумик. Вылупится через 10 минут.</p></div><button class="btn" id="buyEgg">${COST.egg} ✦</button></div>
-    <div class="box shop"><div><b>Редкое яйцо</b><p>Эпический лумик или лучше. Вылупится через 20 минут.</p></div><button class="btn" id="buyRare">${COST.rareEgg} ✧</button></div>`;
+    <button class="btn block" id="doBreed" ${ok?'':'disabled'}>Pair up · ${COST.breed} ✦${legPair?' + 2 ✧':''}</button>
+    <h3 class="sec">Choose parents</h3>
+    <div class="picks">${cand.map(p=>{const why=canBreed(p);return`<button class="card" data-id="${p.id}" aria-pressed="${breedSel.includes(p.id)}" ${why?'disabled':''}>${petSVG(p,{})}<div class="nm">${esc(p.name)}</div><div class="st">${why==='resting'?`rest <span data-until="${p.restUntil}">${fmt(p.restUntil-Date.now())}</span>`:why||RAR[rarity(p.genes)].n}</div></button>`}).join('')}</div>
+    <h3 class="sec">Shop</h3>
+    <div class="box shop"><div><b>Mystery egg</b><p>Usually a common lumik. Hatches in 10 minutes.</p></div><button class="btn" id="buyEgg">${COST.egg} ✦</button></div>
+    <div class="box shop"><div><b>Rare egg</b><p>An epic lumik or better. Hatches in 20 minutes.</p></div><button class="btn" id="buyRare">${COST.rareEgg} ✧</button></div>`;
   el.querySelectorAll('.picks .card').forEach(c=>c.addEventListener('click',()=>toggleBreed(+c.dataset.id)));
   $('#doBreed').addEventListener('click',breed);$('#buyEgg').addEventListener('click',()=>buyEgg(false));$('#buyRare').addEventListener('click',()=>buyEgg(true));
 }
@@ -1129,34 +1130,34 @@ function renderAtlas(){
   const el=$('#tab-atlas'),found=Object.keys(S.atlas).length,tot=Object.keys(EL).length*Object.keys(PAT).length;
   let g=`<div></div>`+Object.values(PAT).map(p=>`<div class="h">${p.n}</div>`).join('');
   for(const e in EL){g+=`<div class="h rh">${EL[e].n}</div>`;for(const pt in PAT){const a=S.atlas[e+'-'+pt];
-    g+=a?`<div class="cell" title="${EL[e].n}, ${PAT[pt].n}">${petSVG({genes:a,xp:100,joy:80,hunger:80},{})}</div>`:`<div class="cell unk" aria-label="Не открыт">?</div>`}}
-  el.innerHTML=`<h3 class="sec">Атлас · ${found} из ${tot}</h3><p class="lead">Каждая пара «стихия + узор» — отдельная запись. Нижние строки и колонка «Звёзды» встречаются реже всего.</p>
+    g+=a?`<div class="cell" title="${EL[e].n}, ${PAT[pt].n}">${petSVG({genes:a,xp:100,joy:80,hunger:80},{})}</div>`:`<div class="cell unk" aria-label="Not found yet">?</div>`}}
+  el.innerHTML=`<h3 class="sec">Atlas · ${found} of ${tot}</h3><p class="lead">Every element + pattern combo is its own entry. The bottom rows and the Stars column are the rarest.</p>
     <div class="atlas">${g}</div>
-    <h3 class="sec">Редкость и множитель добычи</h3>
+    <h3 class="sec">Rarity and earnings multiplier</h3>
     <div class="legend">${RAR.map((r,i)=>`<div class="r${i}">${r.n}<b>×${r.m}</b></div>`).join('')}</div>`;
 }
 function renderEco(){
   const el=$('#tab-eco'),pct=S.earned?Math.round(S.spent/S.earned*100):0,el_=elders();
-  el.innerHTML=`<h3 class="sec">Запасы</h3>
-    <div class="nums"><div class="num"><b>${S.coins}</b><span>✦ Искры</span></div><div class="num"><b>${S.dust}</b><span>✧ Звёздная пыль</span></div><div class="num"><b>${houseLvl()}</b><span>уровень дома</span></div></div>
-    <h3 class="sec">Материалы</h3>
+  el.innerHTML=`<h3 class="sec">Stash</h3>
+    <div class="nums"><div class="num"><b>${S.coins}</b><span>✦ Sparks</span></div><div class="num"><b>${S.dust}</b><span>✧ Stardust</span></div><div class="num"><b>${houseLvl()}</b><span>home level</span></div></div>
+    <h3 class="sec">Materials</h3>
     <div class="mats">${Object.entries(MATS).map(([k,m])=>`<div>${matIcon(k)}${m.n}<b>${S.mats[k]||0}</b></div>`).join('')}</div>
-    <p class="lead" style="margin-top:8px">Материалы приносят из походов. Из них готовят лакомства и делают особый декор.</p>
-    <h3 class="sec">Постоянные бонусы</h3>
-    <div class="info"><div class="ln"><span>Старейшины в доме (до 3)</span><span>${el_} · +${Math.min(3,el_)*5}%</span></div><div class="ln"><span>Звёзды в саду (до 20)</span><span>${S.stars.length} · +${Math.min(20,S.stars.length)*2}%</span></div></div>
-    ${S.stars.length?`<h3 class="sec">Звёздный сад</h3><div class="garden">${S.stars.map(s=>`<span style="border-color:hsl(${s.hue} 60% 60%)">✦ ${esc(s.name)}</span>`).join('')}</div>`:''}
-    <h3 class="sec">Экономика Искр</h3>
-    <div class="burn"><div style="width:${Math.min(100,pct)}%"></div></div><div class="burnlbl">Потрачено ${pct}% от всего добытого: ${S.spent} из ${S.earned} ✦</div>
-    <h3 class="sec">Последние операции</h3>
+    <p class="lead" style="margin-top:8px">Lumiks bring materials back from trips. Use them for treats and special decor.</p>
+    <h3 class="sec">Permanent bonuses</h3>
+    <div class="info"><div class="ln"><span>Elders at home (up to 3)</span><span>${el_} · +${Math.min(3,el_)*5}%</span></div><div class="ln"><span>Stars in the garden (up to 20)</span><span>${S.stars.length} · +${Math.min(20,S.stars.length)*2}%</span></div></div>
+    ${S.stars.length?`<h3 class="sec">Star garden</h3><div class="garden">${S.stars.map(s=>`<span style="border-color:hsl(${s.hue} 60% 60%)">✦ ${esc(s.name)}</span>`).join('')}</div>`:''}
+    <h3 class="sec">Sparks economy</h3>
+    <div class="burn"><div style="width:${Math.min(100,pct)}%"></div></div><div class="burnlbl">Spent ${pct}% of everything earned: ${S.spent} of ${S.earned} ✦</div>
+    <h3 class="sec">Recent activity</h3>
     <div class="log">${S.log.slice(0,10).map(l=>`<div><span>${esc(l.why)}</span><b class="${l.n>0?'plus-n':'minus-n'}">${l.n>0?'+':''}${l.n} ${l.u||'✦'}</b></div>`).join('')}</div>
-    <h3 class="sec">Для теста</h3>
-    <div class="toggle"><span>Ускорить время ×60<small>Час проходит за минуту: походы, яйца, голод, возраст</small></span><button class="btn sm ${GS()>1?'':'ghost'}" id="spd">${GS()>1?'Включено':'Выключено'}</button></div>
-    <div class="toggle"><span>Следующий день<small>Новые задания, серия и +1 день возраста всем лумикам</small></span><button class="btn sm ghost" id="nextDay">Перейти</button></div>
-    <button class="reset" id="reset">Начать заново</button>`;
-  $('#spd').addEventListener('click',()=>{S.speed=GS()>1?1:60;toast(GS()>1?'Время ускорено ×60 (новые таймеры)':'Обычное время');done()});
-  $('#nextDay').addEventListener('click',()=>{S.dayOffset=(S.dayOffset||0)+1;S.pets.forEach(p=>{if(!p.egg)p.age=(p.age||0)+86400});ensureDay();toast('Наступил следующий день');done()});
-  const r=$('#reset');r.addEventListener('click',()=>{if(r.classList.contains('armed')){try{localStorage.removeItem(KEY)}catch(e){}S=initial();S.pets.forEach(p=>{if(!p.egg)discover(p)});ensureDay();breedSel=[];panel=null;toast('Новая игра');setTab('home');done();return}
-    r.classList.add('armed');r.textContent='Весь прогресс пропадёт. Нажмите ещё раз';setTimeout(()=>{if(r.isConnected){r.classList.remove('armed');r.textContent='Начать заново'}},4000)});
+    <h3 class="sec">Testing</h3>
+    <div class="toggle"><span>Speed up time ×60<small>An hour passes in a minute: trips, eggs, hunger, age</small></span><button class="btn sm ${GS()>1?'':'ghost'}" id="spd">${GS()>1?'On':'Off'}</button></div>
+    <div class="toggle"><span>Next day<small>New tasks, streak, and +1 day of age for every lumik</small></span><button class="btn sm ghost" id="nextDay">Skip</button></div>
+    <button class="reset" id="reset">Start over</button>`;
+  $('#spd').addEventListener('click',()=>{S.speed=GS()>1?1:60;toast(GS()>1?'Time sped up ×60 (new timers)':'Normal time');done()});
+  $('#nextDay').addEventListener('click',()=>{S.dayOffset=(S.dayOffset||0)+1;S.pets.forEach(p=>{if(!p.egg)p.age=(p.age||0)+86400});ensureDay();toast('A new day has started');done()});
+  const r=$('#reset');r.addEventListener('click',()=>{if(r.classList.contains('armed')){try{localStorage.removeItem(KEY)}catch(e){}S=initial();S.pets.forEach(p=>{if(!p.egg)discover(p)});ensureDay();breedSel=[];panel=null;toast('New game');setTab('home');done();return}
+    r.classList.add('armed');r.textContent='All progress will be lost. Tap again';setTimeout(()=>{if(r.isConnected){r.classList.remove('armed');r.textContent='Start over'}},4000)});
 }
 function rename(){
   const p=sel(),b=$('#pname'),i=document.createElement('input');i.className='pname-input';i.id='pname-input';i.value=p.name;i.maxLength=14;
@@ -1167,7 +1168,7 @@ function rename(){
 function setTab(t){tab=t;['home','tasks','decor','breed','atlas','eco'].forEach(k=>$('#tab-'+k).hidden=k!==t);
   document.querySelectorAll('.nav button').forEach(b=>b.dataset.tab===t?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
   renderAll();window.scrollTo(0,0)}
-document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{haptic('s');if(game)return toast('Сначала доиграйте');setTab(b.dataset.tab)}));
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{haptic('s');if(game)return toast('Finish the game first');setTab(b.dataset.tab)}));
 
 /* ================= Telegram ================= */
 const TG=window.Telegram&&Telegram.WebApp&&Telegram.WebApp.initData?Telegram.WebApp:null;
@@ -1178,12 +1179,19 @@ function tgInit(){
   const apply=()=>{document.documentElement.setAttribute('data-theme',TG.colorScheme==='dark'?'dark':'light');
     const bg=getComputedStyle(document.body).backgroundColor;try{TG.setHeaderColor(bg);TG.setBackgroundColor(bg);TG.setBottomBarColor&&TG.setBottomBarColor(bg)}catch(e){}};
   apply();TG.onEvent('themeChanged',apply);
-  const u=TG.initDataUnsafe&&TG.initDataUnsafe.user;if(u&&u.first_name)$('#sub').textContent='дом · '+u.first_name;
+  const u=TG.initDataUnsafe&&TG.initDataUnsafe.user;if(u&&u.first_name)$('#sub').textContent=u.first_name+'’s home';
 }
 function start(data){
   tgInit();
   S=(data&&data.S)||load()||initial();
   migrate();S.pets.forEach(p=>{if(!p.egg)discover(p)});ensureDay();
+  /* saves from the Russian version: rename built-in names */
+  const RN={'Гостиная':'Living room','Спальня':'Bedroom','Детская':'Nursery','Мансарда':'Attic','Искорка':'Sparky','Мята':'Minty','Буся':'Boo'};
+  S.rooms.forEach(r=>{if(RN[r.name])r.name=RN[r.name];else r.name=r.name.replace(/^Комната /,'Room ')});
+  const TL='а:a,б:b,в:v,г:g,д:d,е:e,ё:yo,ж:zh,з:z,и:i,й:y,к:k,л:l,м:m,н:n,о:o,п:p,р:r,с:s,т:t,у:u,ф:f,х:kh,ц:ts,ч:ch,ш:sh,щ:sch,ъ:,ы:y,ь:,э:e,ю:yu,я:ya'.split(',').reduce((o,x)=>{const [k,v]=x.split(':');o[k]=v;return o},{});
+  const en=n=>RN[n]||(/[а-яё]/i.test(n)?n.replace(/[а-яё]/gi,c=>{const t=TL[c.toLowerCase()]??c;return c===c.toLowerCase()?t:t.charAt(0).toUpperCase()+t.slice(1)}):n);
+  S.pets.forEach(p=>{if(p.name)p.name=en(p.name);if(p.parents)p.parents=p.parents.map(en)});
+  S.stars.forEach(s=>{s.name=en(s.name)});
   if(!S.lastTick)S.lastTick=Date.now();
   tick();setTab('home');setInterval(tick,1000);
   window.claude?.hot?.snapshot?.(()=>({S}));
