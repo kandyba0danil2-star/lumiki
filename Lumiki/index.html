@@ -30,6 +30,7 @@
   --heart:#EE7590; --rare:#6CB0E0; --epic:#B08CEB; --ok:#86C273; --stage:#251C16; --veil:rgba(20,14,10,.3); color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 :root{padding-top:calc(var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px))}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;-webkit-tap-highlight-color:transparent;overscroll-behavior:none;user-select:none;-webkit-user-select:none}
@@ -282,8 +283,31 @@ svg.pet{overflow:visible}
 .toast.out{transition:opacity .3s,transform .3s;opacity:0;transform:translateY(-8px)}
 @keyframes tin{from{opacity:0;transform:translateY(-8px)}}
 
+/* Sound button */
+.sndbtn{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;padding:0;color:var(--ink)}
+.sndbtn svg{width:18px;height:18px}
+/* Coach (tutorial) */
+.coach{position:fixed;left:0;right:0;bottom:calc(66px + env(safe-area-inset-bottom,0px));z-index:8;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));pointer-events:none}
+.coach-in{max-width:456px;margin:0 auto;background:var(--ink);color:var(--bg);border-radius:18px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.25);pointer-events:auto;animation:tin .25s ease-out}
+.coach-in b{font-family:var(--display);font-weight:400;font-size:13px;color:var(--spark)}
+.coach-in p{margin:2px 0 8px;font-weight:800;font-size:14.5px;line-height:1.35}
+.coach-row{display:flex;justify-content:space-between;align-items:center}
+.coach-row .link{color:var(--bg);opacity:.7}
+body.has-coach #app{padding-bottom:calc(200px + env(safe-area-inset-bottom,0px))}
+.coach-target{position:relative;z-index:3;box-shadow:0 0 0 3px var(--accent),0 0 0 8px color-mix(in srgb,var(--accent) 30%,transparent)!important;animation:ring 1.4s ease-in-out infinite;border-radius:16px}
+@keyframes ring{50%{box-shadow:0 0 0 3px var(--accent),0 0 0 13px color-mix(in srgb,var(--accent) 10%,transparent)}}
+/* Garden */
+.gbar{display:flex;gap:8px;margin-top:12px}
+.gbar .btn{flex:1}
+.bedinfo{margin-top:12px;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:12px 14px}
+.bedinfo h4{margin:0 0 4px;font-family:var(--display);font-weight:400;font-size:18px}
+.bedinfo .st{font-weight:800;font-size:13px;color:var(--muted)}
+.bedinfo .opt{padding:8px 4px}
+.ready-mark{animation:mk 1.2s ease-in-out infinite}
+.rtitle.sky,.rtitle.sky small{color:#2F4A2A}.rtitle.sky.night,.rtitle.sky.night small{color:#F4ECDD}
+
 @media (prefers-reduced-motion: reduce){
-  .bob,.halo,.wobble,.orb,.heart,.coins.bump,.toast,.lampglow,.marker{animation:none!important}
+  .bob,.halo,.wobble,.orb,.heart,.coins.bump,.toast,.lampglow,.marker,.coach-target,.ready-mark{animation:none!important}
   .orb{opacity:1}
 }
 </style>
@@ -292,7 +316,7 @@ svg.pet{overflow:visible}
 <div id="app">
   <header class="top">
     <div class="brand">Lumiki<small id="sub">cozy pets</small></div>
-    <div class="wallet"><span class="speed" id="speedTag" hidden>×60</span><div class="coins dust" title="Stardust — rare currency"><i>✧</i><span id="dustN">0</span></div><div class="coins" id="coins" title="Sparks — main currency"><i>✦</i><span id="coinN">0</span></div></div>
+    <div class="wallet"><button class="sndbtn" id="snd" aria-label="Sound on or off"></button><span class="speed" id="speedTag" hidden>×60</span><div class="coins dust" title="Stardust — rare currency"><i>✧</i><span id="dustN">0</span></div><div class="coins" id="coins" title="Sparks — main currency"><i>✦</i><span id="coinN">0</span></div></div>
   </header>
 
   <main>
@@ -349,7 +373,7 @@ const GAMES={
   firefly:{n:'Catch fireflies',d:'10 seconds · agility',skill:'agi',e:20},
   memory:{n:'Find the pairs',d:'40 seconds · wits',skill:'wit',e:20},
   runner:{n:'Puddle jump',d:'up to 25 seconds · stamina',skill:'sta',e:20},
-  tidy:{n:'Tidy the room',d:'+5 cozy for a day',skill:null,e:10}
+  tidy:{n:'Tidy the room',d:'+5 cozy for 12 hours',skill:null,e:10}
 };
 const LOCS={
   meadow:{n:'Meadow',sec:900,lvl:1,minStage:1,skill:null,req:0,e:15,h:10,coins:[10,20],mats:{berry:[2,4]},egg:.05,eggEl:null,dust:0,xp:5},
@@ -360,10 +384,10 @@ const LOCS={
 const QUESTS=[
   {t:'play',n:'Play mini-games',need:2},{t:'feed',n:'Feed your lumiks',need:3},{t:'trip',n:'Send a lumik exploring',need:1},
   {t:'pet',n:'Pet your lumiks',need:10},{t:'decor',n:'Buy a decor item',need:1},{t:'treat',n:'Give a treat',need:1},
-  {t:'tidy',n:'Tidy a room',need:1},{t:'sleep',n:'Put a lumik to bed',need:1},{t:'skill',n:'Raise skills',need:3}
+  {t:'tidy',n:'Tidy a room',need:1},{t:'sleep',n:'Put a lumik to bed',need:1},{t:'skill',n:'Raise skills',need:3},{t:'water',n:'Water the garden',need:2,lvl:6},{t:'harvest',n:'Harvest a plant',need:1,lvl:6}
 ];
 const XP_T=[0,0,60,150,280,450,660,920,1230,1600,2030,2520,3080,3710,4410,5180,6030,6960,7980,9090,10300];
-const UNLOCKS={2:'Lake',3:'Second room',4:'Dark forest',6:'Crystal caves',8:'Third room',12:'Fourth room'};
+const UNLOCKS={2:'Lake',3:'Second room',4:'Dark forest',6:'Crystal caves + garden',8:'Third room',9:'2 more garden beds',12:'Fourth room'};
 const roomsFor=l=>l>=12?4:l>=8?3:l>=3?2:1;
 const ROOM_NAMES=['Living room','Bedroom','Nursery','Attic'];
 
@@ -433,7 +457,7 @@ function genesRnd(el){
 function initial(){
   const now=Date.now();
   const st={v:2,coins:120,dust:1,earned:120,spent:0,nextId:4,selected:1,roomSel:1,lastTick:now,atlas:{},speed:1,dayOffset:0,
-    mats:{berry:3,shell:0,mush:0,crystal:0},house:{xp:0},stars:[],streak:{n:0,last:null,freezes:0},daily:null,
+    mats:{berry:3,shell:0,mush:0,crystal:0},house:{xp:0},tut:0,sound:true,music:true,garden:null,stars:[],streak:{n:0,last:null,freezes:0},daily:null,
     log:[{n:120,why:'Welcome gift',t:now}],
     rooms:[{id:1,name:'Living room',decor:{wall:'w_cream',floor:'f_planks',rug:'rug_round',corner:'c_ficus',pic:'pic_mount',bed:'bed_pillow'},inv:['w_cream','f_planks','rug_round','c_ficus','pic_mount','bed_pillow'],tidyUntil:0}],
     pets:[
@@ -466,7 +490,7 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
 /* ================= economy ================= */
 function logOp(n,why,unit){S.log.unshift({n,why,u:unit||'✦',t:Date.now()});S.log.length=Math.min(S.log.length,40)}
-function earn(n,why){n=Math.round(n);if(n<=0)return;S.coins+=n;S.earned+=n;logOp(n,why);bump('#coins')}
+let lastCoin=0;function earn(n,why){n=Math.round(n);if(n<=0)return;S.coins+=n;S.earned+=n;logOp(n,why);bump('#coins');const t=Date.now();if(t-lastCoin>250){lastCoin=t;sfx('coin')}}
 function canPay(c){return Object.entries(c).every(([k,v])=>k==='coins'?S.coins>=v:k==='dust'?S.dust>=v:(S.mats[k]||0)>=v)}
 function pay(c,why){
   if(!canPay(c)){const miss=Object.entries(c).filter(([k,v])=>k==='coins'?S.coins<v:k==='dust'?S.dust<v:(S.mats[k]||0)<v).map(([k])=>k==='coins'?'Sparks':k==='dust'?'Stardust':MATS[k].n.toLowerCase());
@@ -480,8 +504,9 @@ function bump(sel){const c=$(sel);if(!c)return;c.classList.remove('bump');void c
 function comfort(r){return Object.values(r.decor).reduce((s,id)=>s+(ITEMS[id]?ITEMS[id].c:0),0)+(r.tidyUntil>Date.now()?5:0)}
 const cozy=r=>Math.min(.6,comfort(r)*.02);
 const elders=()=>S.pets.filter(p=>!p.egg&&stage(p)===3).length;
+const joyMult=p=>p.joy<30?.75:p.joy>=80?1.1:1;
 function earnMult(p){
-  return RAR[rarity(p.genes)].m*(1+cozy(roomOf(p)))*(1+Math.min(3,elders())*.05)*(1+Math.min(20,S.stars.length)*.02)*((p.line||0)>=4?1.25:1);
+  return RAR[rarity(p.genes)].m*joyMult(p)*(1+cozy(roomOf(p)))*(1+Math.min(3,elders())*.05)*(1+Math.min(20,S.stars.length)*.02)*((p.line||0)>=4?1.25:1);
 }
 function addXp(p,n){const s=stage(p);p.xp+=n;if(stage(p)>s&&stage(p)<3){toast(`${p.name} grew up — now ${art(STAGES[stage(p)])}!`);addHouseXp(20)}}
 function addSkill(p,k,n){if(!k||n<=0)return 0;const b=p.skills[k];p.skills[k]=Math.min(100,b+n);const d=p.skills[k]-b;if(d>0)progress('skill',d);return d}
@@ -493,9 +518,9 @@ function toast(msg){const t=document.createElement('div');t.className='toast';t.
 function houseLvl(){let l=1;while(l<20&&S.house.xp>=XP_T[l+1])l++;return l}
 function addHouseXp(n){
   const l0=houseLvl();S.house.xp+=n;const l=houseLvl();
-  if(l>l0){while(S.rooms.length<roomsFor(l))S.rooms.push(newRoom());
+  if(l>l0){while(S.rooms.length<roomsFor(l))S.rooms.push(newRoom());ensureGarden();
     const un=[];for(let i=l0+1;i<=l;i++)if(UNLOCKS[i])un.push(UNLOCKS[i]);
-    haptic('n','success');toast(`Your home reached Lv ${l}!${un.length?' Unlocked: '+un.join(', '):''}`)}
+    haptic('n','success','level');toast(`Your home reached Lv ${l}!${un.length?' Unlocked: '+un.join(', '):''}`)}
 }
 const capacity=()=>S.rooms.length*ROOM_CAP;
 const petCount=()=>S.pets.filter(p=>!p.egg).length;
@@ -506,7 +531,7 @@ function dayNum(){const t=Date.now()+(S.dayOffset||0)*864e5;return Math.floor((t
 function seeded(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function ensureDay(){
   const d=dayNum();if(S.daily&&S.daily.day===d)return false;
-  const r=seeded(d*7919),pool=[...QUESTS];for(let i=pool.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+  const r=seeded(d*7919),pool=QUESTS.filter(q=>!q.lvl||houseLvl()>=q.lvl);for(let i=pool.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
   S.daily={day:d,quests:pool.slice(0,3).map(q=>({t:q.t,need:q.need,have:0,claimed:false})),chest:false};return true;
 }
 function progress(t,n=1){
@@ -745,21 +770,22 @@ function roomSubjects(r,o={}){
 /* ================= loop ================= */
 const mood=p=>p.sleeping?'z':(p.joy<30||p.hunger<20)?'sad':'ok';
 function tick(){
-  const now=Date.now();let dt=(now-S.lastTick)/1000;S.lastTick=now;dt=Math.min(Math.max(dt,0),43200);const g=dt*GS();
+  const now=Date.now();const prev=S.lastTick;const raw=Math.max(0,(now-S.lastTick)/1000);S.lastTick=now;const dt=Math.min(raw,43200),g=dt*GS();
   let changed=ensureDay();
   for(const p of S.pets){
     if(p.egg){if(!p.ready&&now>=p.hatchAt){p.ready=true;changed=true;toast('An egg cracked — ready to hatch!')}continue}
     if(p.restUntil&&now>=p.restUntil){p.restUntil=0;changed=true}
-    const st0=stage(p);p.age=(p.age||0)+g;if(stage(p)!==st0){changed=true;if(stage(p)===3)toast(`${p.name} became an elder`)}
+    const st0=stage(p);p.age=(p.age||0)+raw*GS();if(stage(p)!==st0){changed=true;if(stage(p)===3)toast(`${p.name} became an elder`)}
     if(p.awayUntil){if(now>=p.awayUntil){finishTrip(p);changed=true}continue}
     const m0=mood(p);
-    p.hunger=clamp(p.hunger-g*100/36000);
-    p.joy=clamp(p.joy-g*(p.hunger<20?2:1)*100/50400*(1-cozy(roomOf(p))));
+    p.hunger=clamp(p.hunger-g*100/57600);
+    p.joy=clamp(p.joy-g*(p.hunger<20?2:1)*100/86400*(1-cozy(roomOf(p))));
     if(p.sleeping){p.energy=clamp(p.energy+g*100/3600);if(p.energy>=100){p.sleeping=false;changed=true;toast(`${p.name} is fully rested`)}}
     else p.energy=clamp(p.energy+g*10/3600);
     if(mood(p)!==m0)changed=true;
   }
   for(const r of S.rooms)if(r.tidyUntil&&now>=r.tidyUntil){r.tidyUntil=0;changed=true}
+  if(gardenTick(now,prev,raw))changed=true;
   const per=period();if(per!==S._per){S._per=per;changed=true}
   if(changed){save();renderAll()}else renderLive();
 }
@@ -771,7 +797,7 @@ function hatch(p){
   if(!p.ready)return;const room=freeRoom(curRoom());
   if(!room){toast(`No room: up to ${ROOM_CAP} lumiks per room. Level up your home to unlock a new room`);return}
   Object.assign(p,{egg:false,ready:false,name:randName(),xp:0,hunger:70,joy:85,energy:90,roomId:room.id,skills:skillsRnd(),age:0});
-  S.roomSel=room.id;const isNew=discover(p);addHouseXp(15);haptic('n','success');
+  S.roomSel=room.id;const isNew=discover(p);addHouseXp(15);haptic('n','success','hatch');tutEvent('hatch');
   toast(`${p.name} hatched! ${RAR[rarity(p.genes)].n}${isNew?' · new atlas entry':''}`);done();
 }
 function feed(key){
@@ -780,7 +806,7 @@ function feed(key){
   if(key==='basic'&&p.hunger>=95)return toast(`${p.name} isn't hungry`);
   if(!pay(f.cost,`${f.n} for ${p.name}`))return;
   p.hunger=clamp(p.hunger+f.h);p.joy=clamp(p.joy+f.j);p.energy=clamp(p.energy+f.e);addXp(p,f.xp);
-  progress('feed');if(key!=='basic')progress('treat');haptic('i','light');toast(`${p.name}: ${f.n.toLowerCase()} — yum!`);done();
+  progress('feed');tutEvent('feed');if(key!=='basic')progress('treat');haptic('i','light');toast(`${p.name}: ${f.n.toLowerCase()} — yum!`);done();
 }
 function toggleSleep(){const p=sel();if(!p||p.egg||p.awayUntil)return;p.sleeping=!p.sleeping;if(p.sleeping)progress('sleep');
   toast(p.sleeping?`${p.name} fell asleep${roomOf(p).decor.bed?' in bed':''}`:`${p.name} woke up`);done()}
@@ -798,7 +824,7 @@ function tripCheck(p,k){
 function startTrip(k){
   const p=sel(),L=LOCS[k];if(!p||p.egg||p.awayUntil)return;const why=tripCheck(p,k);if(why)return toast(why[0].toUpperCase()+why.slice(1));
   p.energy=clamp(p.energy-L.e);p.hunger=clamp(p.hunger-L.h);p.awayUntil=Date.now()+durMs(L.sec);p.trip=k;panel=null;
-  progress('trip');toast(`${p.name} set off: ${L.n}, ${fmtSec(L.sec)}`);done();
+  progress('trip');tutEvent('trip');toast(`${p.name} set off: ${L.n}, ${fmtSec(L.sec)}`);done();
 }
 function finishTrip(p){
   const L=LOCS[p.trip]||LOCS.meadow;p.awayUntil=0;p.trip=null;
@@ -832,7 +858,7 @@ function tapPet(e,pid){
   if(S.selected!==pid){S.selected=pid;panel=null;haptic('s');return done()}
   if(p.sleeping)return toast('Shh, they’re sleeping');
   const now=Date.now();if(now-lastPet<350)return;lastPet=now;
-  p.joy=clamp(p.joy+2);haptic('i','soft');progress('pet');
+  p.joy=clamp(p.joy+2);haptic('i','soft');progress('pet');tutEvent('pet');
   const hab=$('#hab'),r=hab.getBoundingClientRect(),h=document.createElement('span');
   h.className='heart';h.textContent='♥';h.style.left=(e.clientX-r.left-8)+'px';h.style.top=(e.clientY-r.top-24)+'px';
   hab.appendChild(h);setTimeout(()=>h.remove(),900);renderLive();
@@ -855,7 +881,7 @@ function endGame(res){
   const n=Math.round(res.score*res.per*earnMult(p)*hungry);
   if(k!=='tidy')p.joy=clamp(p.joy+20);else p.joy=clamp(p.joy+10);
   addXp(p,6);addHouseXp(3);earn(n,`${G.n}: ${p.name}`);
-  const sg=addSkill(p,G.skill,res.skill||0);progress('play');if(k==='tidy'&&res.done)progress('tidy');
+  const sg=addSkill(p,G.skill,res.skill||0);progress('play');tutEvent('play');if(k==='tidy'&&res.done)progress('tidy');
   toast(`${res.msg} — +${n} ✦${sg?` · ${SKILLS[G.skill].toLowerCase()} +${sg}`:''}${hungry<1?' (hungry — half reward)':''}`);done();
 }
 function bar(ov,label){const b=document.createElement('div');b.className='game-bar';b.innerHTML=`<span>${label}</span><span><b class="gT"></b> s · <b class="gC">0</b></span>`;ov.appendChild(b);return b}
@@ -901,7 +927,7 @@ function gRunner(p,ov){
     obs=obs.filter(o=>{if(o.x<-80){o.el.remove();return false}return true});
     pe.style.transform=`translateY(${-y}px)`;
     const l=Math.ceil((end-Date.now())/1000);b.querySelector('.gT').textContent=Math.max(0,l);
-    if(!alive||l<=0){haptic(alive?'n':'n',alive?'success':'warning');return endGame({score,per:2,skill:Math.min(5,Math.floor(score/3)),msg:alive?`Made it! Puddles: ${score}`:`Splash! Puddles: ${score}`})}
+    if(!alive||l<=0){haptic('n',alive?'success':'warning',alive?'chime':'splash');return endGame({score,per:2,skill:Math.min(5,Math.floor(score/3)),msg:alive?`Made it! Puddles: ${score}`:`Splash! Puddles: ${score}`})}
     game.raf=requestAnimationFrame(frame)};
   game.raf=requestAnimationFrame(frame);
 }
@@ -912,7 +938,7 @@ function gTidy(p,ov){
     m.style.left=((x-vb.x)/vb.width*rect.width+rect.left-hr.left)+'px';m.style.top=((y-vb.y)/vb.height*rect.height+rect.top-hr.top)+'px';
     m.innerHTML=`<svg viewBox="-14 -18 28 28">${messSVG(i)}</svg>`;
     m.addEventListener('click',()=>{if(m.disabled)return;m.disabled=true;c++;haptic('i','light');b.querySelector('.gC').textContent=c+'/6';m.classList.add('gone');setTimeout(()=>m.remove(),250);
-      if(c===6){room.tidyUntil=Date.now()+durMs(86400);endGame({score:c,per:2,done:true,msg:'Spotless! +5 cozy for a day'})}});
+      if(c===6){room.tidyUntil=Date.now()+durMs(43200);endGame({score:c,per:2,done:true,msg:'Spotless! +5 cozy for 12 hours'})}});
     ov.appendChild(m)});
   b.querySelector('.gC').textContent='0/6';
   game.t2=setInterval(()=>{const l=Math.ceil((end-Date.now())/1000);b.querySelector('.gT').textContent=Math.max(0,l);if(l<=0)endGame({score:c,per:2,msg:`Cleaned ${c} of 6`})},200);
@@ -946,22 +972,161 @@ function buyEgg(rare){
   toast('Egg bought');setTab('home');done();
 }
 
+
+/* ================= sound ================= */
+let AC=null,master=null,musT=null,musStep=0;
+function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();master=AC.createGain();master.gain.value=.6;master.connect(AC.destination)}catch(e){return null}}if(AC.state==='suspended')AC.resume();return AC}
+function tone(f,t0,dur,type,vol,f2){const a=AC;if(!a)return;const t=a.currentTime+t0,o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol||.15,t+.012);g.gain.exponentialRampToValueAtTime(.0008,t+dur);o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+.05)}
+function noise(t0,dur,vol,freq){const a=AC;if(!a)return;const t=a.currentTime+t0,len=Math.floor(a.sampleRate*dur),buf=a.createBuffer(1,len,a.sampleRate),d=buf.getChannelData(0);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*(1-i/len);
+  const src=a.createBufferSource(),bp=a.createBiquadFilter(),g=a.createGain();src.buffer=buf;bp.type='bandpass';bp.frequency.value=freq;bp.Q.value=.8;g.gain.value=vol;src.connect(bp);bp.connect(g);g.connect(master);src.start(t)}
+const SFX={
+  tick:()=>tone(1400,0,.05,'triangle',.05),
+  pop:()=>tone(620,0,.13,'sine',.16,1240),
+  coin:()=>{tone(1047,0,.08,'square',.045);tone(1568,.07,.2,'square',.045)},
+  chime:()=>[523,659,784].forEach((f,i)=>tone(f,i*.07,.4,'triangle',.11)),
+  level:()=>[523,659,784,1047,1319].forEach((f,i)=>tone(f,i*.09,.55,'triangle',.12)),
+  hatch:()=>{noise(0,.12,.25,2500);[784,988,1175,1568].forEach((f,i)=>tone(f,.12+i*.08,.35,'sine',.12))},
+  error:()=>tone(200,0,.2,'sawtooth',.05,130),
+  purr:()=>{for(let i=0;i<5;i++)tone(85+(i%2)*10,i*.06,.09,'sine',.14)},
+  splash:()=>{noise(0,.35,.3,700);tone(300,0,.25,'sine',.08,120)},
+  water:()=>noise(0,.6,.18,1800),
+  dig:()=>{noise(0,.12,.3,400);noise(.14,.12,.25,350)}
+};
+function sfx(k){if(!S||S.sound===false||!AC)return;try{SFX[k]&&SFX[k]()}catch(e){}}
+const SCALE=[261.6,293.7,329.6,392,440,523.3,587.3,659.3],CHORDS=[[130.8,196,261.6],[110,164.8,220],[87.3,130.8,174.6],[98,146.8,196]];
+function startMusic(){if(musT||!S||!S.music||document.hidden||!AC)return;
+  musT=setInterval(()=>{const st=musStep++;if(st%16===0)CHORDS[(st/16|0)%4].forEach(f=>tone(f,0,3.9,'sine',.022));
+    if(st%2===0&&Math.random()<.6){const ch=CHORDS[(st/16|0)%4],pool=SCALE.filter(f=>ch.some(c=>Math.abs(Math.log2(f/c))%1<.01)||Math.random()<.35);tone(pool[Math.random()*pool.length|0]*(Math.random()<.25?2:1),0,1.1,'triangle',.03)}},260)}
+function stopMusic(){clearInterval(musT);musT=null}
+function renderSnd(){const on=S.sound!==false||S.music;$('#snd').innerHTML=on?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>'}
+
+/* ================= tutorial ================= */
+const TUT=[
+  {t:'Meet your lumiks! Tap Sparky or Minty to give them a pet.',ev:'pet',sel:()=>'#hab'},
+  {t:'Lumiks get hungry. Tap Feed, then Food.',ev:'feed',sel:()=>panel==='feed'?'[data-f="basic"]':'[data-a="feed"]'},
+  {t:'Play to earn Sparks ✦. Tap Play, then Catch fireflies.',ev:'play',sel:()=>panel==='play'?'[data-g="firefly"]':'[data-a="play"]'},
+  {t:'Your egg is ready! Tap it under Your lumiks, then tap Hatch.',ev:'hatch',sel:()=>{const e=S.pets.find(p=>p.egg);if(!e)return null;return sel()===e?'#hatchBtn':`.card[data-id="${e.id}"]`},
+    wait:()=>{const e=S.pets.find(p=>p.egg);return e&&!e.ready?'Your egg is almost ready to hatch. Wait a few seconds…':''}},
+  {t:'Send an adult exploring: tap Explore, then Meadow. They come back with Sparks and berries.',ev:'trip',sel:()=>panel==='trip'?'[data-l="meadow"]':'[data-a="trip"]'},
+  {t:'Cozy rooms earn more. Open Decor to furnish your home.',ev:'decor',sel:()=>'.nav [data-tab="decor"]'},
+  {t:'Come back every day: Tasks has your streak and daily rewards. Have fun!',ev:'end',sel:()=>'.nav [data-tab="tasks"]',btn:'Finish'}
+];
+function tutEvent(ev){if(S.tut==null||S.tut>=TUT.length||TUT[S.tut].ev!==ev)return;S.tut++;
+  if(S.tut>=TUT.length){earn(30,'Tutorial reward');setTimeout(()=>{toast('Tutorial complete: +30 ✦');sfx('level')},400)}save();setTimeout(renderCoach,0)}
+function renderCoach(){
+  document.querySelectorAll('.coach-target').forEach(e=>e.classList.remove('coach-target'));
+  let c=$('#coach');const off=S.tut==null||S.tut>=TUT.length||!!game;
+  document.body.classList.toggle('has-coach',!off);
+  if(off){if(c)c.hidden=true;return}
+  let st=TUT[S.tut];
+  if(st.ev==='hatch'&&!S.pets.some(p=>p.egg)){S.tut++;return renderCoach()}
+  if(st.ev==='trip'&&!S.pets.some(p=>!p.egg&&stage(p)===2&&!p.awayUntil)&&S.pets.some(p=>p.awayUntil)){S.tut++;return renderCoach()}
+  const w=st.wait&&st.wait();
+  if(!c){c=document.createElement('div');c.id='coach';c.className='coach';document.body.appendChild(c)}c.hidden=false;
+  c.innerHTML=`<div class="coach-in"><b>Tip ${S.tut+1} of ${TUT.length}</b><p>${w||st.t}</p><div class="coach-row"><button class="link" id="tutSkip">Skip tutorial</button>${st.btn?`<button class="btn sm" id="tutNext">${st.btn}</button>`:''}</div></div>`;
+  $('#tutSkip').onclick=()=>{S.tut=TUT.length;save();renderCoach()};const n=$('#tutNext');if(n)n.onclick=()=>tutEvent(st.ev);
+  if(!w&&tab==='home'||st.ev==='decor'||st.ev==='end'){const q=st.sel(),el=q&&document.querySelector(q);if(el&&!el.hidden)el.classList.add('coach-target')}
+}
+
+/* ================= garden ================= */
+const SEEDS={
+  sun:{n:'Sunflower',sec:7200,cost:{coins:10},give:{coins:[30,45]},d:'2 h · 30–45 ✦'},
+  berry:{n:'Berry bush',sec:14400,cost:{coins:8},give:{berry:[3,5]},d:'4 h · 3–5 berries'},
+  shroom:{n:'Glowshroom',sec:28800,cost:{coins:15},give:{mush:[2,3]},d:'8 h · 2–3 glowshrooms'},
+  crys:{n:'Crystal bloom',sec:43200,cost:{coins:25},give:{crystal:[1,2]},dust:.1,d:'12 h · 1–2 crystals, chance of ✧'}
+};
+const WET=4*3600, BEDS=[[14,26],[56,26],[98,26],[14,80],[56,80],[98,80]];
+const bedsFor=l=>l>=9?6:l>=6?4:0;
+let bedSel=0;
+function ensureGarden(){const n=bedsFor(houseLvl());if(!n)return;S.garden=S.garden||{beds:[]};while(S.garden.beds.length<n)S.garden.beds.push({plant:null,grown:0,wetUntil:0})}
+const bedReady=b=>b.plant&&b.grown>=SEEDS[b.plant].sec;
+function gardenTick(now,prev,raw){
+  if(!S.garden)return false;let ch=false;
+  for(const b of S.garden.beds){if(!b.plant||bedReady(b))continue;
+    const wetMs=Math.max(0,Math.min(now,b.wetUntil)-Math.max(prev,now-raw*1000));
+    if(wetMs>0){b.grown=Math.min(SEEDS[b.plant].sec,b.grown+wetMs/1000*GS());if(bedReady(b)){ch=true;toast(`${SEEDS[b.plant].n} is ready to harvest`)}}
+    if(b.wetUntil&&now>=b.wetUntil&&!b.dry){b.dry=true;ch=true}}
+  return ch;
+}
+function plant(i,k){const b=S.garden.beds[i],sd=SEEDS[k];if(!b||b.plant)return;if(!pay(sd.cost,`Seeds: ${sd.n}`))return;
+  Object.assign(b,{plant:k,grown:0,wetUntil:Date.now()+durMs(WET),dry:false});haptic('i','light','dig');toast(`${sd.n} planted and watered`);done()}
+function water(i){const b=S.garden.beds[i];if(!b||!b.plant||bedReady(b))return;if(b.wetUntil-Date.now()>durMs(WET)*.75)return toast('Still wet — water it a bit later');
+  b.wetUntil=Date.now()+durMs(WET);b.dry=false;progress('water');haptic('i','light','water');done()}
+function harvest(i){const b=S.garden.beds[i];if(!b||!bedReady(b))return;const sd=SEEDS[b.plant],parts=[];
+  for(const [k,[lo,hi]] of Object.entries(sd.give)){const v=irand(lo,hi);if(k==='coins'){earn(v,`Garden: ${sd.n}`);parts.push(`${v} ✦`)}else{addMats({[k]:v});parts.push(`${v} ${MATS[k].n.toLowerCase()}`)}}
+  if(sd.dust&&Math.random()<sd.dust){addDust(1,`Garden: ${sd.n}`);parts.push('1 ✧')}
+  Object.assign(b,{plant:null,grown:0,wetUntil:0,dry:false});addHouseXp(8);progress('harvest');haptic('n','success','chime');toast(`Harvest: ${parts.join(', ')}`);done()}
+function waterAll(){let n=0;S.garden.beds.forEach(b=>{if(b.plant&&!bedReady(b)&&b.wetUntil-Date.now()<=durMs(WET)*.75){b.wetUntil=Date.now()+durMs(WET);b.dry=false;n++}});
+  if(!n)return toast('Nothing needs water right now');progress('water',n);haptic('i','light','water');toast(`Watered ${n} ${n===1?'bed':'beds'}`);done()}
+function harvestAll(){const idx=S.garden.beds.map((b,i)=>bedReady(b)?i:-1).filter(i=>i>=0);if(!idx.length)return toast('Nothing is ready yet');idx.forEach(harvest)}
+function plantSVG(b){
+  const sd=b.plant,f=b.grown/SEEDS[sd].sec,stg=f>=1?2:f>=.34?1:0;
+  if(stg===0)return `<path d="M0 0 V-8" stroke="#3E8A3A" stroke-width="2"/><ellipse cx="-4" cy="-9" rx="4" ry="2.4" fill="#5EB24E" transform="rotate(-25 -4 -9)"/><ellipse cx="4" cy="-10" rx="4" ry="2.4" fill="#6EC25A" transform="rotate(25 4 -10)"/>`;
+  if(sd==='sun')return `<path d="M0 0 V${stg===2?-40:-26}" stroke="#3E8A3A" stroke-width="3"/><ellipse cx="-7" cy="-14" rx="7" ry="3.5" fill="#5EB24E"/><ellipse cx="7" cy="-20" rx="7" ry="3.5" fill="#5EB24E"/>`+(stg===2?`<g transform="translate(0 -42)">${[...Array(10)].map((_,i)=>`<ellipse cx="0" cy="-10" rx="4" ry="8" fill="#F7C93B" transform="rotate(${i*36})"/>`).join('')}<circle r="7" fill="#8A5A2B"/></g>`:`<ellipse cx="0" cy="-29" rx="5" ry="7" fill="#7CC35E"/>`);
+  if(sd==='berry'){const r=stg===2?15:11;return `<circle cx="-8" cy="${-r}" r="${r*.8}" fill="#3E8A3A"/><circle cx="8" cy="${-r}" r="${r*.8}" fill="#4A9B42"/><circle cx="0" cy="${-r*1.5}" r="${r*.85}" fill="#5EB24E"/>`+(stg===2?[[-9,-14],[6,-20],[-2,-26],[10,-10],[-12,-22]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3" fill="#D93A5E"/>`).join(''):'')}
+  if(sd==='shroom'){const h=stg===2?22:14;return `${stg===2?`<circle cx="0" cy="${-h}" r="20" fill="#C9B8FF" opacity=".35"/>`:''}<rect x="-3" y="${-h}" width="6" height="${h}" rx="2" fill="#F4ECDD"/><path d="M-13 ${-h+2} a13 11 0 0 1 26 0Z" fill="#8A7FD6"/><circle cx="-5" cy="${-h-4}" r="2" fill="#E9E3FF"/><circle cx="4" cy="${-h-6}" r="1.6" fill="#E9E3FF"/><rect x="10" y="-9" width="4" height="9" rx="2" fill="#F4ECDD"/><path d="M6 -8 a6 5 0 0 1 12 0Z" fill="#A497E8"/>`}
+  const k=stg===2?1:.65;return `<g transform="scale(${k})"><polygon points="0,-36 7,-18 3,0 -3,0 -7,-18" fill="#9FE6EF" stroke="#3FAFC2" stroke-width="1.5"/><polygon points="-12,-22 -6,-12 -8,0 -13,0 -16,-12" fill="#BDEFF5" stroke="#3FAFC2" stroke-width="1.5"/><polygon points="12,-24 16,-12 13,0 8,0 6,-12" fill="#BDEFF5" stroke="#3FAFC2" stroke-width="1.5"/></g>`+(stg===2?`<polygon points="${star(14,-34,5)}" fill="#FFF4C4"/>`:'');
+}
+function gardenSVG(){
+  const per=period(),sky={night:'#24305C',dawn:'#FFD8B4',day:'#BFE6F5',dusk:'#F6B79C'}[per];
+  let s=`<svg class="room" viewBox="0 -16 320 296" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Garden"><rect x="0" y="-20" width="320" height="320" fill="${sky}"/>`;
+  if(per==='night')[[40,10],[90,30],[250,20],[290,50],[200,0]].forEach(([x,y])=>s+=`<circle cx="${x}" cy="${y}" r="1.6" fill="#fff"/>`);
+  else s+=`<circle cx="268" cy="20" r="16" fill="${per==='day'?'#FFE58A':'#FFC48A'}"/><ellipse cx="70" cy="30" rx="26" ry="9" fill="#fff" opacity=".85"/>`;
+  s+=`<ellipse cx="60" cy="140" rx="90" ry="40" fill="#8FBF73"/><ellipse cx="270" cy="135" rx="80" ry="34" fill="#9CCB7E"/>`;
+  s+=`<g transform="${FL}"><rect width="140" height="140" fill="#9CCB74"/>${[...Array(40)].map((_,i)=>`<path d="M${(i*37)%140} ${(i*53)%140} l2 -4 l2 4" stroke="#7FB25C" stroke-width="1.2" fill="none"/>`).join('')}</g>`;
+  for(let i=0;i<=7;i++){const [x,y]=fp(i*20,0),[x2,y2]=fp(0,i*20);s+=`<rect x="${x-2}" y="${y-22}" width="4" height="22" fill="#C99A6B"/><rect x="${x2-2}" y="${y2-22}" width="4" height="22" fill="#C99A6B"/>`}
+  s+=`<path d="M${fp(0,0)[0]} ${fp(0,0)[1]-16} L${fp(140,0)[0]} ${fp(140,0)[1]-16} M${fp(0,0)[0]} ${fp(0,0)[1]-8} L${fp(140,0)[0]} ${fp(140,0)[1]-8} M${fp(0,0)[0]} ${fp(0,0)[1]-16} L${fp(0,140)[0]} ${fp(0,140)[1]-16} M${fp(0,0)[0]} ${fp(0,0)[1]-8} L${fp(0,140)[0]} ${fp(0,140)[1]-8}" stroke="#B5845A" stroke-width="3"/>`;
+  const order=S.garden.beds.map((b,i)=>i).sort((a,b)=>(BEDS[a][0]+BEDS[a][1])-(BEDS[b][0]+BEDS[b][1]));
+  for(const i of order){const b=S.garden.beds[i],[p,q]=BEDS[i],wet=b.plant&&b.wetUntil>Date.now();
+    s+=`<g class="tap" data-bed="${i}">`+isoBox(p,q,32,32,7,0,[wet?'#6B4A2E':'#B88D5F','#8E6440','#7A5434']);
+    if(i===bedSel)s+=`<polygon points="${pts([fp(p,q),fp(p+32,q),fp(p+32,q+32),fp(p,q+32)].map(([x,y])=>[x,y-7]))}" fill="none" stroke="#E5654F" stroke-width="2.5"/>`;
+    const [cx,cy]=fp(p+16,q+16);
+    if(b.plant)s+=`<g transform="translate(${cx} ${cy-7})">${plantSVG(b)}</g>`;
+    if(bedReady(b))s+=`<g class="ready-mark"><circle cx="${cx+16}" cy="${cy-52}" r="9" fill="#E5654F"/><polygon points="${star(cx+16,cy-52,5)}" fill="#fff"/></g>`;
+    else if(b.plant&&!wet)s+=`<g><circle cx="${cx+16}" cy="${cy-38}" r="8" fill="#3F86B8"/><path d="M${cx+16} ${cy-43} q-4 5 -3 7 a3 3 0 0 0 6 0 q1 -2 -3 -7Z" fill="#fff"/></g>`;
+    s+=`</g>`}
+  if(per==='night')s+=`<rect x="0" y="-20" width="320" height="320" fill="#141838" opacity=".3"/>`;
+  return s+'</svg>';
+}
+function renderGarden(){
+  const h=$('#hab'),beds=S.garden.beds;if(bedSel>=beds.length)bedSel=0;const b=beds[bedSel];
+  const ready=beds.filter(bedReady).length,dry=beds.filter(x=>x.plant&&!bedReady(x)&&x.wetUntil<=Date.now()).length;
+  h.innerHTML=`<div class="room-head"><div class="rtitle sky${period()==='night'?' night':''}">Garden<small>${beds.filter(x=>x.plant).length} of ${beds.length} beds planted</small></div></div>${gardenSVG()}
+    <div class="status"><span>${ready?`${ready} ready to harvest`:dry?`${dry} ${dry===1?'bed needs':'beds need'} water`:'Tap a bed to plant or water'}</span></div>`;
+  h.querySelectorAll('[data-bed]').forEach(g=>g.addEventListener('click',()=>{bedSel=+g.dataset.bed;haptic('s');renderGarden()}));
+  let info='';
+  if(!b.plant){info=`<h4>Bed ${bedSel+1} · empty</h4><div class="st">Pick seeds. Planting waters the bed for 4 hours.</div>`+Object.entries(SEEDS).map(([k,sd])=>`<button class="opt${canPay(sd.cost)?'':' off'}" data-seed="${k}"><span class="ico"><svg viewBox="-20 -46 40 50">${plantSVG({plant:k,grown:SEEDS[k].sec})}</svg></span><span class="t"><b>${sd.n}</b><span>${sd.d}</span></span><span class="go">${costHtml(sd.cost)}</span></button>`).join('')}
+  else{const sd=SEEDS[b.plant],rd=bedReady(b),wet=b.wetUntil>Date.now();
+    info=`<h4>Bed ${bedSel+1} · ${sd.n}</h4><div class="st">${rd?'Ready to harvest!':`Grown <b data-grow="${bedSel}">${Math.floor(b.grown/sd.sec*100)}%</b> · ${wet?`water lasts <b data-until="${b.wetUntil}">${fmt(b.wetUntil-Date.now())}</b>`:'dry — it stops growing until you water it'}`}</div>
+      <div class="gbar">${rd?`<button class="btn" id="bHarv">Harvest</button>`:`<button class="btn${wet?' ghost':''}" id="bWater">Water</button>`}</div>`}
+  $('#info').innerHTML=`<div class="bedinfo">${info}</div><div class="gbar"><button class="btn ghost" id="wAll">Water all</button><button class="btn ghost" id="hAll">Harvest all</button></div>
+    <p class="lead" style="margin-top:10px">Plants grow only while the soil is wet. Watering lasts 4 hours, so come back to keep them growing.</p>`;
+  document.querySelectorAll('[data-seed]').forEach(x=>x.addEventListener('click',()=>plant(bedSel,x.dataset.seed)));
+  const bw=$('#bWater');bw&&bw.addEventListener('click',()=>water(bedSel));const bh=$('#bHarv');bh&&bh.addEventListener('click',()=>harvest(bedSel));
+  $('#wAll').addEventListener('click',waterAll);$('#hAll').addEventListener('click',harvestAll);
+}
+
 /* ================= render ================= */
-function renderAll(){renderLive();renderRooms();if(!game){renderHab();renderActions()}renderPanel();renderStats();renderInfo();renderStrip();renderDot();
-  ({tasks:renderTasks,decor:renderDecor,breed:renderBreed,atlas:renderAtlas,eco:renderEco})[tab]?.()}
+function renderAll(){renderLive();renderRooms();const gv=S.roomSel==='garden'&&!!S.garden;['#stats','#actions','#panel'].forEach(x=>$(x).hidden=gv);
+  if(gv){if(!game)renderGarden()}else{if(!game){renderHab();renderActions()}renderPanel();renderStats();renderInfo()}renderStrip();renderDot();renderSnd();
+  ({tasks:renderTasks,decor:renderDecor,breed:renderBreed,atlas:renderAtlas,eco:renderEco})[tab]?.();renderCoach()}
 function renderLive(){
   $('#coinN').textContent=S.coins;$('#dustN').textContent=S.dust;$('#speedTag').hidden=GS()===1;
   const p=sel();if(p&&!p.egg){setBar('h',p.hunger);setBar('j',p.joy);setBar('e',p.energy)}
   document.querySelectorAll('[data-until]').forEach(el=>el.textContent=fmt(+el.dataset.until-Date.now()));
+  document.querySelectorAll('[data-grow]').forEach(el=>{const b=S.garden&&S.garden.beds[+el.dataset.grow];if(b&&b.plant)el.textContent=Math.floor(b.grown/SEEDS[b.plant].sec*100)+'%'});
 }
 function setBar(k,v){const f=document.getElementById('f-'+k);if(!f)return;f.style.width=v+'%';document.getElementById('n-'+k).textContent=Math.round(v);f.closest('.stat').classList.toggle('low',v<25)}
-function roomChips(cur,onclick){
+function roomChips(cur,garden){
   const l=houseLvl();let h=S.rooms.map(r=>`<button class="rchip" data-r="${r.id}" aria-pressed="${r.id===cur}">${esc(r.name)}<small>${petsIn(r).length}/${ROOM_CAP}</small></button>`).join('');
-  const next=[3,8,12].find(x=>roomsFor(x)>S.rooms.length);if(next)h+=`<span class="rchip locked">New room · Lv ${next}</span>`;return h;
+  const next=[3,8,12].find(x=>roomsFor(x)>S.rooms.length);if(next)h+=`<span class="rchip locked">New room · Lv ${next}</span>`;
+  if(garden)h+=S.garden?`<button class="rchip" data-r="garden" aria-pressed="${cur==='garden'}">Garden<small>${S.garden.beds.filter(b=>b.plant&&b.grown>=SEEDS[b.plant].sec).length?'ready!':S.garden.beds.filter(b=>b.plant).length+'/'+S.garden.beds.length}</small></button>`:`<span class="rchip locked">Garden · Lv 6</span>`;
+  return h;
 }
 function renderRooms(){
-  const el=$('#roomsBar'),p=sel();el.hidden=!!(p&&p.egg);el.innerHTML=roomChips(S.roomSel);
-  el.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{if(game)return;S.roomSel=+b.dataset.r;const f=petsIn(curRoom())[0];if(f)S.selected=f.id;panel=null;done()}));
+  const el=$('#roomsBar'),p=sel();el.hidden=!!(p&&p.egg);el.innerHTML=roomChips(S.roomSel,true);
+  el.querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{if(game)return;haptic('s');if(b.dataset.r==='garden'){S.roomSel='garden';panel=null;return done()}S.roomSel=+b.dataset.r;const f=petsIn(curRoom())[0];if(f)S.selected=f.id;panel=null;done()}));
 }
 function renderHab(){
   let p=sel();const h=$('#hab');
@@ -982,7 +1147,7 @@ function renderHab(){
   }
   const mess=!room.tidyUntil&&here.length>0;
   const status=p.awayUntil?`${esc(p.name)} returns in <b data-until="${p.awayUntil}">${fmt(p.awayUntil-Date.now())}</b>`
-    :p.sleeping?'Sleeping · restoring energy':p.hunger<20?'Hungry — feed them':p.joy<30?'Bored — play with them':here.length>1?'Tap a lumik to select it':'Pet your lumik';
+    :p.sleeping?'Sleeping · restoring energy':p.hunger<20?'Hungry — feed them':p.joy<30?'Bored — earns 25% less, play with them':here.length>1?'Tap a lumik to select it':'Pet your lumik';
   h.innerHTML=`<div class="room-head"><button class="rtitle" id="pname" title="Rename">${esc(p.name)}<small>${STAGES[stage(p)]} · ${esc(room.name)}</small></button>
     <div class="chips"><span class="chip r${r}">${RAR[r].n}</span>${(p.line||0)>=4?'<span class="chip gold">Pure line</span>':''}<button class="chip comfy" id="comfy">Cozy ${c}</button></div></div>
     ${roomSVG(room.decor,{subject:roomSubjects(room,{anim:1,marker:1}),dim:here.length&&here.every(x=>x.sleeping||x.awayUntil)&&here.some(x=>x.sleeping),mess})}
@@ -1037,6 +1202,7 @@ function renderPanel(){
   el.querySelectorAll('[data-g]').forEach(b=>b.addEventListener('click',()=>startGame(b.dataset.g)));
   el.querySelectorAll('[data-l]').forEach(b=>b.addEventListener('click',()=>startTrip(b.dataset.l)));
   const y=$('#relYes');if(y){y.addEventListener('click',release);$('#relNo').addEventListener('click',()=>{panel=null;renderPanel()})}
+  renderCoach();
 }
 function renderInfo(){
   const el=$('#info'),p=sel();
@@ -1059,7 +1225,7 @@ function renderStrip(){
   const el=$('#strip');
   el.innerHTML=S.pets.map(p=>`<button class="card" aria-pressed="${p.id===S.selected}" data-id="${p.id}">${drawAny(p,{})}<div class="nm">${p.egg?'Egg':esc(p.name)}</div><div class="st">${stripStatus(p)}</div></button>`).join('')+
     `<div class="card" style="cursor:default;display:grid;place-items:center;color:var(--muted);font-weight:800;font-size:12px;border-style:dashed">${petCount()}/${capacity()}<br>spots</div>`;
-  el.querySelectorAll('button.card').forEach(b=>b.addEventListener('click',()=>{if(game)return;S.selected=+b.dataset.id;const p=pet(S.selected);if(p&&!p.egg)S.roomSel=p.roomId;panel=null;done()}));
+  el.querySelectorAll('button.card').forEach(b=>b.addEventListener('click',()=>{if(game)return;haptic('s');S.selected=+b.dataset.id;const p=pet(S.selected);if(p&&!p.egg)S.roomSel=p.roomId;else if(S.roomSel==='garden')S.roomSel=S.rooms[0].id;panel=null;done()}));
 }
 function renderTasks(){
   const el=$('#tab-tasks'),st=S.streak,d=dayNum(),claimed=st.last===d,gap=streakGap();
@@ -1089,7 +1255,7 @@ function renderDecor(){
   el.innerHTML=`<h3 class="sec">Home</h3>
     <div class="house"><div class="hd"><b>Level ${l}</b><span class="muted" style="font-weight:800;font-size:13px">${nx?`${S.house.xp} / ${nx} XP`:'max'}</span></div>
       <div class="track"><div class="fill f-x" style="width:${pr}%"></div></div>
-      <div class="unl">${Object.entries(UNLOCKS).map(([lv,n])=>`<span class="${l>=lv?'on':''}">Lv ${lv} · ${n}</span>`).join('')}<span>coming soon · garden and greenhouse</span></div>
+      <div class="unl">${Object.entries(UNLOCKS).map(([lv,n])=>`<span class="${l>=lv?'on':''}">Lv ${lv} · ${n}</span>`).join('')}<span>coming soon · greenhouse</span></div>
       <div class="muted" style="font-size:12.5px;font-weight:700;margin-top:8px">Your home earns XP from decor, tasks, trips, and lumiks growing up and hatching.</div></div>
     <h3 class="sec">Furnishing</h3>
     <div class="rooms" id="decRooms">${roomChips(r.id)}</div>
@@ -1146,16 +1312,23 @@ function renderEco(){
     <h3 class="sec">Permanent bonuses</h3>
     <div class="info"><div class="ln"><span>Elders at home (up to 3)</span><span>${el_} · +${Math.min(3,el_)*5}%</span></div><div class="ln"><span>Stars in the garden (up to 20)</span><span>${S.stars.length} · +${Math.min(20,S.stars.length)*2}%</span></div></div>
     ${S.stars.length?`<h3 class="sec">Star garden</h3><div class="garden">${S.stars.map(s=>`<span style="border-color:hsl(${s.hue} 60% 60%)">✦ ${esc(s.name)}</span>`).join('')}</div>`:''}
+    <h3 class="sec">Settings</h3>
+    <div class="toggle"><span>Sound effects</span><button class="btn sm ${S.sound!==false?'':'ghost'}" id="setSnd">${S.sound!==false?'On':'Off'}</button></div>
+    <div class="toggle"><span>Music</span><button class="btn sm ${S.music?'':'ghost'}" id="setMus">${S.music?'On':'Off'}</button></div>
+    <div class="toggle"><span>Tutorial<small>Show the tips from the start</small></span><button class="btn sm ghost" id="setTut">Replay</button></div>
     <h3 class="sec">Sparks economy</h3>
     <div class="burn"><div style="width:${Math.min(100,pct)}%"></div></div><div class="burnlbl">Spent ${pct}% of everything earned: ${S.spent} of ${S.earned} ✦</div>
     <h3 class="sec">Recent activity</h3>
     <div class="log">${S.log.slice(0,10).map(l=>`<div><span>${esc(l.why)}</span><b class="${l.n>0?'plus-n':'minus-n'}">${l.n>0?'+':''}${l.n} ${l.u||'✦'}</b></div>`).join('')}</div>
-    <h3 class="sec">Testing</h3>
+    ${S.dev?`<h3 class="sec">Testing</h3>
     <div class="toggle"><span>Speed up time ×60<small>An hour passes in a minute: trips, eggs, hunger, age</small></span><button class="btn sm ${GS()>1?'':'ghost'}" id="spd">${GS()>1?'On':'Off'}</button></div>
-    <div class="toggle"><span>Next day<small>New tasks, streak, and +1 day of age for every lumik</small></span><button class="btn sm ghost" id="nextDay">Skip</button></div>
+    <div class="toggle"><span>Next day<small>New tasks, streak, and +1 day of age for every lumik</small></span><button class="btn sm ghost" id="nextDay">Skip</button></div>`:''}
     <button class="reset" id="reset">Start over</button>`;
-  $('#spd').addEventListener('click',()=>{S.speed=GS()>1?1:60;toast(GS()>1?'Time sped up ×60 (new timers)':'Normal time');done()});
-  $('#nextDay').addEventListener('click',()=>{S.dayOffset=(S.dayOffset||0)+1;S.pets.forEach(p=>{if(!p.egg)p.age=(p.age||0)+86400});ensureDay();toast('A new day has started');done()});
+  $('#setSnd').addEventListener('click',()=>{S.sound=S.sound===false;sfx('tick');done()});
+  $('#setMus').addEventListener('click',()=>{S.music=!S.music;S.music?startMusic():stopMusic();done()});
+  $('#setTut').addEventListener('click',()=>{S.tut=0;setTab('home');done()});
+  $('#spd')&&$('#spd').addEventListener('click',()=>{S.speed=GS()>1?1:60;toast(GS()>1?'Time sped up ×60 (new timers)':'Normal time');done()});
+  $('#nextDay')&&$('#nextDay').addEventListener('click',()=>{S.dayOffset=(S.dayOffset||0)+1;S.pets.forEach(p=>{if(!p.egg)p.age=(p.age||0)+86400});ensureDay();toast('A new day has started');done()});
   const r=$('#reset');r.addEventListener('click',()=>{if(r.classList.contains('armed')){try{localStorage.removeItem(KEY)}catch(e){}S=initial();S.pets.forEach(p=>{if(!p.egg)discover(p)});ensureDay();breedSel=[];panel=null;toast('New game');setTab('home');done();return}
     r.classList.add('armed');r.textContent='All progress will be lost. Tap again';setTimeout(()=>{if(r.isConnected){r.classList.remove('armed');r.textContent='Start over'}},4000)});
 }
@@ -1165,14 +1338,15 @@ function rename(){
   const fin=()=>{const v=i.value.trim();if(v)p.name=v;done()};
   i.addEventListener('blur',fin);i.addEventListener('keydown',e=>{if(e.key==='Enter')i.blur()});
 }
-function setTab(t){tab=t;['home','tasks','decor','breed','atlas','eco'].forEach(k=>$('#tab-'+k).hidden=k!==t);
+function setTab(t){tab=t;if(t==='decor')tutEvent('decor');['home','tasks','decor','breed','atlas','eco'].forEach(k=>$('#tab-'+k).hidden=k!==t);
   document.querySelectorAll('.nav button').forEach(b=>b.dataset.tab===t?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
   renderAll();window.scrollTo(0,0)}
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{haptic('s');if(game)return toast('Finish the game first');setTab(b.dataset.tab)}));
+let devTaps=[];$('.brand').addEventListener('click',()=>{const t=Date.now();devTaps=devTaps.filter(x=>t-x<3000);devTaps.push(t);if(devTaps.length>=5){devTaps=[];S.dev=!S.dev;if(!S.dev)S.speed=1;toast(S.dev?'Test tools on (Stash tab)':'Test tools off');done()}});
 
 /* ================= Telegram ================= */
 const TG=window.Telegram&&Telegram.WebApp&&Telegram.WebApp.initData?Telegram.WebApp:null;
-function haptic(k,v){try{if(!TG)return;if(k==='n')TG.HapticFeedback.notificationOccurred(v);else if(k==='s')TG.HapticFeedback.selectionChanged();else TG.HapticFeedback.impactOccurred(v)}catch(e){}}
+function haptic(k,v,snd){sfx(snd||(k==='n'?(v==='success'?'chime':v==='error'?'error':'tick'):k==='s'?'tick':v==='soft'?'purr':'pop'));try{if(!TG)return;if(k==='n')TG.HapticFeedback.notificationOccurred(v);else if(k==='s')TG.HapticFeedback.selectionChanged();else TG.HapticFeedback.impactOccurred(v)}catch(e){}}
 function tgInit(){
   if(!TG)return;
   try{TG.ready();TG.expand();TG.disableVerticalSwipes&&TG.disableVerticalSwipes()}catch(e){}
@@ -1193,6 +1367,11 @@ function start(data){
   S.pets.forEach(p=>{if(p.name)p.name=en(p.name);if(p.parents)p.parents=p.parents.map(en)});
   S.stars.forEach(s=>{s.name=en(s.name)});
   if(!S.lastTick)S.lastTick=Date.now();
+  if(!S.dev)S.speed=1;
+  if(S.tut===undefined)S.tut=TUT.length;if(S.sound===undefined)S.sound=true;if(S.music===undefined)S.music=true;ensureGarden();
+  $('#snd').addEventListener('click',()=>{const on=S.sound!==false||S.music;S.sound=!on;S.music=!on;on?stopMusic():(ac(),startMusic());if(!on)sfx('chime');done()});
+  document.addEventListener('pointerdown',()=>{ac();startMusic()});
+  document.addEventListener('visibilitychange',()=>document.hidden?stopMusic():startMusic());
   tick();setTab('home');setInterval(tick,1000);
   window.claude?.hot?.snapshot?.(()=>({S}));
 }
